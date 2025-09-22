@@ -91,7 +91,7 @@ class FitThereDialogWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: FitThereButton(
+                child: PIButton(
                   onPressed: onOptionOneTextPress,
                   text: optionOneText,
                   fontSize: 16,
@@ -108,7 +108,7 @@ class FitThereDialogWidget extends StatelessWidget {
                 color: AppColors.lightGreyShade3.withValues(alpha: 0.55),
               ),
               Expanded(
-                child: FitThereButton(
+                child: PIButton(
                   onPressed: onOptionTwoTextPress,
                   text: optionTwoText,
                   fontSize: 16,

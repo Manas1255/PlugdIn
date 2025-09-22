@@ -33,7 +33,7 @@ class AppRouter {
   }
 
   static final router = GoRouter(
-    initialLocation: AppRoutes.homeScreen,
+    initialLocation: AppRoutes.splash,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [

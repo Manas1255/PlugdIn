@@ -8,7 +8,7 @@ class AssetPaths {
   static const sfProDisplay = 'SFProDisplay';
 
   ///Icons
-  static const appLogo = '${_svg}logo.svg';
+  // static const appLogo = '${_svg}logo.svg';
   static const eye = '${_svg}eye.svgs';
   static const eyeOff = '${_svg}eye_slash.svg';
   static const calenderIcon = '${_svg}calendar.svgs';
@@ -98,4 +98,7 @@ class AssetPaths {
   static const bykeaLogo = '${_svg}bykea_logo.svg';
   static const easypaisaLogo = '${_svg}easypaisa_logo.svg';
   static const jazzCashLogo = '${_svg}jazz_cash_logo.svg';
+
+  /// My logos
+  static const appLogo = '${_img}app_logo.png';
 }

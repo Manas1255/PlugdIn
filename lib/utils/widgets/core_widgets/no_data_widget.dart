@@ -36,7 +36,7 @@ class EmptyWidget extends StatelessWidget {
           ),
 
           if (buttonText != null && buttonText!.trim().isNotEmpty)
-            FitThereButton(
+            PIButton(
               text: buttonText!,
               onPressed: onTap,
               isExpanded: false,

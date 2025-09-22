@@ -3,17 +3,17 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
 
-class FitThereButton extends StatelessWidget {
-  const FitThereButton({
+class PIButton extends StatelessWidget {
+  const PIButton({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
     super.key,
-    this.backgroundColor = AppColors.black,
-    this.textColor = AppColors.offWhite,
+    this.backgroundColor = AppColors.secondaryColor,
+    this.textColor = AppColors.white,
     this.disabledTextColor = AppColors.offWhite,
     this.disabledBackgroundColor,
-    this.borderRadius = 100,
+    this.borderRadius = 16,
     this.padding = const EdgeInsetsDirectional.symmetric(
       vertical: 16,
       horizontal: 24,
@@ -32,12 +32,12 @@ class FitThereButton extends StatelessWidget {
     this.borderWidth = 1.0,
   });
 
-  FitThereButton.secondary({
+  PIButton.secondary({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
     super.key,
-    this.borderRadius = 100,
+    this.borderRadius = 16,
     this.padding = const EdgeInsetsDirectional.symmetric(
       vertical: 16,
       horizontal: 24,
@@ -54,7 +54,7 @@ class FitThereButton extends StatelessWidget {
     this.borderColor = AppColors.black,
     this.borderWidth = 1.0,
     this.textColor = AppColors.black,
-  }) : backgroundColor = AppColors.primaryColor,
+  }) : backgroundColor = AppColors.white,
        disabledTextColor = AppColors.black,
        disabledBackgroundColor = AppColors.primaryColor,
        loadingColor = AppColors.black;
@@ -81,7 +81,7 @@ class FitThereButton extends StatelessWidget {
   final Color? borderColor;
   final double borderWidth;
 
-  FitThereButton.tertiary({
+  PIButton.tertiary({
     required this.text,
     required this.onPressed,
     this.isLoading = false,

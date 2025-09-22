@@ -35,7 +35,7 @@ class FitThereErrorWidget extends StatelessWidget {
             height: 8,
           ),
 
-          FitThereButton(
+          PIButton(
             text: 'Retry',
             onPressed: onPressed,
 

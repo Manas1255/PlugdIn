@@ -222,7 +222,7 @@ class ReStyleBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    child: FitThereButton(
+                    child: PIButton(
                       prefixIcon: buttonOnePrefix,
                       text: buttonOneText ?? '',
                       borderColor:
@@ -234,7 +234,7 @@ class ReStyleBottomSheet extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: FitThereButton(
+                    child: PIButton(
                       prefixIcon: buttonTwoPrefix,
                       text: buttonTwoText ?? '',
                       borderColor:
@@ -248,7 +248,7 @@ class ReStyleBottomSheet extends StatelessWidget {
               ),
               const SizedBox(height: 12),
             ] else if (buttonText != null) ...[
-              FitThereButton(
+              PIButton(
                 text: buttonText!,
                 onPressed: onTap,
                 isLoading: isLoading,
