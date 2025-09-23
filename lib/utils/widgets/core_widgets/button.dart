@@ -31,6 +31,32 @@ class PIButton extends StatelessWidget {
     this.borderColor,
     this.borderWidth = 1.0,
   });
+  const PIButton.tertiary({
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    super.key,
+    this.borderRadius = 16,
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      vertical: 16,
+      horizontal: 24,
+    ),
+    this.fontWeight = FontWeight.w700,
+    this.splashColor = Colors.black12,
+    this.fontSize = 14,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.outsidePadding = const EdgeInsetsDirectional.symmetric(vertical: 4),
+    this.isExpanded = true,
+    this.iconSpacing,
+    this.disabled = false,
+    this.borderWidth = 1.0,
+    this.backgroundColor = Colors.transparent,
+    this.borderColor = AppColors.offWhite,
+  }) : textColor = AppColors.white,
+       disabledTextColor = AppColors.black,
+       disabledBackgroundColor = AppColors.lightGreyColor,
+       loadingColor = AppColors.black;
 
   PIButton.secondary({
     required this.text,
@@ -80,33 +106,6 @@ class PIButton extends StatelessWidget {
   final Color loadingColor;
   final Color? borderColor;
   final double borderWidth;
-
-  PIButton.tertiary({
-    required this.text,
-    required this.onPressed,
-    this.isLoading = false,
-    super.key,
-    this.borderRadius = 100,
-    this.padding = const EdgeInsetsDirectional.symmetric(
-      vertical: 16,
-      horizontal: 24,
-    ),
-    this.fontWeight = FontWeight.w700,
-    this.splashColor = Colors.black12,
-    this.fontSize = 14,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.outsidePadding = const EdgeInsetsDirectional.symmetric(vertical: 4),
-    this.isExpanded = true,
-    this.iconSpacing,
-    this.disabled = false,
-    this.borderWidth = 1.0,
-    this.backgroundColor = AppColors.lightGreyColor,
-    this.borderColor = AppColors.black,
-  }) : textColor = AppColors.black,
-       disabledTextColor = AppColors.black,
-       disabledBackgroundColor = AppColors.lightGreyColor,
-       loadingColor = AppColors.black;
 
   @override
   Widget build(BuildContext context) {

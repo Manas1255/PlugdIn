@@ -12,7 +12,7 @@ class ToastHelper {
         message,
         style: const TextStyle(
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           color: AppColors.offWhite,
           fontSize: 14,
         ),
@@ -51,7 +51,7 @@ class ToastHelper {
         message,
         style: const TextStyle(
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           fontSize: 14,
           color: AppColors.offWhite,
         ),
@@ -89,7 +89,7 @@ class ToastHelper {
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           color: AppColors.offWhite,
         ),
       ),

@@ -4,9 +4,6 @@ class AssetPaths {
   static const _svg = 'assets/svgs/';
   static const _img = 'assets/images/';
 
-  ///Fonts
-  static const sfProDisplay = 'SFProDisplay';
-
   ///Icons
   // static const appLogo = '${_svg}logo.svg';
   static const eye = '${_svg}eye.svgs';
@@ -98,6 +95,10 @@ class AssetPaths {
   static const bykeaLogo = '${_svg}bykea_logo.svg';
   static const easypaisaLogo = '${_svg}easypaisa_logo.svg';
   static const jazzCashLogo = '${_svg}jazz_cash_logo.svg';
+
+  ///My fonts
+  static const montserrat = 'Montserrat';
+  static const helveticaNeue = 'HelveticaNeue';
 
   /// My logos
   static const appLogo = '${_img}app_logo.png';

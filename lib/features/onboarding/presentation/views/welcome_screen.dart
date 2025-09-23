@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 
@@ -15,8 +16,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
+      appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 32),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 32,
+        ),
         child: Column(
           children: [
             Image.asset(
@@ -28,17 +32,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Text(
               'Your event, your way, we’ll connect you with the best.',
               textAlign: TextAlign.center,
+              style: context.t1,
             ),
           ],
         ),
       ),
       bottomNavigationBar: SafeArea(
-        child: PIButton.secondary(
-          text: 'Login',
-          onPressed: () {},
-          outsidePadding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 16,
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PIButton.secondary(
+              text: 'Login',
+              onPressed: () {},
+              outsidePadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 16,
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            PIButton.tertiary(
+              text: 'Sign Up',
+              onPressed: () {},
+              outsidePadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+            ),
+          ],
         ),
       ),
     );
