@@ -6,7 +6,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 
-enum FitThereTextFieldType {
+enum PITextFieldType {
   email,
   password,
   description,
@@ -17,15 +17,15 @@ enum FitThereTextFieldType {
   timePicker,
 }
 
-class FitThereTextField extends StatefulWidget {
-  const FitThereTextField({
+class PITextField extends StatefulWidget {
+  const PITextField({
     required this.controller,
     this.padding = EdgeInsets.zero,
     this.labelText,
     this.hintText,
     this.hintColor,
     this.hintFontWeight,
-    this.type = FitThereTextFieldType.text,
+    this.type = PITextFieldType.text,
     this.validator,
     this.prefixPath,
     this.suffixPath,
@@ -54,7 +54,7 @@ class FitThereTextField extends StatefulWidget {
   final String? hintText;
   final Color? hintColor;
   final FontWeight? hintFontWeight;
-  final FitThereTextFieldType type;
+  final PITextFieldType type;
   final String? Function(String?)? validator;
   final String? prefixPath;
   final String? suffixPath;
@@ -76,10 +76,10 @@ class FitThereTextField extends StatefulWidget {
   final TextAlign? textAlign;
 
   @override
-  State<FitThereTextField> createState() => _FitThereTextFieldState();
+  State<PITextField> createState() => _PITextFieldState();
 }
 
-class _FitThereTextFieldState extends State<FitThereTextField> {
+class _PITextFieldState extends State<PITextField> {
   late FocusNode _focusNode;
   bool _obscureText = true;
   String? _errorText;
@@ -276,14 +276,14 @@ class _FitThereTextFieldState extends State<FitThereTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final isEmail = widget.type == FitThereTextFieldType.email;
+    final isEmail = widget.type == PITextFieldType.email;
     final isPassword =
-        widget.type == FitThereTextFieldType.password ||
-        widget.type == FitThereTextFieldType.confirmPassword;
-    final isDescription = widget.type == FitThereTextFieldType.description;
-    final isNumber = widget.type == FitThereTextFieldType.number;
-    final isDatePicker = widget.type == FitThereTextFieldType.datePicker;
-    final isTimePicker = widget.type == FitThereTextFieldType.timePicker;
+        widget.type == PITextFieldType.password ||
+        widget.type == PITextFieldType.confirmPassword;
+    final isDescription = widget.type == PITextFieldType.description;
+    final isNumber = widget.type == PITextFieldType.number;
+    final isDatePicker = widget.type == PITextFieldType.datePicker;
+    final isTimePicker = widget.type == PITextFieldType.timePicker;
 
     final fieldError = widget.errorText ?? _errorText;
 
@@ -298,7 +298,7 @@ class _FitThereTextFieldState extends State<FitThereTextField> {
 
     final baseBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(
-        isDescription ? 24 : widget.borderRadius ?? 48,
+        isDescription ? 24 : widget.borderRadius ?? 16,
       ),
       borderSide: BorderSide(
         color: borderColor,

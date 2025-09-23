@@ -53,7 +53,7 @@ class PIButton extends StatelessWidget {
     this.borderWidth = 1.0,
     this.backgroundColor = Colors.transparent,
     this.borderColor = AppColors.offWhite,
-  }) : textColor = AppColors.white,
+  }) : textColor = AppColors.black,
        disabledTextColor = AppColors.black,
        disabledBackgroundColor = AppColors.lightGreyColor,
        loadingColor = AppColors.black;

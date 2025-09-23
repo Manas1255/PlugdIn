@@ -51,6 +51,14 @@ class AppRouter {
           return const OnboardingScreen();
         },
       ),
+
+      GoRoute(
+        path: AppRoutes.loginScreen,
+        name: AppRouteNames.loginScreen,
+        builder: (context, state) {
+          return LoginScreen();
+        },
+      ),
     ],
   );
 }

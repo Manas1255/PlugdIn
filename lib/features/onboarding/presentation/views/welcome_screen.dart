@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -43,7 +45,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: [
             PIButton.secondary(
               text: 'Login',
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(
+                  AppRouteNames.loginScreen,
+                );
+              },
               outsidePadding: const EdgeInsetsDirectional.symmetric(
                 horizontal: 16,
               ),
@@ -56,7 +62,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onPressed: () {},
               outsidePadding: const EdgeInsetsDirectional.symmetric(
                 horizontal: 16,
-                vertical: 8,
               ),
             ),
           ],

@@ -7,6 +7,7 @@ abstract class AppColors {
   static const black = Color(0xFF000000);
   static const secondaryColor = Color(0xFF691AFF);
   static const grey = Color(0xFFB3B3B3);
+  static const greyShade2 = Color(0xFF88888C);
   static const darkGrey = Color(0xFF565656);
   static const offWhite = Color(0xFFDBE6DD);
 
@@ -46,7 +47,7 @@ abstract class AppColors {
   static const primaryBrown = Color(0xFF4F3422);
 
   static const greyShade1 = Color.fromRGBO(195, 193, 197, 1);
-  static const greyShade2 = Color(0xFF2a2d38);
+
   static const greyShade3 = Color(0xFFF6F6F6);
   static const greyShade4 = Color(0xFFF9FAFB);
   static const greyShade5 = Color(0xFFDBDADC);

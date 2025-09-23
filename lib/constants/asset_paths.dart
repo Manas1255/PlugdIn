@@ -47,7 +47,7 @@ class AssetPaths {
   static const favOutlinedIcon = '${_svg}fav_outlined.svg';
   static const filterIcon = '${_svg}filter_icon.svg';
   static const crossIcon = '${_svg}cross_icon.svg';
-  static const backIcon = '${_svg}back_icon.svg';
+
   static const forwardIcon = '${_svg}forward_icon.svg';
   static const plusIcon = '${_svg}plus_icon.svg';
   static const noOffersIcon = '${_svg}no_offers_icon.svg';
@@ -102,4 +102,7 @@ class AssetPaths {
 
   /// My logos
   static const appLogo = '${_img}app_logo.png';
+
+  ///My icons
+  static const backIcon = '${_svg}back_icon.svg';
 }
