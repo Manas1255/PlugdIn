@@ -8,13 +8,14 @@ abstract class AppColors {
   static const secondaryColor = Color(0xFF691AFF);
   static const grey = Color(0xFFB3B3B3);
   static const greyShade2 = Color(0xFF88888C);
+  static const lightGreyColor = Color(0xFFEBEBEB);
   static const darkGrey = Color(0xFF565656);
   static const offWhite = Color(0xFFDBE6DD);
 
   ///My colors end
 
   static const darkGreyTextColor = Color(0xFF696969);
-  static const lightGreyColor = Color(0xFFEBEBEB);
+
   static const lightGreyShade2 = Color(0xFFF9F9F9);
   static const lightGreyShade3 = Color(0XFF8080808C);
   static const lightGreyShade4 = Color(0XFFE6E6E6);

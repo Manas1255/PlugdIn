@@ -6,123 +6,55 @@ extension AppTextStyle on BuildContext {
   String get _bodyFontFamily => AssetPaths.montserrat;
   String get _headingFontFamily => AssetPaths.helveticaNeue;
 
-  // Headlines
-  TextStyle get h1 => TextStyle(
+  // --- Helpers --------------------------------------------------------------
+  TextStyle _body(double size, FontWeight weight, Color color) => TextStyle(
+    fontFamily: _bodyFontFamily,
+    fontSize: size,
+    fontWeight: weight,
+    color: color,
+  );
+
+  TextStyle _heading(double size, FontWeight weight, Color color) => TextStyle(
     fontFamily: _headingFontFamily,
-    fontSize: 32,
-    fontWeight: FontWeight.w700, // Bold
-    color: AppColors.black,
+    fontSize: size,
+    fontWeight: weight,
+    color: color,
   );
 
-  TextStyle get h2 => TextStyle(
-    fontFamily: _headingFontFamily,
-    fontSize: 28,
-    fontWeight: FontWeight.w600, // Semibold
-    color: AppColors.black,
-  );
+  TextStyle get h1 => _heading(32, FontWeight.w700, AppColors.black);
+  TextStyle get h2 => _heading(28, FontWeight.w600, AppColors.black);
+  TextStyle get h3 => _heading(24, FontWeight.w700, AppColors.black);
 
-  TextStyle get h3 => TextStyle(
-    fontFamily: _headingFontFamily,
-    fontSize: 24,
-    fontWeight: FontWeight.w700,
-    color: AppColors.black,
-  );
+  TextStyle get t1 => _body(20, FontWeight.w600, AppColors.black);
+  TextStyle get t2 => _body(18, FontWeight.w500, AppColors.black);
+  TextStyle get t3 => _body(16, FontWeight.w500, AppColors.black);
 
-  // Titles
-  TextStyle get t1 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    color: AppColors.black,
-  );
+  TextStyle get t1White => _body(20, FontWeight.w600, AppColors.white);
+  TextStyle get t2White => _body(18, FontWeight.w500, AppColors.white);
+  TextStyle get t3White => _body(16, FontWeight.w500, AppColors.white);
 
-  TextStyle get t2 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 18,
-    fontWeight: FontWeight.w500, // Medium
-    color: AppColors.black,
-  );
+  TextStyle get b1 => _body(16, FontWeight.w700, AppColors.black);
+  TextStyle get b2 => _body(14, FontWeight.w500, AppColors.black);
+  TextStyle get b3 => _body(12, FontWeight.w500, AppColors.black);
 
-  TextStyle get t3 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    color: AppColors.black,
-  );
+  TextStyle get b1White => _body(16, FontWeight.w700, AppColors.white);
+  TextStyle get b2White => _body(14, FontWeight.w500, AppColors.white);
+  TextStyle get b3White => _body(12, FontWeight.w500, AppColors.white);
 
-  // Body
-  TextStyle get b1 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 16,
-    fontWeight: FontWeight.w700, // Regular
-    color: AppColors.black,
-  );
+  TextStyle get l1 => _body(14, FontWeight.w600, AppColors.black);
+  TextStyle get l2 => _body(12, FontWeight.w400, AppColors.black);
+  TextStyle get l3 => _body(10, FontWeight.w400, AppColors.black);
 
-  TextStyle get b2 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: AppColors.black,
-  );
+  TextStyle get l1White => _body(14, FontWeight.w600, AppColors.white);
+  TextStyle get l2White => _body(12, FontWeight.w400, AppColors.white);
+  TextStyle get l3White => _body(10, FontWeight.w400, AppColors.white);
 
-  TextStyle get b3 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-    color: AppColors.black,
-  );
+  TextStyle get thickText => _body(18, FontWeight.w900, AppColors.black);
+  TextStyle get lightText => _body(18, FontWeight.w300, AppColors.black);
+  TextStyle get extraLightText => _body(18, FontWeight.w200, AppColors.black);
 
-  // Labels
-  TextStyle get l1 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color: AppColors.black,
-  );
-
-  TextStyle get l2 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    color: AppColors.black,
-  );
-
-  TextStyle get l3 => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 10,
-    fontWeight: FontWeight.w400,
-    color: AppColors.black,
-  );
-
-  // Specials
-  TextStyle get thickText => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 18,
-    fontWeight: FontWeight.w900, // Black
-    color: AppColors.black,
-  );
-
-  TextStyle get lightText => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 18,
-    fontWeight: FontWeight.w300, // Light
-    color: AppColors.black,
-  );
-
-  TextStyle get extraLightText => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 18,
-    fontWeight: FontWeight.w200,
-    // You don't have UltraLight, fallback to Light
-    color: AppColors.black,
-  );
-
-  TextStyle get italicBody => TextStyle(
-    fontFamily: _bodyFontFamily,
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    fontStyle: FontStyle.italic,
-    // Will apply italic even if no specific italic font
-    color: AppColors.black,
-  );
+  TextStyle get thickTextWhite => _body(18, FontWeight.w900, AppColors.white);
+  TextStyle get lightTextWhite => _body(18, FontWeight.w300, AppColors.white);
+  TextStyle get extraLightTextWhite =>
+      _body(18, FontWeight.w200, AppColors.white);
 }

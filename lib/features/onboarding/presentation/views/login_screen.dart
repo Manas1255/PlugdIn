@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -14,26 +15,25 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            AssetPaths.backIcon,
+    return FocusHandler(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              AssetPaths.backIcon,
+            ),
+            onPressed: () {
+              context.pop();
+            },
           ),
-          onPressed: () {
-            context.pop();
-          },
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16,
-          vertical: 24,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 16,
+              vertical: 24,
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -89,27 +89,31 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                PIButton.tertiary(
+                PIButton.secondary(
                   text: 'Continue with Google',
                   prefixIcon: SvgPicture.asset(
                     AssetPaths.googleIcon,
                   ),
                   onPressed: () {},
                 ),
-                PIButton.tertiary(
+                PIButton.secondary(
                   text: 'Continue with Apple',
                   prefixIcon: SvgPicture.asset(
                     AssetPaths.appleIcon,
                   ),
                   onPressed: () {},
                 ),
+                const SizedBox(
+                  height: 32,
+                ),
+                Text(
+                  'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
+                  textAlign: TextAlign.center,
+                  style: context.b3,
+                ),
               ],
             ),
-            Text(
-              'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         ),
       ),
     );

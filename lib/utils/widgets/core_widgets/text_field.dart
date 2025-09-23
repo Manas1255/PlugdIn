@@ -424,7 +424,7 @@ class _PITextFieldState extends State<PITextField> {
                           )
                         : Text(
                             widget.hintText ?? '',
-                            style: context.b1.copyWith(
+                            style: context.b2.copyWith(
                               color:
                                   widget.hintColor ??
                                   AppColors.darkGreyTextColor,

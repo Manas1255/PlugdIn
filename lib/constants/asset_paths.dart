@@ -6,7 +6,7 @@ class AssetPaths {
 
   ///Icons
   // static const appLogo = '${_svg}logo.svg';
-  static const eye = '${_svg}eye.svgs';
+  static const eye = '${_svg}eye.svg';
   static const eyeOff = '${_svg}eye_slash.svg';
   static const calenderIcon = '${_svg}calendar.svgs';
   static const toastSuccess = '${_svg}toast-success.svgs';
