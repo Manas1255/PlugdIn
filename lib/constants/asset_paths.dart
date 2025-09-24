@@ -84,4 +84,8 @@ class AssetPaths {
 
   ///My icons
   static const backIcon = '${_svg}back_icon.svg';
+  static const unselectedHouseIcon = '${_svg}unselected_house_icon.svg';
+  static const selectedHouseIcon = '${_svg}selected_house_icon.svg';
+  static const unselectedCustomerIcon = '${_svg}unselected_customer_icon.svg';
+  static const selectedCustomerIcon = '${_svg}selected_customer_icon.svg';
 }

@@ -59,6 +59,14 @@ class AppRouter {
           return LoginScreen();
         },
       ),
+
+      GoRoute(
+        path: AppRoutes.roleSelectionScreen,
+        name: AppRouteNames.roleSelectionScreen,
+        builder: (context, state) {
+          return RoleSelectionScreen();
+        },
+      ),
     ],
   );
 }

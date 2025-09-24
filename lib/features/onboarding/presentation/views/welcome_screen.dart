@@ -59,7 +59,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             PIButton.tertiary(
               text: 'Sign Up',
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(
+                  AppRouteNames.roleSelectionScreen,
+                );
+              },
               outsidePadding: const EdgeInsetsDirectional.symmetric(
                 horizontal: 16,
               ),
