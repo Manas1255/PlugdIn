@@ -5,6 +5,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
+import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,11 +19,8 @@ class LoginScreen extends StatelessWidget {
     return FocusHandler(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: SvgPicture.asset(
-              AssetPaths.backIcon,
-            ),
-            onPressed: () {
+          leading: BackArrowIcon(
+            onTap: () {
               context.pop();
             },
           ),

@@ -1,8 +1,13 @@
-import 'package:plugdin/app/app.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:plugdin/app/view/app.dart';
 import 'package:plugdin/bootstrap.dart';
 import 'package:plugdin/config/flavor_config.dart';
 
-void main() {
+Future<void> main() async {
   FlavorConfig(flavor: Flavor.development);
-  bootstrap(() => const AppView());
+  await bootstrap(
+    () => DevicePreview(
+      builder: (context) => const App(),
+    ),
+  );
 }

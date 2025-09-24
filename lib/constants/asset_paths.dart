@@ -5,7 +5,6 @@ class AssetPaths {
   static const _img = 'assets/images/';
 
   ///Icons
-  // static const appLogo = '${_svg}logo.svg';
   static const eye = '${_svg}eye.svg';
   static const eyeOff = '${_svg}eye_slash.svg';
   static const calenderIcon = '${_svg}calendar.svgs';
@@ -69,32 +68,12 @@ class AssetPaths {
   static const flagIcon = '${_svg}flag_icon.svg';
   static const uploadImageIcon = '${_svg}upload_image_icon.svg';
 
-  static const notificationIllustration =
-      '${_svg}notification_illustration.svg';
-  static const noListingsIllustration = '${_svg}no_listings_illustration.svg';
-
-  static const sortReviewIcon = '${_svg}sort_review_icon.svg';
   static const sendButton = '${_svg}send_button.svg';
   static const thinBinIcon = '${_svg}thin_bin_icon.svg';
 
   ///Images
-  static const onboardingStep1 = '${_img}onboarding_step_1.png';
-  static const onboardingStep2 = '${_img}onboarding_step_2.png';
-  static const onboardingStep3 = '${_img}onboarding_step_3.png';
-  static const bohoStyle = '${_img}boho_style.png';
-  static const y2kStyle = '${_img}y2k_style.png';
-  static const shopByBrandImage = '${_img}shop_by_brand_image.png';
   static const suggestedForYouImage = '${_img}suggested_for_you_image.png';
   static const errorPlaceholderImage = '${_img}error_placeholder_image.png';
-  static const sellerStoreImage = '${_img}seller_store_image.png';
-  static const sellerStoreImage2 = '${_img}seller_store_image_2.png';
-
-  ///Logos
-  static const tcsLogo = '${_svg}tcs_logo.svg';
-  static const leopardsLogo = '${_svg}leopards_logo.svg';
-  static const bykeaLogo = '${_svg}bykea_logo.svg';
-  static const easypaisaLogo = '${_svg}easypaisa_logo.svg';
-  static const jazzCashLogo = '${_svg}jazz_cash_logo.svg';
 
   ///My fonts
   static const montserrat = 'Montserrat';
