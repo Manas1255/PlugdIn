@@ -8,4 +8,9 @@ abstract class OnboardingFlowRepository {
     required String password,
     required RoleType role,
   });
+
+  Future<RepositoryResponse<bool>> emailLogin({
+    required String email,
+    required String password,
+  });
 }

@@ -54,4 +54,38 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       );
     }
   }
+
+  Future<void> emailLogin({
+    required String email,
+    required String password,
+  }) async {
+    emit(
+      state.copyWith(
+        emailLogin: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.emailLogin(
+      email: email,
+      password: password,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          emailLogin: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          emailLogin: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
 }

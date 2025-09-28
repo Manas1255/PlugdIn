@@ -27,7 +27,7 @@ class PIButton extends StatelessWidget {
     this.isExpanded = true,
     this.iconSpacing,
     this.disabled = false,
-    this.loadingColor = AppColors.offWhite,
+    this.loadingColor = AppColors.white,
     this.borderColor,
     this.borderWidth = 1.0,
   });
@@ -110,7 +110,7 @@ class PIButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveDisabledBackgroundColor =
-        disabledBackgroundColor ?? backgroundColor.withOpacity(0.5);
+        disabledBackgroundColor ?? backgroundColor.withValues(alpha: 0.5);
 
     final button = TextButton(
       onPressed: (isLoading || disabled) ? null : onPressed,

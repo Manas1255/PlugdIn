@@ -52,4 +52,35 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> emailLogin({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.login,
+        data: {
+          'email': email,
+          'password': password,
+        },
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error signing in: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }
