@@ -48,7 +48,7 @@ class RoleSelectionScreen extends StatelessWidget {
             const SizedBox(
               height: 32,
             ),
-            BlocBuilder<OnboardingFlowCubit, OnboardingFlowState>(
+            BlocBuilder<OnboardingCubit, OnboardingState>(
               builder: (context, state) {
                 return Row(
                   children: [
@@ -59,7 +59,7 @@ class RoleSelectionScreen extends StatelessWidget {
                           : AssetPaths.unselectedHouseIcon,
                       isSelected: state.selectedRoleType == RoleType.vendor,
                       onTap: () {
-                        context.read<OnboardingFlowCubit>().selectRole(
+                        context.read<OnboardingCubit>().selectRole(
                           RoleType.vendor,
                         );
                       },
@@ -74,7 +74,7 @@ class RoleSelectionScreen extends StatelessWidget {
                           : AssetPaths.unselectedCustomerIcon,
                       isSelected: state.selectedRoleType == RoleType.customer,
                       onTap: () {
-                        context.read<OnboardingFlowCubit>().selectRole(
+                        context.read<OnboardingCubit>().selectRole(
                           RoleType.customer,
                         );
                       },
@@ -87,7 +87,7 @@ class RoleSelectionScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: SafeArea(
-        child: BlocBuilder<OnboardingFlowCubit, OnboardingFlowState>(
+        child: BlocBuilder<OnboardingCubit, OnboardingState>(
           builder: (context, state) {
             return PIButton(
               text: 'Next',

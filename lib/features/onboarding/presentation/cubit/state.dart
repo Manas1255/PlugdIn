@@ -1,28 +1,29 @@
 import 'package:equatable/equatable.dart';
 import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/utils/helpers/data_state.dart';
 
-class OnboardingFlowState extends Equatable {
-  const OnboardingFlowState({
-    this.currentPage = 0,
-    this.selectedRoleType,
+class OnboardingState extends Equatable {
+  const OnboardingState({
+    this.selectedRoleType = RoleType.customer,
+    this.emailSignUp = const DataState.initial(),
   });
 
-  final int currentPage;
   final RoleType? selectedRoleType;
+  final DataState<bool> emailSignUp;
 
-  OnboardingFlowState copyWith({
-    int? currentPage,
+  OnboardingState copyWith({
     RoleType? selectedRoleType,
+    DataState<bool>? emailSignUp,
   }) {
-    return OnboardingFlowState(
-      currentPage: currentPage ?? this.currentPage,
+    return OnboardingState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
+      emailSignUp: emailSignUp ?? this.emailSignUp,
     );
   }
 
   @override
   List<Object?> get props => [
-    currentPage,
     selectedRoleType,
+    emailSignUp,
   ];
 }

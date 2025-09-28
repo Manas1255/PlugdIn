@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
+import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -54,17 +56,10 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
+
               PITextField(
-                hintText: 'First Name',
-                controller: _firstNameController,
-                validator: FieldValidators.nameValidator,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              PITextField(
-                hintText: 'Last Name',
-                controller: _lastNameController,
+                hintText: 'Full Name',
+                controller: _nameController,
                 validator: FieldValidators.nameValidator,
               ),
               const SizedBox(
@@ -79,20 +74,7 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              PITextField(
-                hintText: 'Address',
-                controller: _addressController,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              PITextField(
-                hintText: 'City',
-                controller: _cityController,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+
               PITextField(
                 hintText: 'Password',
                 controller: _passwordController,
@@ -114,14 +96,26 @@ class SignupScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          child: PIButton(
-            text: 'Next',
-            onPressed: () {},
-            outsidePadding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 16,
-            ),
-          ),
+        bottomNavigationBar: BlocBuilder<OnboardingCubit, OnboardingState>(
+          builder: (context, state) {
+            return SafeArea(
+              child: PIButton(
+                text: 'Next',
+                onPressed: () {
+                  context.read<OnboardingCubit>().emailSignUp(
+                    fullName: _nameController.text.trim(),
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text,
+                    role: state.selectedRoleType ?? RoleType.customer,
+                  );
+                },
+                isLoading: state.emailSignUp.isLoading,
+                outsidePadding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 16,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

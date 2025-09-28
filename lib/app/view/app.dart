@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => LocaleCubit(context: context)),
 
         BlocProvider(
-          create: (context) => OnboardingFlowCubit(
+          create: (context) => OnboardingCubit(
             repository: OnboardingFlowRepositoryImpl(),
           ),
         ),
