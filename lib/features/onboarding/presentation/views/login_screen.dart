@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,91 +38,99 @@ class LoginScreen extends StatelessWidget {
                   horizontal: 16,
                   vertical: 24,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Login',
-                      style: context.h1,
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    PITextField(
-                      hintText: 'Email',
-                      controller: _emailController,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    PITextField(
-                      hintText: 'Password',
-                      controller: _passwordController,
-                      type: PITextFieldType.password,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () {},
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Login',
+                        style: context.h1,
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      PITextField(
+                        hintText: 'Email',
+                        controller: _emailController,
+                        type: PITextFieldType.email,
+                        validator: FieldValidators.emailValidator,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      PITextField(
+                        hintText: 'Password',
+                        controller: _passwordController,
+                        type: PITextFieldType.password,
+                        validator: FieldValidators.passwordValidator,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            'Forgot Password?',
+                            style: context.b2,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      PIButton(
+                        text: 'Login',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<OnboardingCubit>().emailLogin(
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text,
+                            );
+                          }
+                        },
+                        isLoading: state.emailLogin.isLoading,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Center(
                         child: Text(
-                          'Forgot Password?',
-                          style: context.b2,
+                          'OR',
+                          style: context.b1.copyWith(
+                            color: AppColors.greyShade2,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    PIButton(
-                      text: 'Login',
-                      onPressed: () {
-                        context.read<OnboardingCubit>().emailLogin(
-                          email: _emailController.text.trim(),
-                          password: _passwordController.text,
-                        );
-                      },
-                      isLoading: state.emailLogin.isLoading,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Center(
-                      child: Text(
-                        'OR',
-                        style: context.b1.copyWith(
-                          color: AppColors.greyShade2,
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      PIButton.secondary(
+                        text: 'Continue with Google',
+                        prefixIcon: SvgPicture.asset(
+                          AssetPaths.googleIcon,
                         ),
+                        onPressed: () {},
                       ),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    PIButton.secondary(
-                      text: 'Continue with Google',
-                      prefixIcon: SvgPicture.asset(
-                        AssetPaths.googleIcon,
+                      PIButton.secondary(
+                        text: 'Continue with Apple',
+                        prefixIcon: SvgPicture.asset(
+                          AssetPaths.appleIcon,
+                        ),
+                        onPressed: () {},
                       ),
-                      onPressed: () {},
-                    ),
-                    PIButton.secondary(
-                      text: 'Continue with Apple',
-                      prefixIcon: SvgPicture.asset(
-                        AssetPaths.appleIcon,
+                      const SizedBox(
+                        height: 32,
                       ),
-                      onPressed: () {},
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Text(
-                      'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
-                      textAlign: TextAlign.center,
-                      style: context.b3,
-                    ),
-                  ],
+                      Text(
+                        'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
+                        textAlign: TextAlign.center,
+                        style: context.b3,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
