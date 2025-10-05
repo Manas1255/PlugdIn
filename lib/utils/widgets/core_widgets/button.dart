@@ -11,8 +11,8 @@ class PIButton extends StatelessWidget {
     super.key,
     this.backgroundColor = AppColors.secondaryColor,
     this.textColor = AppColors.white,
-    this.disabledTextColor = AppColors.offWhite,
-    this.disabledBackgroundColor,
+    this.disabledTextColor = AppColors.white,
+    this.disabledBackgroundColor = AppColors.disabledButtonColor,
     this.borderRadius = 16,
     this.padding = const EdgeInsetsDirectional.symmetric(
       vertical: 16,
@@ -55,10 +55,10 @@ class PIButton extends StatelessWidget {
     this.borderColor = AppColors.offWhite,
   }) : textColor = AppColors.white,
        disabledTextColor = AppColors.black,
-       disabledBackgroundColor = AppColors.lightGreyColor,
+       disabledBackgroundColor = AppColors.disabledButtonColor,
        loadingColor = AppColors.black;
 
-  PIButton.secondary({
+  const PIButton.secondary({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
@@ -82,7 +82,7 @@ class PIButton extends StatelessWidget {
     this.textColor = AppColors.black,
   }) : backgroundColor = AppColors.white,
        disabledTextColor = AppColors.black,
-       disabledBackgroundColor = AppColors.primaryColor,
+       disabledBackgroundColor = AppColors.lightGreyColor,
        loadingColor = AppColors.black;
 
   final String text;

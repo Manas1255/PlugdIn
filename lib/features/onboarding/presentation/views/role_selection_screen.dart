@@ -96,6 +96,7 @@ class RoleSelectionScreen extends StatelessWidget {
                   AppRouteNames.signUpScreen,
                 );
               },
+              disabled: state.selectedRoleType == RoleType.none,
               outsidePadding: const EdgeInsetsDirectional.symmetric(
                 horizontal: 16,
               ),

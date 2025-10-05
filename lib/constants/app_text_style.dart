@@ -23,7 +23,11 @@ extension AppTextStyle on BuildContext {
 
   TextStyle get h1 => _heading(32, FontWeight.w700, AppColors.black);
   TextStyle get h2 => _heading(28, FontWeight.w600, AppColors.black);
-  TextStyle get h3 => _heading(20, FontWeight.w700, AppColors.black);
+  TextStyle get h3 => _heading(20, FontWeight.w500, AppColors.black);
+
+  TextStyle get h1White => _heading(32, FontWeight.w700, AppColors.white);
+  TextStyle get h2White => _heading(28, FontWeight.w600, AppColors.white);
+  TextStyle get h3White => _heading(20, FontWeight.w700, AppColors.white);
 
   TextStyle get t1 => _body(20, FontWeight.w600, AppColors.black);
   TextStyle get t2 => _body(18, FontWeight.w500, AppColors.black);

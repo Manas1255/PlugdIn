@@ -4,7 +4,7 @@ import 'package:plugdin/utils/helpers/data_state.dart';
 
 class OnboardingState extends Equatable {
   const OnboardingState({
-    this.selectedRoleType = RoleType.customer,
+    this.selectedRoleType = RoleType.none,
     this.emailSignUp = const DataState.initial(),
     this.emailLogin = const DataState.initial(),
   });

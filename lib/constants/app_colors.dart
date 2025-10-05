@@ -11,6 +11,7 @@ abstract class AppColors {
   static const lightGreyColor = Color(0xFFEBEBEB);
   static const darkGrey = Color(0xFF565656);
   static const offWhite = Color(0xFFDBE6DD);
+  static const disabledButtonColor = Color(0xFFB6B6B6);
 
   ///My colors end
 

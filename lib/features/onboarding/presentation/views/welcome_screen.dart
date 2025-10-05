@@ -34,7 +34,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Text(
               'Your event, your way, we’ll connect you with the best.',
               textAlign: TextAlign.center,
-              style: context.t1White,
+              style: context.h3.copyWith(
+                color: AppColors.white,
+              ),
             ),
           ],
         ),
