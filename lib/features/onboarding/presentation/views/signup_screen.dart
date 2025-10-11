@@ -26,6 +26,8 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OnboardingCubit, OnboardingState>(
+      listenWhen: (previous, current) =>
+          previous.emailSignUp != current.emailSignUp,
       listener: (context, state) {
         if (state.emailSignUp.isLoaded) {
           ToastHelper.showSuccessToast(

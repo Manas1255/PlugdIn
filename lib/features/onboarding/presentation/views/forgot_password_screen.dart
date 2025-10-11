@@ -20,6 +20,8 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OnboardingCubit, OnboardingState>(
+      listenWhen: (previous, current) =>
+          previous.passwordResetCode != current.passwordResetCode,
       listener: (context, state) {
         if (state.passwordResetCode.isLoaded) {
           ToastHelper.showSuccessToast(
@@ -82,6 +84,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         context.read<OnboardingCubit>().sendPasswordResetCode(
+                          email: _emailController.text.trim(),
+                        );
+                        context.read<OnboardingCubit>().setPasswordResetEmail(
                           email: _emailController.text.trim(),
                         );
                       }

@@ -91,6 +91,14 @@ class AppRouter {
           return ResetCodeScreen();
         },
       ),
+
+      GoRoute(
+        path: AppRoutes.newPasswordScreen,
+        name: AppRouteNames.newPasswordScreen,
+        builder: (context, state) {
+          return NewPasswordScreen();
+        },
+      ),
     ],
   );
 }

@@ -114,4 +114,35 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.verifyResetCode,
+        data: {
+          'email': email,
+          'code': code,
+        },
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error verifying password reset code: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

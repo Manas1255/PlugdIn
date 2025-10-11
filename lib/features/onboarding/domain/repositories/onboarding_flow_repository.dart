@@ -18,4 +18,9 @@ abstract class OnboardingFlowRepository {
   Future<RepositoryResponse<bool>> sendPasswordResetCode({
     required String email,
   });
+
+  Future<RepositoryResponse<bool>> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  });
 }

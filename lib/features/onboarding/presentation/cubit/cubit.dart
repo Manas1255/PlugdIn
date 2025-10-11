@@ -122,4 +122,46 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       );
     }
   }
+
+  void setPasswordResetEmail({required String email}) {
+    emit(
+      state.copyWith(
+        passwordResetEmail: email,
+      ),
+    );
+  }
+
+  Future<void> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) async {
+    emit(
+      state.copyWith(
+        verifyPasswordResetCode: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.verifyPasswordResetCode(
+      email: email,
+      code: code,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          verifyPasswordResetCode: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          verifyPasswordResetCode: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
 }
