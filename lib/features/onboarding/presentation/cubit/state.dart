@@ -8,7 +8,7 @@ class OnboardingState extends Equatable {
     this.emailSignUp = const DataState.initial(),
     this.emailLogin = const DataState.initial(),
     this.passwordResetCode = const DataState.initial(),
-    this.newPassword = const DataState.initial(),
+    this.resetPassword = const DataState.initial(),
     this.passwordResetEmail = '',
     this.verifyPasswordResetCode = const DataState.initial(),
   });
@@ -17,7 +17,7 @@ class OnboardingState extends Equatable {
   final DataState<bool> emailSignUp;
   final DataState<bool> emailLogin;
   final DataState<bool> passwordResetCode;
-  final DataState<bool> newPassword;
+  final DataState<bool> resetPassword;
   final String passwordResetEmail;
   final DataState<bool> verifyPasswordResetCode;
 
@@ -28,7 +28,7 @@ class OnboardingState extends Equatable {
     DataState<bool>? passwordResetCode,
     String? passwordResetEmail,
     DataState<bool>? verifyPasswordResetCode,
-    DataState<bool>? newPassword,
+    DataState<bool>? resetPassword,
   }) {
     return OnboardingState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
@@ -36,7 +36,7 @@ class OnboardingState extends Equatable {
       emailLogin: emailLogin ?? this.emailLogin,
       passwordResetCode: passwordResetCode ?? this.passwordResetCode,
       passwordResetEmail: passwordResetEmail ?? this.passwordResetEmail,
-      newPassword: newPassword ?? this.newPassword,
+      resetPassword: resetPassword ?? this.resetPassword,
       verifyPasswordResetCode:
           verifyPasswordResetCode ?? this.verifyPasswordResetCode,
     );
@@ -49,7 +49,7 @@ class OnboardingState extends Equatable {
     emailLogin,
     passwordResetCode,
     passwordResetEmail,
-    newPassword,
+    resetPassword,
     verifyPasswordResetCode,
   ];
 }

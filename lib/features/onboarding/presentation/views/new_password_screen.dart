@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
+import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
@@ -76,19 +79,27 @@ class NewPasswordScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          child: PIButton(
-            text: 'Create Password',
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                context.pop();
-              }
-            },
-            outsidePadding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-          ),
+        bottomNavigationBar: BlocBuilder<OnboardingCubit, OnboardingState>(
+          builder: (context, state) {
+            return SafeArea(
+              child: PIButton(
+                text: 'Create Password',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<OnboardingCubit>().resetPassword(
+                      newPassword: _passwordController.text.trim(),
+                      email: state.passwordResetEmail,
+                    );
+                  }
+                },
+                outsidePadding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                isLoading: state.resetPassword.isLoading,
+              ),
+            );
+          },
         ),
       ),
     );

@@ -98,6 +98,7 @@ class SignupScreen extends StatelessWidget {
                     hintText: 'Email',
                     controller: _emailController,
                     validator: FieldValidators.emailValidator,
+                    type: PITextFieldType.email,
                   ),
                   const SizedBox(
                     height: 16,

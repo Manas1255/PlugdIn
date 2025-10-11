@@ -145,4 +145,35 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> resetPassword({
+    required String email,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.resetPassword,
+        data: {
+          'email': email,
+          'newPassword': newPassword,
+        },
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error resetting password: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }
