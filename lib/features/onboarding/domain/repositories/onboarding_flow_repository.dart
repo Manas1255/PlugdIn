@@ -7,10 +7,15 @@ abstract class OnboardingFlowRepository {
     required String email,
     required String password,
     required RoleType role,
+    required String userName,
   });
 
   Future<RepositoryResponse<bool>> emailLogin({
     required String email,
     required String password,
+  });
+
+  Future<RepositoryResponse<bool>> sendPasswordResetCode({
+    required String email,
   });
 }

@@ -72,7 +72,15 @@ class AppRouter {
         path: AppRoutes.roleSelectionScreen,
         name: AppRouteNames.roleSelectionScreen,
         builder: (context, state) {
-          return RoleSelectionScreen();
+          return const RoleSelectionScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.forgotPasswordScreen,
+        name: AppRouteNames.forgotPasswordScreen,
+        builder: (context, state) {
+          return ForgotPasswordScreen();
         },
       ),
     ],

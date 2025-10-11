@@ -33,7 +33,6 @@ class ApiResponseParser {
           return ResponseDataModel.error('No data found in response');
         }
 
-        // Parse the data using the provided fromJson function
         final parsedData = fromJson(data as Map<String, dynamic>);
 
         return ResponseDataModel.success(
@@ -41,7 +40,6 @@ class ApiResponseParser {
           successMessage ?? 'Data loaded successfully',
         );
       } else {
-        // Handle error response
         return ResponseDataModel.error(
           error ?? 'Request failed',
           statusCode: statusCode,
@@ -71,23 +69,27 @@ class ApiResponseParser {
           ? json
           : throw const FormatException('Response is not a valid JSON object');
 
-      final statusCode = responseMap['statusCode'] as int? ?? 0;
+      final sC = responseMap['statusCode'] as String? ?? '0';
+      final statusCode = int.tryParse(sC) ?? 0;
       final error = responseMap['error'] as String?;
 
-      if (statusCode == 200 && error == null) {
+      if ((statusCode == 200 || statusCode == 201) && error == null) {
+        print('hello');
         return ResponseDataModel.success(
           true,
           successMessage ?? 'Operation completed successfully',
         );
       } else {
+        print('error');
         return ResponseDataModel.error(
           error ?? 'Operation failed',
           statusCode: statusCode,
         );
       }
-    } catch (e) {
+    } catch (e, s) {
+      print('catch, $e  $s');
       return ResponseDataModel.error(
-        'Failed to parse response: $e',
+        'Failed to parse response: $e $s',
       );
     }
   }
@@ -114,7 +116,7 @@ class ApiResponseParser {
       final statusCode = responseMap['statusCode'] as int? ?? 0;
       final error = responseMap['error'] as String?;
 
-      if (statusCode == 200 && error == null) {
+      if ((statusCode == 200 || statusCode == 201) && error == null) {
         final data = responseMap['data'];
 
         if (data == null) {

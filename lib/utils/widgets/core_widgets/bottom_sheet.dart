@@ -181,7 +181,7 @@ class ReStyleBottomSheet extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             if (imagePath != null)
-              FitThereSvgPic(
+              PISvgPic(
                 imagePath!,
                 height: 100,
                 color: imageColor,

@@ -8,9 +8,9 @@ class AssetPaths {
   static const eye = '${_svg}eye.svg';
   static const eyeOff = '${_svg}eye_slash.svg';
   static const calenderIcon = '${_svg}calendar.svgs';
-  static const toastSuccess = '${_svg}toast-success.svgs';
-  static const toastError = '${_svg}toast-error.svgs';
-  static const toastInfo = '${_svg}toast-info.svgs';
+  static const toastSuccess = '${_svg}toast-success.svg';
+  static const toastError = '${_svg}toast-error.svg';
+  static const toastInfo = '${_svg}toast-info.svg';
 
   static const mailboxIcon = '${_svg}mail_box_icon.svg';
   static const appleIcon = '${_svg}apple_icon.svg';

@@ -23,7 +23,7 @@ class EmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FitThereSvgPic(icon),
+          PISvgPic(icon),
           const SizedBox(
             height: 8,
           ),

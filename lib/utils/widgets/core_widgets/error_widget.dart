@@ -23,7 +23,7 @@ class FitThereErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FitThereSvgPic(errorIcon),
+          PISvgPic(errorIcon),
           const SizedBox(
             height: 8,
           ),

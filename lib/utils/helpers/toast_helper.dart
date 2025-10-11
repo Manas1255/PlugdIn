@@ -24,7 +24,7 @@ class ToastHelper {
       style: ToastificationStyle.flat,
       autoCloseDuration: const Duration(seconds: 4),
       borderSide: const BorderSide(color: Colors.transparent),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastError,
         width: 25,
         height: 25,
@@ -66,7 +66,7 @@ class ToastHelper {
       closeButton: const ToastCloseButton(
         showType: CloseButtonShowType.onHover,
       ),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastSuccess,
         width: 25,
         height: 25,
@@ -96,7 +96,7 @@ class ToastHelper {
       borderRadius: BorderRadius.circular(
         50,
       ),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastInfo,
         width: 25,
         height: 25,

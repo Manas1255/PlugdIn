@@ -22,6 +22,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     required String email,
     required String password,
     required RoleType role,
+    required String userName,
   }) async {
     emit(
       state.copyWith(
@@ -34,6 +35,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       email: email,
       password: password,
       role: role,
+      userName: userName,
     );
 
     if (response.isSuccess) {
@@ -82,6 +84,38 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       emit(
         state.copyWith(
           emailLogin: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> sendPasswordResetCode({
+    required String email,
+  }) async {
+    emit(
+      state.copyWith(
+        passwordResetCode: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.sendPasswordResetCode(
+      email: email,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          passwordResetCode: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          passwordResetCode: DataState.failure(
             error: response.message,
           ),
         ),

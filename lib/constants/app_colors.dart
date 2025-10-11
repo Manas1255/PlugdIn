@@ -9,6 +9,7 @@ abstract class AppColors {
   static const grey = Color(0xFFB3B3B3);
   static const greyShade2 = Color(0xFF88888C);
   static const lightGreyColor = Color(0xFFEBEBEB);
+  static const lightGreyShade2 = Color(0xFF666666);
   static const darkGrey = Color(0xFF565656);
   static const offWhite = Color(0xFFDBE6DD);
   static const disabledButtonColor = Color(0xFFB6B6B6);
@@ -17,7 +18,6 @@ abstract class AppColors {
 
   static const darkGreyTextColor = Color(0xFF696969);
 
-  static const lightGreyShade2 = Color(0xFFF9F9F9);
   static const lightGreyShade3 = Color(0XFF8080808C);
   static const lightGreyShade4 = Color(0XFFE6E6E6);
   static const red = Color(0xFFEB4132);

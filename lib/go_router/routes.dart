@@ -6,6 +6,7 @@ class AppRoutes {
   static const String loginScreen = '/login-screen';
   static const String signUpScreen = '/sign-up-screen';
   static const String roleSelectionScreen = '/role-selection-screen';
+  static const String forgotPasswordScreen = '/forgot-password-screen';
 }
 
 class AppRouteNames {
@@ -14,4 +15,5 @@ class AppRouteNames {
   static const String loginScreen = 'login-screen';
   static const String signUpScreen = 'sign-up-screen';
   static const String roleSelectionScreen = 'role-selection-screen';
+  static const String forgotPasswordScreen = 'forgot-password-screen';
 }
