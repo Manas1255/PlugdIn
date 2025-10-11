@@ -74,13 +74,11 @@ class ApiResponseParser {
       final error = responseMap['error'] as String?;
 
       if ((statusCode == 200 || statusCode == 201) && error == null) {
-        print('hello');
         return ResponseDataModel.success(
           true,
           successMessage ?? 'Operation completed successfully',
         );
       } else {
-        print('error');
         return ResponseDataModel.error(
           error ?? 'Operation failed',
           statusCode: statusCode,
