@@ -83,6 +83,14 @@ class AppRouter {
           return ForgotPasswordScreen();
         },
       ),
+
+      GoRoute(
+        path: AppRoutes.resetCodeScreen,
+        name: AppRouteNames.resetCodeScreen,
+        builder: (context, state) {
+          return ResetCodeScreen();
+        },
+      ),
     ],
   );
 }
