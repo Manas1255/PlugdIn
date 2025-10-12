@@ -198,4 +198,32 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       );
     }
   }
+
+  Future<void> googleSignIn() async {
+    emit(
+      state.copyWith(
+        googleSignIn: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.googleSignIn();
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          googleSignIn: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          googleSignIn: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
 }

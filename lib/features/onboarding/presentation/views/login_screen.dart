@@ -135,7 +135,10 @@ class LoginScreen extends StatelessWidget {
                           prefixIcon: SvgPicture.asset(
                             AssetPaths.googleIcon,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<OnboardingCubit>().googleSignIn();
+                          },
+                          isLoading: state.googleSignIn.isLoading,
                         ),
                         PIButton.secondary(
                           text: 'Continue with Apple',

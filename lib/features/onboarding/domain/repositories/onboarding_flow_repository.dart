@@ -28,4 +28,6 @@ abstract class OnboardingFlowRepository {
     required String email,
     required String newPassword,
   });
+
+  Future<RepositoryResponse<bool>> googleSignIn();
 }

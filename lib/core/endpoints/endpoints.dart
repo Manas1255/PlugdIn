@@ -11,4 +11,5 @@ class Endpoints {
   static const String requestPasswordReset = 'auth/forgot-password';
   static const String verifyResetCode = 'auth/verify-code';
   static const String resetPassword = 'auth/reset-password';
+  static const String googleLogin = 'auth/google';
 }

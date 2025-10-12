@@ -176,4 +176,28 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> googleSignIn() async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.googleLogin,
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error with Google Sign-In: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

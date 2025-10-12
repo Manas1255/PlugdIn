@@ -11,6 +11,7 @@ class OnboardingState extends Equatable {
     this.resetPassword = const DataState.initial(),
     this.passwordResetEmail = '',
     this.verifyPasswordResetCode = const DataState.initial(),
+    this.googleSignIn = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -20,6 +21,7 @@ class OnboardingState extends Equatable {
   final DataState<bool> resetPassword;
   final String passwordResetEmail;
   final DataState<bool> verifyPasswordResetCode;
+  final DataState<bool> googleSignIn;
 
   OnboardingState copyWith({
     RoleType? selectedRoleType,
@@ -29,6 +31,7 @@ class OnboardingState extends Equatable {
     String? passwordResetEmail,
     DataState<bool>? verifyPasswordResetCode,
     DataState<bool>? resetPassword,
+    DataState<bool>? googleSignIn,
   }) {
     return OnboardingState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
@@ -39,6 +42,7 @@ class OnboardingState extends Equatable {
       resetPassword: resetPassword ?? this.resetPassword,
       verifyPasswordResetCode:
           verifyPasswordResetCode ?? this.verifyPasswordResetCode,
+      googleSignIn: googleSignIn ?? this.googleSignIn,
     );
   }
 
@@ -51,5 +55,6 @@ class OnboardingState extends Equatable {
     passwordResetEmail,
     resetPassword,
     verifyPasswordResetCode,
+    googleSignIn,
   ];
 }
