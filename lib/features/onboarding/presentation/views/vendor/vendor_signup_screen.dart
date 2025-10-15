@@ -37,6 +37,8 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
+  final TextEditingController _businessDescriptionController =
+      TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -250,6 +252,15 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                               PITextField(
                                 hintText: 'Paste link here',
                                 controller: _linkController,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+
+                              PITextField(
+                                hintText: 'Business Description',
+                                controller: _businessDescriptionController,
+                                type: PITextFieldType.description,
                               ),
                               const SizedBox(
                                 height: 16,
