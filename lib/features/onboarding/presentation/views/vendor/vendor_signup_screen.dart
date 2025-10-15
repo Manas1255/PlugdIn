@@ -282,10 +282,6 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                   text: state.currentPage == 0 ? 'Next' : 'Send Request',
                   onPressed: () {
                     if (state.currentPage == 0) {
-                      // Validate form and move to next page
-                      // if (_formKey.currentState?.validate() ?? false) {
-                      //
-                      // }
                       context.read<OnboardingCubit>().nextPage();
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -302,12 +298,21 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                         address: _addressController.text,
                         city: state.selectedCity?.toDisplayName() ?? '',
                         phoneNumber: _phoneController.text,
-                        primaryCategory: state.selectedPrimaryCategory?.toDisplayName() ?? '',
-                        businessDescription: _businessDescriptionController.text,
-                        additionalCategories: state.selectedAdditionalCategory != null 
-                            ? [state.selectedAdditionalCategory!.toDisplayName()] 
+                        primaryCategory:
+                            state.selectedPrimaryCategory?.toDisplayName() ??
+                            '',
+                        businessDescription:
+                            _businessDescriptionController.text,
+                        additionalCategories:
+                            state.selectedAdditionalCategory != null
+                            ? [
+                                state.selectedAdditionalCategory!
+                                    .toDisplayName(),
+                              ]
                             : null,
-                        links: _linkController.text.isNotEmpty ? [_linkController.text] : null,
+                        links: _linkController.text.isNotEmpty
+                            ? [_linkController.text]
+                            : null,
                       );
                     }
                   },

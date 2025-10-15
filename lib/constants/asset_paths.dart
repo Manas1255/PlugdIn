@@ -89,4 +89,5 @@ class AssetPaths {
   static const unselectedCustomerIcon = '${_svg}unselected_customer_icon.svg';
   static const selectedCustomerIcon = '${_svg}selected_customer_icon.svg';
   static const dropdownIcon = '${_svg}dropdown_icon.svg';
+  static const tickIcon = '${_svg}tick_icon.svg';
 }

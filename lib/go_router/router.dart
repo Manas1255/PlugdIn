@@ -69,6 +69,14 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: AppRoutes.vendorOnboardingSuccessScreen,
+        name: AppRouteNames.vendorOnboardingSuccessScreen,
+        builder: (context, state) {
+          return VendorOnboardingSuccessScreen();
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.loginScreen,
         name: AppRouteNames.loginScreen,
         builder: (context, state) {
