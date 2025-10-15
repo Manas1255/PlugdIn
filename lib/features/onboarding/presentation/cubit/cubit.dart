@@ -17,7 +17,33 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     );
   }
 
-  Future<void> emailSignUp({
+  void setCurrentPage(int page) {
+    emit(
+      state.copyWith(
+        currentPage: page,
+      ),
+    );
+  }
+
+  void nextPage() {
+    emit(
+      state.copyWith(
+        currentPage: state.currentPage + 1,
+      ),
+    );
+  }
+
+  void previousPage() {
+    if (state.currentPage > 0) {
+      emit(
+        state.copyWith(
+          currentPage: state.currentPage - 1,
+        ),
+      );
+    }
+  }
+
+  Future<void> customerEmailSignUp({
     required String fullName,
     required String email,
     required String password,

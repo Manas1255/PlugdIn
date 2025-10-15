@@ -12,8 +12,8 @@ import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
+class CustomerSignupScreen extends StatelessWidget {
+  CustomerSignupScreen({super.key});
 
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -133,7 +133,7 @@ class SignupScreen extends StatelessWidget {
                   text: 'Sign Up',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.read<OnboardingCubit>().emailSignUp(
+                      context.read<OnboardingCubit>().customerEmailSignUp(
                         fullName: _fullNameController.text.trim(),
                         email: _emailController.text.trim(),
                         password: _passwordController.text,

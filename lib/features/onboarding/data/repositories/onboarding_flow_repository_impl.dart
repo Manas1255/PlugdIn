@@ -1,4 +1,6 @@
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
+import 'package:plugdin/core/api_service/app_api_exception.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
@@ -17,6 +19,9 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
 
   final ApiService _apiService;
   final AppPreferences _cache;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  bool _googleInit = false;
 
   @override
   Future<RepositoryResponse<bool>> emailSignUp({
@@ -177,11 +182,37 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
     }
   }
 
+  Future<void> _initGoogleSignIn() async {
+    if (!_googleInit) {
+      await _googleSignIn.initialize(
+        serverClientId:
+            '65191217222-4j6md0sjqfegulbhme4ofkcq9st8khdn.apps.googleusercontent.com',
+      );
+      _googleInit = true;
+    }
+  }
+
   @override
   Future<RepositoryResponse<bool>> googleSignIn() async {
     try {
-      final response = await _apiService.get(
-        Endpoints.googleLogin,
+      await _initGoogleSignIn();
+
+      final account = await _googleSignIn.authenticate(
+        scopeHint: ['email'],
+      );
+
+      final auth = account.authentication;
+      final idToken = auth.idToken;
+
+      if (idToken == null) {
+        throw AppApiException('Failed to retrieve Google ID token');
+      }
+
+      final response = await _apiService.post(
+        endpoint: Endpoints.googleLogin,
+        data: {
+          'idToken': idToken,
+        },
       );
 
       final responseData = ApiResponseParser.parseBooleanResponse(

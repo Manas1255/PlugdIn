@@ -53,10 +53,18 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: AppRoutes.signUpScreen,
-        name: AppRouteNames.signUpScreen,
+        path: AppRoutes.customerSignUpScreen,
+        name: AppRouteNames.customerSignUpScreen,
         builder: (context, state) {
-          return SignupScreen();
+          return CustomerSignupScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.vendorSignUpScreen,
+        name: AppRouteNames.vendorSignUpScreen,
+        builder: (context, state) {
+          return VendorSignupScreen();
         },
       ),
 
