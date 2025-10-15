@@ -5,8 +5,8 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
-class TNSDropdown<T> extends StatefulWidget {
-  const TNSDropdown({
+class PIDropdown<T> extends StatefulWidget {
+  const PIDropdown({
     required this.items,
     required this.onChanged,
     super.key,
@@ -52,10 +52,10 @@ class TNSDropdown<T> extends StatefulWidget {
   final double? optionFontSize;
 
   @override
-  State<TNSDropdown<T>> createState() => _TNSDropdownState<T>();
+  State<PIDropdown<T>> createState() => _PIDropdownState<T>();
 }
 
-class _TNSDropdownState<T> extends State<TNSDropdown<T>> {
+class _PIDropdownState<T> extends State<PIDropdown<T>> {
   bool _isExpanded = false;
 
   void _toggleDropdown() {
@@ -241,7 +241,7 @@ class _TNSDropdownState<T> extends State<TNSDropdown<T>> {
                                 ? 3.14159
                                 : 0, // 180 degrees when expanded
                             child: SvgPicture.asset(
-                              AssetPaths.downArrowIcon,
+                              AssetPaths.dropdownIcon,
                             ),
                           ),
                         ],

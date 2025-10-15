@@ -27,15 +27,15 @@ class CustomerSignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<OnboardingCubit, OnboardingState>(
       listenWhen: (previous, current) =>
-          previous.emailSignUp != current.emailSignUp,
+          previous.customerEmailSignUp != current.customerEmailSignUp,
       listener: (context, state) {
-        if (state.emailSignUp.isLoaded) {
+        if (state.customerEmailSignUp.isLoaded) {
           ToastHelper.showSuccessToast(
             'Sign up successful!',
           );
-        } else if (state.emailSignUp.isFailure) {
+        } else if (state.customerEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
-            state.emailSignUp.errorMessage ??
+            state.customerEmailSignUp.errorMessage ??
                 'Sign up failed. Please try again.',
           );
         }
@@ -142,7 +142,7 @@ class CustomerSignupScreen extends StatelessWidget {
                       );
                     }
                   },
-                  isLoading: state.emailSignUp.isLoading,
+                  isLoading: state.customerEmailSignUp.isLoading,
                   outsidePadding: const EdgeInsetsDirectional.symmetric(
                     horizontal: 16,
                   ),

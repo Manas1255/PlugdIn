@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/enums/city.dart';
 import 'package:plugdin/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
@@ -13,6 +15,22 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     emit(
       state.copyWith(
         selectedRoleType: roleType,
+      ),
+    );
+  }
+
+  void setSelectedCity(City? city) {
+    emit(
+      state.copyWith(
+        selectedCity: city,
+      ),
+    );
+  }
+
+  void setSelectedPrimaryCategory(CategoryType? category) {
+    emit(
+      state.copyWith(
+        selectedPrimaryCategory: category,
       ),
     );
   }
@@ -52,7 +70,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }) async {
     emit(
       state.copyWith(
-        emailSignUp: const DataState.loading(),
+        customerEmailSignUp: const DataState.loading(),
       ),
     );
 
@@ -67,7 +85,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     if (response.isSuccess) {
       emit(
         state.copyWith(
-          emailSignUp: DataState.loaded(
+          customerEmailSignUp: DataState.loaded(
             data: response.data,
           ),
         ),
@@ -75,7 +93,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     } else {
       emit(
         state.copyWith(
-          emailSignUp: DataState.failure(
+          customerEmailSignUp: DataState.failure(
             error: response.message,
           ),
         ),
