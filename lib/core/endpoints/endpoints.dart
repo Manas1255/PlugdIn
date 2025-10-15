@@ -12,4 +12,5 @@ class Endpoints {
   static const String verifyResetCode = 'auth/verify-code';
   static const String resetPassword = 'auth/reset-password';
   static const String googleLogin = 'auth/google';
+  static const String vendorSignup = 'vendor/register';
 }

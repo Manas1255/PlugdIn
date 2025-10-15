@@ -5,6 +5,7 @@ import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
@@ -225,6 +226,33 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error with Google Sign-In: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> vendorEmailSignUp({
+    required VendorOnboardingRequestModel vendorOnboardingRequestModel,
+  }) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.vendorSignup,
+        data: vendorOnboardingRequestModel.toJson(),
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error signing up vendor: ', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

@@ -57,15 +57,15 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
   Widget build(BuildContext context) {
     return BlocListener<OnboardingCubit, OnboardingState>(
       listenWhen: (previous, current) =>
-          previous.customerEmailSignUp != current.customerEmailSignUp,
+          previous.vendorEmailSignUp != current.vendorEmailSignUp,
       listener: (context, state) {
-        if (state.customerEmailSignUp.isLoaded) {
+        if (state.vendorEmailSignUp.isLoaded) {
           ToastHelper.showSuccessToast(
             'Sign up successful!',
           );
-        } else if (state.customerEmailSignUp.isFailure) {
+        } else if (state.vendorEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
-            state.customerEmailSignUp.errorMessage ??
+            state.vendorEmailSignUp.errorMessage ??
                 'Sign up failed. Please try again.',
           );
         }
@@ -231,7 +231,7 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                               ),
 
                               PIDropdown<CategoryType>(
-                                value: state.selectedPrimaryCategory,
+                                value: state.selectedAdditionalCategory,
                                 hintText: 'Additional Category',
                                 textColor: AppColors.black,
                                 items: CategoryType.values.map((category) {
@@ -243,7 +243,7 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                                 onChanged: (category) {
                                   context
                                       .read<OnboardingCubit>()
-                                      .setSelectedPrimaryCategory(category);
+                                      .setSelectedAdditionalCategory(category);
                                 },
                               ),
                               const SizedBox(
@@ -292,11 +292,26 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                         curve: Curves.easeInOut,
                       );
                     } else {
-                      // Handle send request logic
-                      // TODO: Implement send request functionality
+                      context.read<OnboardingCubit>().vendorEmailSignUp(
+                        name: _personNameController.text,
+                        username: _userNameController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        companyName: _companyNameController.text,
+                        personName: _personNameController.text,
+                        address: _addressController.text,
+                        city: state.selectedCity?.toDisplayName() ?? '',
+                        phoneNumber: _phoneController.text,
+                        primaryCategory: state.selectedPrimaryCategory?.toDisplayName() ?? '',
+                        businessDescription: _businessDescriptionController.text,
+                        additionalCategories: state.selectedAdditionalCategory != null 
+                            ? [state.selectedAdditionalCategory!.toDisplayName()] 
+                            : null,
+                        links: _linkController.text.isNotEmpty ? [_linkController.text] : null,
+                      );
                     }
                   },
-                  isLoading: state.customerEmailSignUp.isLoading,
+                  isLoading: state.vendorEmailSignUp.isLoading,
                   outsidePadding: const EdgeInsetsDirectional.symmetric(
                     horizontal: 16,
                   ),

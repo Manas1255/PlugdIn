@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:plugdin/enums/category_type.dart';
 import 'package:plugdin/enums/city.dart';
 import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -31,6 +32,14 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     emit(
       state.copyWith(
         selectedPrimaryCategory: category,
+      ),
+    );
+  }
+
+  void setSelectedAdditionalCategory(CategoryType? category) {
+    emit(
+      state.copyWith(
+        selectedAdditionalCategory: category,
       ),
     );
   }
@@ -94,6 +103,66 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       emit(
         state.copyWith(
           customerEmailSignUp: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> vendorEmailSignUp({
+    required String name,
+    required String username,
+    required String email,
+    required String password,
+    required String companyName,
+    required String personName,
+    required String address,
+    required String city,
+    required String phoneNumber,
+    required String primaryCategory,
+    required String businessDescription,
+    String? companyLogo,
+    List<String>? additionalCategories,
+    List<String>? links,
+  }) async {
+    emit(
+      state.copyWith(
+        vendorEmailSignUp: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.vendorEmailSignUp(
+      vendorOnboardingRequestModel: VendorOnboardingRequestModel(
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+        companyName: companyName,
+        companyLogo: companyLogo,
+        personName: personName,
+        address: address,
+        city: city,
+        phoneNumber: phoneNumber,
+        primaryCategory: primaryCategory,
+        additionalCategories: additionalCategories,
+        links: links,
+        businessDescription: businessDescription,
+      ),
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          vendorEmailSignUp: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorEmailSignUp: DataState.failure(
             error: response.message,
           ),
         ),

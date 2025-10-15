@@ -8,6 +8,7 @@ class OnboardingState extends Equatable {
   const OnboardingState({
     this.selectedRoleType = RoleType.none,
     this.customerEmailSignUp = const DataState.initial(),
+    this.vendorEmailSignUp = const DataState.initial(),
     this.emailLogin = const DataState.initial(),
     this.passwordResetCode = const DataState.initial(),
     this.resetPassword = const DataState.initial(),
@@ -17,10 +18,12 @@ class OnboardingState extends Equatable {
     this.currentPage = 0,
     this.selectedCity,
     this.selectedPrimaryCategory,
+    this.selectedAdditionalCategory,
   });
 
   final RoleType? selectedRoleType;
   final DataState<bool> customerEmailSignUp;
+  final DataState<bool> vendorEmailSignUp;
   final DataState<bool> emailLogin;
   final DataState<bool> passwordResetCode;
   final DataState<bool> resetPassword;
@@ -30,10 +33,12 @@ class OnboardingState extends Equatable {
   final int currentPage;
   final City? selectedCity;
   final CategoryType? selectedPrimaryCategory;
+  final CategoryType? selectedAdditionalCategory;
 
   OnboardingState copyWith({
     RoleType? selectedRoleType,
     DataState<bool>? customerEmailSignUp,
+    DataState<bool>? vendorEmailSignUp,
     DataState<bool>? emailLogin,
     DataState<bool>? passwordResetCode,
     String? passwordResetEmail,
@@ -43,10 +48,12 @@ class OnboardingState extends Equatable {
     int? currentPage,
     City? selectedCity,
     CategoryType? selectedPrimaryCategory,
+    CategoryType? selectedAdditionalCategory,
   }) {
     return OnboardingState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
       customerEmailSignUp: customerEmailSignUp ?? this.customerEmailSignUp,
+      vendorEmailSignUp: vendorEmailSignUp ?? this.vendorEmailSignUp,
       emailLogin: emailLogin ?? this.emailLogin,
       passwordResetCode: passwordResetCode ?? this.passwordResetCode,
       passwordResetEmail: passwordResetEmail ?? this.passwordResetEmail,
@@ -58,6 +65,8 @@ class OnboardingState extends Equatable {
       selectedCity: selectedCity ?? this.selectedCity,
       selectedPrimaryCategory:
           selectedPrimaryCategory ?? this.selectedPrimaryCategory,
+      selectedAdditionalCategory:
+          selectedAdditionalCategory ?? this.selectedAdditionalCategory,
     );
   }
 
@@ -65,6 +74,7 @@ class OnboardingState extends Equatable {
   List<Object?> get props => [
     selectedRoleType,
     customerEmailSignUp,
+    vendorEmailSignUp,
     emailLogin,
     passwordResetCode,
     passwordResetEmail,
@@ -74,5 +84,6 @@ class OnboardingState extends Equatable {
     currentPage,
     selectedCity,
     selectedPrimaryCategory,
+    selectedAdditionalCategory,
   ];
 }
