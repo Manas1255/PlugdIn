@@ -12,6 +12,11 @@ class AppRoutes {
   static const String forgotPasswordScreen = '/forgot-password-screen';
   static const String resetCodeScreen = '/reset-code-screen';
   static const String newPasswordScreen = '/new-password-screen';
+  static const String homeScreen = '/home-screen';
+  static const String profileScreen = '/profile-screen';
+  static const String searchScreen = '/search-screen';
+  static const String personalInfoScreen = '/personal-info-screen';
+  static const String changePasswordScreen = '/change-password-screen';
 }
 
 class AppRouteNames {
@@ -26,4 +31,9 @@ class AppRouteNames {
   static const String forgotPasswordScreen = 'forgot-password-screen';
   static const String resetCodeScreen = 'reset-code-screen';
   static const String newPasswordScreen = 'new-password-screen';
+  static const String homeScreen = 'home-screen';
+  static const String profileScreen = 'profile-screen';
+  static const String searchScreen = 'search-screen';
+  static const String personalInfoScreen = 'personal-info-screen';
+  static const String changePasswordScreen = 'change-password-screen';
 }

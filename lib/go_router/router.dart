@@ -33,7 +33,7 @@ class AppRouter {
   }
 
   static final router = GoRouter(
-    initialLocation: AppRoutes.splash,
+    initialLocation: AppRoutes.profileScreen,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
@@ -113,6 +113,61 @@ class AppRouter {
         name: AppRouteNames.newPasswordScreen,
         builder: (context, state) {
           return NewPasswordScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.personalInfoScreen,
+        name: AppRouteNames.personalInfoScreen,
+        builder: (context, state) {
+          return PersonalInfoScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.changePasswordScreen,
+        name: AppRouteNames.changePasswordScreen,
+        builder: (context, state) {
+          return ChangePasswordScreen();
+        },
+      ),
+
+      StatefulShellRoute.indexedStack(
+        branches: [
+          StatefulShellBranch(
+            initialLocation: AppRoutes.homeScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.homeScreen,
+                name: AppRouteNames.homeScreen,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoutes.searchScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.searchScreen,
+                name: AppRouteNames.searchScreen,
+                builder: (context, state) => const SearchScreen(),
+              ),
+            ],
+          ),
+
+          StatefulShellBranch(
+            initialLocation: AppRoutes.profileScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.profileScreen,
+                name: AppRouteNames.profileScreen,
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+        builder: (context, state, shell) {
+          return UserNavigation(shell: shell);
         },
       ),
     ],
