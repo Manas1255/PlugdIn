@@ -23,7 +23,7 @@ class FitThereErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FitThereSvgPic(errorIcon),
+          PISvgPic(errorIcon),
           const SizedBox(
             height: 8,
           ),
@@ -35,7 +35,7 @@ class FitThereErrorWidget extends StatelessWidget {
             height: 8,
           ),
 
-          FitThereButton(
+          PIButton(
             text: 'Retry',
             onPressed: onPressed,
 

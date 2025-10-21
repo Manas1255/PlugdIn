@@ -3,17 +3,17 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
 
-class FitThereButton extends StatelessWidget {
-  const FitThereButton({
+class PIButton extends StatelessWidget {
+  const PIButton({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
     super.key,
-    this.backgroundColor = AppColors.black,
-    this.textColor = AppColors.offWhite,
-    this.disabledTextColor = AppColors.offWhite,
-    this.disabledBackgroundColor,
-    this.borderRadius = 100,
+    this.backgroundColor = AppColors.secondaryColor,
+    this.textColor = AppColors.white,
+    this.disabledTextColor = AppColors.white,
+    this.disabledBackgroundColor = AppColors.disabledButtonColor,
+    this.borderRadius = 16,
     this.padding = const EdgeInsetsDirectional.symmetric(
       vertical: 16,
       horizontal: 24,
@@ -27,22 +27,21 @@ class FitThereButton extends StatelessWidget {
     this.isExpanded = true,
     this.iconSpacing,
     this.disabled = false,
-    this.loadingColor = AppColors.offWhite,
+    this.loadingColor = AppColors.white,
     this.borderColor,
     this.borderWidth = 1.0,
   });
-
-  FitThereButton.secondary({
+  const PIButton.tertiary({
     required this.text,
     required this.onPressed,
     this.isLoading = false,
     super.key,
-    this.borderRadius = 100,
+    this.borderRadius = 16,
     this.padding = const EdgeInsetsDirectional.symmetric(
       vertical: 16,
       horizontal: 24,
     ),
-    this.fontWeight = FontWeight.w500,
+    this.fontWeight = FontWeight.w700,
     this.splashColor = Colors.black12,
     this.fontSize = 14,
     this.prefixIcon,
@@ -51,12 +50,39 @@ class FitThereButton extends StatelessWidget {
     this.isExpanded = true,
     this.iconSpacing,
     this.disabled = false,
-    this.borderColor = AppColors.black,
+    this.borderWidth = 1.0,
+    this.backgroundColor = Colors.transparent,
+    this.borderColor = AppColors.offWhite,
+  }) : textColor = AppColors.white,
+       disabledTextColor = AppColors.black,
+       disabledBackgroundColor = AppColors.disabledButtonColor,
+       loadingColor = AppColors.black;
+
+  const PIButton.secondary({
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    super.key,
+    this.borderRadius = 16,
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      vertical: 16,
+      horizontal: 24,
+    ),
+    this.fontWeight = FontWeight.w700,
+    this.splashColor = Colors.black12,
+    this.fontSize = 14,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.outsidePadding = const EdgeInsetsDirectional.symmetric(vertical: 4),
+    this.isExpanded = true,
+    this.iconSpacing,
+    this.disabled = false,
+    this.borderColor = AppColors.lightGreyColor,
     this.borderWidth = 1.0,
     this.textColor = AppColors.black,
-  }) : backgroundColor = AppColors.primaryColor,
+  }) : backgroundColor = AppColors.white,
        disabledTextColor = AppColors.black,
-       disabledBackgroundColor = AppColors.primaryColor,
+       disabledBackgroundColor = AppColors.lightGreyColor,
        loadingColor = AppColors.black;
 
   final String text;
@@ -81,37 +107,10 @@ class FitThereButton extends StatelessWidget {
   final Color? borderColor;
   final double borderWidth;
 
-  FitThereButton.tertiary({
-    required this.text,
-    required this.onPressed,
-    this.isLoading = false,
-    super.key,
-    this.borderRadius = 100,
-    this.padding = const EdgeInsetsDirectional.symmetric(
-      vertical: 16,
-      horizontal: 24,
-    ),
-    this.fontWeight = FontWeight.w700,
-    this.splashColor = Colors.black12,
-    this.fontSize = 14,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.outsidePadding = const EdgeInsetsDirectional.symmetric(vertical: 4),
-    this.isExpanded = true,
-    this.iconSpacing,
-    this.disabled = false,
-    this.borderWidth = 1.0,
-    this.backgroundColor = AppColors.lightGreyColor,
-    this.borderColor = AppColors.black,
-  }) : textColor = AppColors.black,
-       disabledTextColor = AppColors.black,
-       disabledBackgroundColor = AppColors.lightGreyColor,
-       loadingColor = AppColors.black;
-
   @override
   Widget build(BuildContext context) {
     final effectiveDisabledBackgroundColor =
-        disabledBackgroundColor ?? backgroundColor.withOpacity(0.5);
+        disabledBackgroundColor ?? backgroundColor.withValues(alpha: 0.5);
 
     final button = TextButton(
       onPressed: (isLoading || disabled) ? null : onPressed,

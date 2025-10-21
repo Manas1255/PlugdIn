@@ -54,6 +54,33 @@ class FieldValidators {
     return null;
   }
 
+  static String? usernameValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a username';
+    }
+
+    if (value.length < 3) {
+      return 'Username must be at least 3 characters long';
+    }
+    if (value.length > 30) {
+      return 'Username must be 30 characters or fewer';
+    }
+
+    if (!RegExp(r'^[a-zA-Z0-9._]+$').hasMatch(value)) {
+      return 'Username can only contain letters, numbers, periods, and underscores';
+    }
+
+    if (value.startsWith('.') || value.endsWith('.')) {
+      return 'Username cannot start or end with a period';
+    }
+
+    if (value.contains('..')) {
+      return 'Username cannot have consecutive periods';
+    }
+
+    return null;
+  }
+
   static String? timeValidator(String? value, DateTime? date) {
     if (value == null || value.isEmpty) {
       return 'Please enter a time';

@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:plugdin/config/remote_config.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 
@@ -11,7 +10,7 @@ abstract class AppModule {
     _container = container;
     await _setupHive();
     await _setupAppPreferences();
-    await _setupFirebaseRemoteConfig();
+    // await _setupFirebaseRemoteConfig();
     await _setupAPIService();
 
     // await _setupAwesomeNotifications();
@@ -32,11 +31,11 @@ abstract class AppModule {
     _container.registerSingleton<AppPreferences>(appPreferences);
   }
 
-  static Future<void> _setupFirebaseRemoteConfig() async {
-    final instance = RemoteConfigService();
-    await instance.setup();
-    _container.registerSingleton<RemoteConfigService>(instance);
-  }
+  // static Future<void> _setupFirebaseRemoteConfig() async {
+  //   final instance = RemoteConfigService();
+  //   await instance.setup();
+  //   _container.registerSingleton<RemoteConfigService>(instance);
+  // }
 
   // static Future<void> _setupAwesomeNotifications() async {
   //   final awesomeNotificationService = AwesomeNotificationService();

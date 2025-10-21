@@ -12,7 +12,7 @@ class ToastHelper {
         message,
         style: const TextStyle(
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           color: AppColors.offWhite,
           fontSize: 14,
         ),
@@ -24,7 +24,7 @@ class ToastHelper {
       style: ToastificationStyle.flat,
       autoCloseDuration: const Duration(seconds: 4),
       borderSide: const BorderSide(color: Colors.transparent),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastError,
         width: 25,
         height: 25,
@@ -51,7 +51,7 @@ class ToastHelper {
         message,
         style: const TextStyle(
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           fontSize: 14,
           color: AppColors.offWhite,
         ),
@@ -66,7 +66,7 @@ class ToastHelper {
       closeButton: const ToastCloseButton(
         showType: CloseButtonShowType.onHover,
       ),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastSuccess,
         width: 25,
         height: 25,
@@ -89,14 +89,14 @@ class ToastHelper {
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w800,
-          fontFamily: AssetPaths.sfProDisplay,
+          fontFamily: AssetPaths.montserrat,
           color: AppColors.offWhite,
         ),
       ),
       borderRadius: BorderRadius.circular(
         50,
       ),
-      icon: const FitThereSvgPic(
+      icon: const PISvgPic(
         AssetPaths.toastInfo,
         width: 25,
         height: 25,

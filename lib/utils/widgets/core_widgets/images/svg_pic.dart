@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class FitThereSvgPic extends StatelessWidget {
-  const FitThereSvgPic(
+class PISvgPic extends StatelessWidget {
+  const PISvgPic(
     this.path, {
     super.key,
     this.color,

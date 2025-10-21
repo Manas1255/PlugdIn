@@ -5,26 +5,28 @@ import 'package:plugdin/core/di/injector.dart';
 /// API Environments & Configurations
 enum ApiEnvironment {
   production(
-    baseUrl: 'https://fightping.onrender.com/api',
-    apiVersion: 'v1',
+    baseUrl:
+        'http://ec2-13-53-179-158.eu-north-1.compute.amazonaws.com:5000/api/',
+    // apiVersion: 'v1',
     mapboxAPIKey:
         'pk.eyJ1IjoiYWN0aXZzcG9ydHMiLCJhIjoiY21hdXl0Ymk5MDJiMDJscXh4NHIzaXBpNiJ9.Q0Sd2wsSe7ATgAT1_GGTGA',
   ),
   development(
-    baseUrl: 'https://fightping.onrender.com/api',
-    apiVersion: 'v1',
+    baseUrl:
+        'http://ec2-13-53-179-158.eu-north-1.compute.amazonaws.com:5000/api/',
+    // apiVersion: 'v1',
     mapboxAPIKey:
         'pk.eyJ1IjoiYWN0aXZzcG9ydHMiLCJhIjoiY21hdXl0Ymk5MDJiMDJscXh4NHIzaXBpNiJ9.Q0Sd2wsSe7ATgAT1_GGTGA',
   );
 
+  final String baseUrl;
+
   const ApiEnvironment({
     required this.baseUrl,
-    required this.apiVersion,
+    // required this.apiVersion,
     required this.mapboxAPIKey,
   });
-
-  final String baseUrl;
-  final String apiVersion;
+  // final String apiVersion;
   final String mapboxAPIKey;
 
   /// Get GetStream API Key from Remote Config

@@ -23,7 +23,7 @@ class EmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FitThereSvgPic(icon),
+          PISvgPic(icon),
           const SizedBox(
             height: 8,
           ),
@@ -36,7 +36,7 @@ class EmptyWidget extends StatelessWidget {
           ),
 
           if (buttonText != null && buttonText!.trim().isNotEmpty)
-            FitThereButton(
+            PIButton(
               text: buttonText!,
               onPressed: onTap,
               isExpanded: false,

@@ -3,11 +3,21 @@ import 'dart:ui';
 abstract class AppColors {
   ///My colors
   static const primaryColor = Color(0xFFFFFFFF);
+  static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);
-  static const offWhite = Color(0xFFF1F0F1);
-  static const darkGreyTextColor = Color(0xFF696969);
+  static const secondaryColor = Color(0xFF691AFF);
+  static const grey = Color(0xFFB3B3B3);
+  static const greyShade2 = Color(0xFF88888C);
   static const lightGreyColor = Color(0xFFEBEBEB);
-  static const lightGreyShade2 = Color(0xFFF9F9F9);
+  static const lightGreyShade2 = Color(0xFF666666);
+  static const darkGrey = Color(0xFF565656);
+  static const offWhite = Color(0xFFDBE6DD);
+  static const disabledButtonColor = Color(0xFFB6B6B6);
+
+  ///My colors end
+
+  static const darkGreyTextColor = Color(0xFF696969);
+
   static const lightGreyShade3 = Color(0XFF8080808C);
   static const lightGreyShade4 = Color(0XFFE6E6E6);
   static const red = Color(0xFFEB4132);
@@ -18,9 +28,6 @@ abstract class AppColors {
   static const blueTextColor = Color(0xFF004E98);
   static const blueTextColor2 = Color(0xFF007AFF);
 
-  ///My colors end
-
-  static const secondaryColor = Color(0xFFC8A6E5);
   static const primaryShade1 = Color(0xFFAF7DD9);
   static const tertiaryColor = Color(0xff3a1657);
   static const tertiaryShade1 = Color.fromRGBO(58, 22, 87, 0.2);
@@ -42,7 +49,7 @@ abstract class AppColors {
   static const primaryBrown = Color(0xFF4F3422);
 
   static const greyShade1 = Color.fromRGBO(195, 193, 197, 1);
-  static const greyShade2 = Color(0xFF2a2d38);
+
   static const greyShade3 = Color(0xFFF6F6F6);
   static const greyShade4 = Color(0xFFF9FAFB);
   static const greyShade5 = Color(0xFFDBDADC);
