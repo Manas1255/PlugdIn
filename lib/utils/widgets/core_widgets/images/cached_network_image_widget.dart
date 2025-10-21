@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:plugdin/generated/assets.dart';
 import 'package:plugdin/utils/widgets/core_widgets/shimmer_effect.dart';
 
-class FitThereCNIWidget extends StatelessWidget {
-  const FitThereCNIWidget({
+class PICNIWidget extends StatelessWidget {
+  const PICNIWidget({
     required this.imageUrl,
     this.width,
     this.height,

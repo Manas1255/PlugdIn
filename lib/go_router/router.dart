@@ -53,10 +53,26 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: AppRoutes.signUpScreen,
-        name: AppRouteNames.signUpScreen,
+        path: AppRoutes.customerSignUpScreen,
+        name: AppRouteNames.customerSignUpScreen,
         builder: (context, state) {
-          return SignupScreen();
+          return CustomerSignupScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.vendorSignUpScreen,
+        name: AppRouteNames.vendorSignUpScreen,
+        builder: (context, state) {
+          return VendorSignupScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.vendorOnboardingSuccessScreen,
+        name: AppRouteNames.vendorOnboardingSuccessScreen,
+        builder: (context, state) {
+          return VendorOnboardingSuccessScreen();
         },
       ),
 
@@ -81,6 +97,22 @@ class AppRouter {
         name: AppRouteNames.forgotPasswordScreen,
         builder: (context, state) {
           return ForgotPasswordScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.resetCodeScreen,
+        name: AppRouteNames.resetCodeScreen,
+        builder: (context, state) {
+          return ResetCodeScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.newPasswordScreen,
+        name: AppRouteNames.newPasswordScreen,
+        builder: (context, state) {
+          return NewPasswordScreen();
         },
       ),
     ],

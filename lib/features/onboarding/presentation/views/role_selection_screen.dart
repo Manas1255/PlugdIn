@@ -93,7 +93,9 @@ class RoleSelectionScreen extends StatelessWidget {
               text: 'Next',
               onPressed: () {
                 context.pushNamed(
-                  AppRouteNames.signUpScreen,
+                  state.selectedRoleType == RoleType.vendor
+                      ? AppRouteNames.vendorSignUpScreen
+                      : AppRouteNames.customerSignUpScreen,
                 );
               },
               disabled: state.selectedRoleType == RoleType.none,

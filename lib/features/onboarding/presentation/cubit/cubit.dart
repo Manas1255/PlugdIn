@@ -1,5 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/enums/city.dart';
 import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -17,7 +20,57 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     );
   }
 
-  Future<void> emailSignUp({
+  void setSelectedCity(City? city) {
+    emit(
+      state.copyWith(
+        selectedCity: city,
+      ),
+    );
+  }
+
+  void setSelectedPrimaryCategory(CategoryType? category) {
+    emit(
+      state.copyWith(
+        selectedPrimaryCategory: category,
+      ),
+    );
+  }
+
+  void setSelectedAdditionalCategory(CategoryType? category) {
+    emit(
+      state.copyWith(
+        selectedAdditionalCategory: category,
+      ),
+    );
+  }
+
+  void setCurrentPage(int page) {
+    emit(
+      state.copyWith(
+        currentPage: page,
+      ),
+    );
+  }
+
+  void nextPage() {
+    emit(
+      state.copyWith(
+        currentPage: state.currentPage + 1,
+      ),
+    );
+  }
+
+  void previousPage() {
+    if (state.currentPage > 0) {
+      emit(
+        state.copyWith(
+          currentPage: state.currentPage - 1,
+        ),
+      );
+    }
+  }
+
+  Future<void> customerEmailSignUp({
     required String fullName,
     required String email,
     required String password,
@@ -26,7 +79,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }) async {
     emit(
       state.copyWith(
-        emailSignUp: const DataState.loading(),
+        customerEmailSignUp: const DataState.loading(),
       ),
     );
 
@@ -41,7 +94,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     if (response.isSuccess) {
       emit(
         state.copyWith(
-          emailSignUp: DataState.loaded(
+          customerEmailSignUp: DataState.loaded(
             data: response.data,
           ),
         ),
@@ -49,7 +102,67 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     } else {
       emit(
         state.copyWith(
-          emailSignUp: DataState.failure(
+          customerEmailSignUp: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> vendorEmailSignUp({
+    required String name,
+    required String username,
+    required String email,
+    required String password,
+    required String companyName,
+    required String personName,
+    required String address,
+    required String city,
+    required String phoneNumber,
+    required String primaryCategory,
+    required String businessDescription,
+    String? companyLogo,
+    List<String>? additionalCategories,
+    List<String>? links,
+  }) async {
+    emit(
+      state.copyWith(
+        vendorEmailSignUp: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.vendorEmailSignUp(
+      vendorOnboardingRequestModel: VendorOnboardingRequestModel(
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+        companyName: companyName,
+        companyLogo: companyLogo,
+        personName: personName,
+        address: address,
+        city: city,
+        phoneNumber: phoneNumber,
+        primaryCategory: primaryCategory,
+        additionalCategories: additionalCategories,
+        links: links,
+        businessDescription: businessDescription,
+      ),
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          vendorEmailSignUp: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorEmailSignUp: DataState.failure(
             error: response.message,
           ),
         ),
@@ -116,6 +229,110 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       emit(
         state.copyWith(
           passwordResetCode: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void setPasswordResetEmail({required String email}) {
+    emit(
+      state.copyWith(
+        passwordResetEmail: email,
+      ),
+    );
+  }
+
+  Future<void> verifyPasswordResetCode({
+    required String email,
+    required String code,
+  }) async {
+    emit(
+      state.copyWith(
+        verifyPasswordResetCode: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.verifyPasswordResetCode(
+      email: email,
+      code: code,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          verifyPasswordResetCode: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          verifyPasswordResetCode: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> resetPassword({
+    required String email,
+    required String newPassword,
+  }) async {
+    emit(
+      state.copyWith(
+        resetPassword: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.resetPassword(
+      email: email,
+      newPassword: newPassword,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          resetPassword: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          resetPassword: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> googleSignIn() async {
+    emit(
+      state.copyWith(
+        googleSignIn: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.googleSignIn();
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          googleSignIn: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          googleSignIn: DataState.failure(
             error: response.message,
           ),
         ),

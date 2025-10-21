@@ -12,8 +12,8 @@ import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
+class CustomerSignupScreen extends StatelessWidget {
+  CustomerSignupScreen({super.key});
 
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -26,14 +26,16 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OnboardingCubit, OnboardingState>(
+      listenWhen: (previous, current) =>
+          previous.customerEmailSignUp != current.customerEmailSignUp,
       listener: (context, state) {
-        if (state.emailSignUp.isLoaded) {
+        if (state.customerEmailSignUp.isLoaded) {
           ToastHelper.showSuccessToast(
             'Sign up successful!',
           );
-        } else if (state.emailSignUp.isFailure) {
+        } else if (state.customerEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
-            state.emailSignUp.errorMessage ??
+            state.customerEmailSignUp.errorMessage ??
                 'Sign up failed. Please try again.',
           );
         }
@@ -96,6 +98,7 @@ class SignupScreen extends StatelessWidget {
                     hintText: 'Email',
                     controller: _emailController,
                     validator: FieldValidators.emailValidator,
+                    type: PITextFieldType.email,
                   ),
                   const SizedBox(
                     height: 16,
@@ -130,7 +133,7 @@ class SignupScreen extends StatelessWidget {
                   text: 'Sign Up',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.read<OnboardingCubit>().emailSignUp(
+                      context.read<OnboardingCubit>().customerEmailSignUp(
                         fullName: _fullNameController.text.trim(),
                         email: _emailController.text.trim(),
                         password: _passwordController.text,
@@ -139,7 +142,7 @@ class SignupScreen extends StatelessWidget {
                       );
                     }
                   },
-                  isLoading: state.emailSignUp.isLoading,
+                  isLoading: state.customerEmailSignUp.isLoading,
                   outsidePadding: const EdgeInsetsDirectional.symmetric(
                     horizontal: 16,
                   ),
