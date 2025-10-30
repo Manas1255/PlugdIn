@@ -4,6 +4,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/features/profile/presentation/widgets/delete_account_bottom_sheet.dart';
 import 'package:plugdin/features/profile/presentation/widgets/notifications_toggle_widget.dart';
 import 'package:plugdin/features/profile/presentation/widgets/settings_tile_widget.dart';
 import 'package:plugdin/go_router/exports.dart';
@@ -101,9 +102,14 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                NotificationsToggleWidget(),
+                const NotificationsToggleWidget(),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    DeleteAccountBottomSheet.show(
+                      context,
+                      requestId: '1',
+                    );
+                  },
                   child: Text(
                     'Delete Account',
                     style: context.b2.copyWith(
