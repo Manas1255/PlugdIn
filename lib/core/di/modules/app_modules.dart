@@ -41,13 +41,4 @@ abstract class AppModule {
   //   await instance.setup();
   //   _container.registerSingleton<RemoteConfigService>(instance);
   // }
-
-  // static Future<void> _setupAwesomeNotifications() async {
-  //   final awesomeNotificationService = AwesomeNotificationService();
-  //   await awesomeNotificationService.initialize();
-  //   await awesomeNotificationService.initializeFCM();
-  //   _container.registerSingleton<AwesomeNotificationService>(
-  //     awesomeNotificationService,
-  //   );
-  // }
 }
