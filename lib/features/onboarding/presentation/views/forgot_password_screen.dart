@@ -77,7 +77,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-
                 BlocBuilder<OnboardingCubit, OnboardingState>(
                   builder: (context, state) {
                     return PIButton(
