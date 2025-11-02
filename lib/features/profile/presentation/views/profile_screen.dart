@@ -7,8 +7,8 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/profile/presentation/cubit/state.dart';
-import 'package:plugdin/features/profile/presentation/widgets/delete_account_bottom_sheet.dart';
 import 'package:plugdin/features/profile/presentation/widgets/notifications_toggle_widget.dart';
+import 'package:plugdin/features/profile/presentation/widgets/pi_bottom_sheet.dart';
 import 'package:plugdin/features/profile/presentation/widgets/settings_tile_widget.dart';
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
@@ -104,9 +104,13 @@ class ProfileScreen extends StatelessWidget {
                     const NotificationsToggleWidget(),
                     GestureDetector(
                       onTap: () {
-                        DeleteAccountBottomSheet.show(
+                        PIBottomSheet.show(
                           context,
-                          requestId: '1',
+                          title: 'Are you sure?',
+                          text:
+                              'Are you sure you want to delete this item? Once deleted, it cannot be recovered and all related data will be permanently removed. Please confirm if you wish to proceed with this action.',
+                          buttonText: 'Delete Account',
+                          onTap: () {},
                         );
                       },
                       child: Text(
@@ -120,7 +124,11 @@ class ProfileScreen extends StatelessWidget {
                       height: 16,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        context.read<ProfileCubit>().showLogoutBottomSheet(
+                          context,
+                        );
+                      },
                       child: Text(
                         'Log Out',
                         style: context.b2.copyWith(

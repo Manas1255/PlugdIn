@@ -55,4 +55,26 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> logout() async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.logout,
+      );
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData ?? false,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error logging out:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

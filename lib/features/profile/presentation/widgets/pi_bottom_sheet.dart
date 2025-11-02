@@ -3,13 +3,28 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 
-class DeleteAccountBottomSheet extends StatefulWidget {
-  const DeleteAccountBottomSheet({
+class PIBottomSheet extends StatefulWidget {
+  const PIBottomSheet({
+    required this.title,
+    required this.text,
+    required this.buttonText,
+    required this.onTap,
     super.key,
   });
+  final String title;
+  final String text;
+  final String buttonText;
+  final VoidCallback onTap;
 
-  static Future<void> show(BuildContext context, {required String requestId}) {
+  static Future<void> show(
+    BuildContext context, {
+    required String title,
+    required String text,
+    required String buttonText,
+    required VoidCallback onTap,
+  }) {
     return showModalBottomSheet(
+      useRootNavigator: true,
       backgroundColor: AppColors.white,
       context: context,
       isScrollControlled: true,
@@ -18,16 +33,20 @@ class DeleteAccountBottomSheet extends StatefulWidget {
           top: Radius.circular(24),
         ),
       ),
-      builder: (context) => DeleteAccountBottomSheet(),
+      builder: (context) => PIBottomSheet(
+        title: title,
+        text: text,
+        buttonText: buttonText,
+        onTap: onTap,
+      ),
     );
   }
 
   @override
-  State<DeleteAccountBottomSheet> createState() =>
-      _DeleteAccountBottomSheetState();
+  State<PIBottomSheet> createState() => _PIBottomSheetState();
 }
 
-class _DeleteAccountBottomSheetState extends State<DeleteAccountBottomSheet> {
+class _PIBottomSheetState extends State<PIBottomSheet> {
   @override
   void initState() {
     super.initState();
@@ -41,7 +60,7 @@ class _DeleteAccountBottomSheetState extends State<DeleteAccountBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.3,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsetsDirectional.symmetric(
@@ -55,24 +74,22 @@ class _DeleteAccountBottomSheetState extends State<DeleteAccountBottomSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Are you sure?',
+                  widget.title,
                   style: context.h3.copyWith(
                     fontSize: 18,
                   ),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Are you sure you want to delete this item? Once deleted, it cannot be recovered and all related data will be permanently removed. Please confirm if you wish to proceed with this action.',
+                  widget.text,
                   style: context.b2.copyWith(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 const SizedBox(height: 16),
                 PIButton(
-                  text: 'Submit',
-                  onPressed: () {
-                    //delete account api call
-                  },
+                  text: widget.buttonText,
+                  onPressed: widget.onTap,
                 ),
               ],
             ),

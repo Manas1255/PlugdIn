@@ -1,6 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:plugdin/core/services/logout_service.dart';
 import 'package:plugdin/features/profile/domain/repositories/profile_repository.dart';
 import 'package:plugdin/features/profile/presentation/cubit/state.dart';
+import 'package:plugdin/features/profile/presentation/widgets/pi_bottom_sheet.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -40,5 +44,22 @@ class ProfileCubit extends Cubit<ProfileState> {
         ),
       );
     }
+  }
+
+  void showLogoutBottomSheet(BuildContext context) {
+    PIBottomSheet.show(
+      context,
+      title: 'Log Out?',
+      text:
+          'Are you sure you want to log out? You will need to sign in again to access your account.',
+      buttonText: 'Log Out',
+      onTap: () async {
+        context.pop();
+        await LogoutService().logout(
+          profileCubit: this,
+          context: context,
+        );
+      },
+    );
   }
 }

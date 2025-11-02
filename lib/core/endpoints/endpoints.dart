@@ -8,6 +8,7 @@ class Endpoints {
   /// Authentication Endpoints
   static const String signup = 'auth/register';
   static const String login = 'auth/login';
+  static const String logout = 'auth/logout';
   static const String requestPasswordReset = 'auth/forgot-password';
   static const String verifyResetCode = 'auth/verify-code';
   static const String resetPassword = 'auth/reset-password';
