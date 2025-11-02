@@ -22,7 +22,6 @@ class ProfileResponseModel extends Equatable {
       rethrow;
     }
   }
-
   final UserModel user;
 
   Map<String, dynamic> toJson() => {
