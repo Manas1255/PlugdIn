@@ -22,7 +22,12 @@ class ApiResponseParser {
           ? json
           : throw const FormatException('Response is not a valid JSON object');
 
-      final statusCode = responseMap['statusCode'] as int? ?? 0;
+      // Some endpoints return statusCode as a String, others as an int.
+      // Normalize to int for consistent success checks.
+      final dynamic rawStatusCode = responseMap['statusCode'];
+      final statusCode = rawStatusCode is int
+          ? rawStatusCode
+          : int.tryParse(rawStatusCode?.toString() ?? '') ?? 0;
       final error = responseMap['error'] as String?;
 
       // Check for success

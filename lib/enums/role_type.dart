@@ -1,6 +1,14 @@
+import 'package:hive_flutter/adapters.dart';
+
+part 'role_type.g.dart';
+
+@HiveType(typeId: 2)
 enum RoleType {
+  @HiveField(0)
   none,
+  @HiveField(1)
   customer,
+  @HiveField(2)
   vendor;
 
   String get toName {

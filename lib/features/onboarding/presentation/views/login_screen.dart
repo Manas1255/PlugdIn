@@ -31,7 +31,9 @@ class LoginScreen extends StatelessWidget {
           ToastHelper.showSuccessToast(
             'Login successful!',
           );
-          context.pop();
+          context.goNamed(
+            AppRouteNames.homeScreen,
+          );
         }
         if (state.emailLogin.isFailure) {
           ToastHelper.showErrorToast(

@@ -30,15 +30,11 @@ class AssetPaths {
   static const downArrowIcon = '${_svg}down_arrow_icon.svg';
   static const checkCircleIcon = '${_svg}check_circle_icon.svg';
 
-  static const homeUnselectedIcon = '${_svg}home_unselected_icon.svg';
-  static const homeSelectedIcon = '${_svg}home_selected_icon.svg';
   static const sellersUnselectedIcon = '${_svg}sellers_unselected_icon.svg';
   static const sellersSelectedIcon = '${_svg}sellers_selected_icon.svg';
   static const sellerIcon = '${_svg}sell_icon.svg';
   static const inboxUnselectedIcon = '${_svg}inbox_unselected_icon.svg';
   static const inboxSelectedIcon = '${_svg}inbox_selected_icon.svg';
-  static const profileUnselectedIcon = '${_svg}profile_unselected_icon.svg';
-  static const profileSelectedIcon = '${_svg}profile_selected_icon.svg';
 
   static const searchIcon = '${_svg}search_icon.svg';
   static const cartIcon = '${_svg}cart_icon.svg';
@@ -90,4 +86,14 @@ class AssetPaths {
   static const selectedCustomerIcon = '${_svg}selected_customer_icon.svg';
   static const dropdownIcon = '${_svg}dropdown_icon.svg';
   static const tickIcon = '${_svg}tick_icon.svg';
+  static const homeUnselectedIcon = '${_svg}home_unselected_icon.svg';
+  static const homeSelectedIcon = '${_svg}home_selected_icon.svg';
+  static const searchUnselectedIcon = '${_svg}search_unselected_icon.svg';
+  static const searchSelectedIcon = '${_svg}search_selected_icon.svg';
+  static const profileUnselectedIcon = '${_svg}profile_unselected_icon.svg';
+  static const profileSelectedIcon = '${_svg}profile_selected_icon.svg';
+  static const personalInfoIcon = '${_svg}personal_info_icon.svg';
+  static const keyIcon = '${_svg}key_icon.svg';
+  static const termsOfUseIcon = '${_svg}terms_of_use_icon.svg';
+  static const lockIcon = '${_svg}lock_icon.svg';
 }

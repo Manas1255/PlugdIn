@@ -1,4 +1,5 @@
 import 'package:plugdin/core/app_preferences/base_storage.dart';
+import 'package:plugdin/core/models/user_model.dart';
 
 class AppPreferences extends BaseStorage {
   AppPreferences() {
@@ -46,6 +47,14 @@ class AppPreferences extends BaseStorage {
 
   String? getRefreshToken() {
     return retrieve<String>(_refreshTokenKey);
+  }
+
+  void setUserModel(UserModel user) {
+    store<UserModel>(_userModelKey, user);
+  }
+
+  UserModel? getUserModel() {
+    return retrieve<UserModel>(_userModelKey);
   }
 
   void removeUserModel() {

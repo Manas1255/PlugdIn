@@ -5,8 +5,8 @@ import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/svg_pic.dart';
 
-class FitThereErrorWidget extends StatelessWidget {
-  const FitThereErrorWidget({
+class PIErrorWidget extends StatelessWidget {
+  const PIErrorWidget({
     required this.onPressed,
     this.errorText = 'Could not fetch data!',
     super.key,

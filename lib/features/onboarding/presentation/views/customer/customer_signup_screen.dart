@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
+import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
@@ -72,6 +74,47 @@ class CustomerSignupScreen extends StatelessWidget {
                       color: AppColors.darkGreyTextColor,
                     ),
                   ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+
+                  Center(
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: const BoxDecoration(
+                            color: AppColors.lightGreyColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            AssetPaths.unselectedCustomerIcon,
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: SvgPicture.asset(
+                                AssetPaths.uploadImageIcon,
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.white,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   const SizedBox(
                     height: 32,
                   ),

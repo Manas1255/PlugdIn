@@ -1,23 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:plugdin/core/models/api_response/api_response_model.dart';
 import 'package:plugdin/core/models/api_response/base_api_response.dart';
+import 'package:plugdin/enums/role_type.dart';
 
+part 'user_model.g.dart';
+
+@HiveType(typeId: 1)
 class UserModel extends Equatable {
   const UserModel({
     required this.id,
     required this.email,
     required this.name,
-    required this.isPremium,
-    required this.isAdmin,
-    required this.reminders,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.version,
-    this.resetPasswordCode,
-    this.resetPasswordCodeExpires,
-    this.imageUrl,
-    this.profilePhoto,
+    required this.username,
+    required this.role,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -27,17 +24,10 @@ class UserModel extends Equatable {
       id: userData['id']?.toString() ?? '',
       email: userData['email']?.toString() ?? '',
       name: userData['name']?.toString() ?? '',
-      isPremium: userData['isPremium'] == true,
-      isAdmin: userData['isAdmin'] == true,
-      reminders: userData['reminders'] as List<dynamic>? ?? [],
-      createdAt: userData['createdAt']?.toString() ?? '',
-      updatedAt: userData['updatedAt']?.toString() ?? '',
-      version: userData['__v'] as int? ?? 0,
-      resetPasswordCode: userData['resetPasswordCode']?.toString(),
-      resetPasswordCodeExpires: userData['resetPasswordCodeExpires']
-          ?.toString(),
-      imageUrl: userData['imageUrl']?.toString(),
-      profilePhoto: userData['profilePhoto']?.toString(),
+      username: userData['username']?.toString() ?? '',
+      role: userData['role'] != null
+          ? RoleType.toEnum(userData['role'].toString())
+          : RoleType.none,
     );
   }
 
@@ -53,34 +43,23 @@ class UserModel extends Equatable {
     );
   }
 
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String email;
+  @HiveField(2)
   final String name;
-  final bool isPremium;
-  final bool isAdmin;
-  final List<dynamic> reminders;
-  final String createdAt;
-  final String updatedAt;
-  final int version;
-  final String? resetPasswordCode;
-  final String? resetPasswordCodeExpires;
-  final String? imageUrl;
-  final String? profilePhoto;
+  @HiveField(3)
+  final String username;
+  @HiveField(4)
+  final RoleType role;
 
   Map<String, dynamic> toJson() => {
-    '_id': id,
+    'id': id,
     'email': email,
     'name': name,
-    'isPremium': isPremium,
-    'isAdmin': isAdmin,
-    'reminders': reminders,
-    'createdAt': createdAt,
-    'updatedAt': updatedAt,
-    '__v': version,
-    'resetPasswordCode': resetPasswordCode,
-    'resetPasswordCodeExpires': resetPasswordCodeExpires,
-    'imageUrl': imageUrl,
-    'profilePhoto': profilePhoto,
+    'username': username,
+    'role': role.toName,
   };
 
   @override
@@ -88,15 +67,7 @@ class UserModel extends Equatable {
     id,
     email,
     name,
-    isPremium,
-    isAdmin,
-    reminders,
-    createdAt,
-    updatedAt,
-    version,
-    resetPasswordCode,
-    resetPasswordCodeExpires,
-    imageUrl,
-    profilePhoto,
+    username,
+    role,
   ];
 }

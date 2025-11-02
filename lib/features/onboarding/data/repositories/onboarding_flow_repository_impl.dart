@@ -4,7 +4,9 @@ import 'package:plugdin/core/api_service/app_api_exception.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
+import 'package:plugdin/core/models/user_model.dart';
 import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/features/onboarding/data/models/auth_response_model.dart';
 import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -62,7 +64,7 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
   }
 
   @override
-  Future<RepositoryResponse<bool>> emailLogin({
+  Future<RepositoryResponse<UserModel?>> emailLogin({
     required String email,
     required String password,
   }) async {
@@ -75,13 +77,20 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
         },
       );
 
-      final responseData = ApiResponseParser.parseBooleanResponse(
+      final responseData = ApiResponseParser.parse<AuthResponseModel>(
         json: response.data,
+        fromJson: AuthResponseModel.fromJson,
       );
+
+      if (responseData.isSuccess && responseData.responseData != null) {
+        _cache
+          ..setUserModel(responseData.responseData!.user)
+          ..setToken(responseData.responseData!.tokens.accessToken);
+      }
 
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,
-        data: responseData.responseData,
+        data: responseData.responseData?.user,
       );
     } catch (e, s) {
       AppLogger.error('Error signing in: ', e, s);

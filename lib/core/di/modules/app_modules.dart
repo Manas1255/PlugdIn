@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
+import 'package:plugdin/core/models/user_model.dart';
+import 'package:plugdin/enums/role_type.dart';
 
 abstract class AppModule {
   static late final GetIt _container;
@@ -18,6 +20,9 @@ abstract class AppModule {
 
   static Future<void> _setupHive() async {
     await Hive.initFlutter();
+    Hive
+      ..registerAdapter(UserModelAdapter())
+      ..registerAdapter(RoleTypeAdapter());
   }
 
   static Future<void> _setupAPIService() async {
@@ -36,15 +41,4 @@ abstract class AppModule {
   //   await instance.setup();
   //   _container.registerSingleton<RemoteConfigService>(instance);
   // }
-
-  // static Future<void> _setupAwesomeNotifications() async {
-  //   final awesomeNotificationService = AwesomeNotificationService();
-  //   await awesomeNotificationService.initialize();
-  //   await awesomeNotificationService.initializeFCM();
-  //   _container.registerSingleton<AwesomeNotificationService>(
-  //     awesomeNotificationService,
-  //   );
-  // }
 }
-
-class UserModelAdapter {}

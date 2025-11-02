@@ -188,8 +188,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     if (response.isSuccess) {
       emit(
         state.copyWith(
-          emailLogin: DataState.loaded(
-            data: response.data,
+          emailLogin: const DataState.loaded(
+            data: true,
           ),
         ),
       );
