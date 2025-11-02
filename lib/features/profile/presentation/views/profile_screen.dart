@@ -27,6 +27,24 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
+          if (state.profileInfo.isLoading) {
+            return const LoadingWidget();
+          }
+          if (state.profileInfo.isFailure) {
+            return PIErrorWidget(
+              errorText:
+                  state.profileInfo.errorMessage ?? 'Unexpected error occurred',
+              onPressed: () {
+                context.read<ProfileCubit>().fetchProfileInfo();
+              },
+            );
+          }
+
+          if (state.profileInfo.isEmpty) {
+            return const EmptyWidget(
+              text: 'No profile data found',
+            );
+          }
           return Padding(
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: 38,

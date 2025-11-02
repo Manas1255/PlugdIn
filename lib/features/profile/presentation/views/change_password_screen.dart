@@ -61,6 +61,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   value,
                   _newPasswordController,
                 );
+                return null;
               },
               type: PITextFieldType.password,
             ),

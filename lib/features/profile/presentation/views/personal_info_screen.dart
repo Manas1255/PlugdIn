@@ -5,6 +5,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/profile/presentation/cubit/state.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
@@ -55,62 +56,83 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           style: context.h3,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 16,
-          vertical: 24,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Full Name',
-              style: context.b2,
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          if (state.profileInfo.isLoading) {
+            return const LoadingWidget();
+          }
+          if (state.profileInfo.isFailure) {
+            return PIErrorWidget(
+              errorText:
+                  state.profileInfo.errorMessage ?? 'Unexpected error occurred',
+              onPressed: () {
+                context.read<ProfileCubit>().fetchProfileInfo();
+              },
+            );
+          }
+          if (state.profileInfo.isEmpty) {
+            return const EmptyWidget(
+              text: 'No profile data found',
+            );
+          }
+          return Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 16,
+              vertical: 24,
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            PITextField(
-              hintText: 'Full Name',
-              controller: _fullNameController,
-              validator: FieldValidators.nameValidator,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Full Name',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'Full Name',
+                  controller: _fullNameController,
+                  validator: FieldValidators.nameValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
 
-            Text(
-              'Username',
-              style: context.b2,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            PITextField(
-              hintText: 'User Name',
-              controller: _userNameController,
-              validator: FieldValidators.usernameValidator,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
+                Text(
+                  'Username',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'User Name',
+                  controller: _userNameController,
+                  validator: FieldValidators.usernameValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
 
-            Text(
-              'Email',
-              style: context.b2,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
+                Text(
+                  'Email',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
 
-            PITextField(
-              hintText: 'Email',
-              controller: _emailController,
-              readOnly: true,
-              backgroundColor: AppColors.lightGreyColor,
+                PITextField(
+                  hintText: 'Email',
+                  controller: _emailController,
+                  readOnly: true,
+                  backgroundColor: AppColors.lightGreyColor,
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
       bottomNavigationBar: SafeArea(
         child: PIButton(
