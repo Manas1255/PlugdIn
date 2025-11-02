@@ -1,7 +1,13 @@
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
+import 'package:plugdin/core/endpoints/endpoints.dart';
+import 'package:plugdin/core/models/user_model.dart';
+import 'package:plugdin/features/profile/data/models/profile_response_model.dart';
 import 'package:plugdin/features/profile/domain/repositories/profile_repository.dart';
+import 'package:plugdin/utils/helpers/logger_helper.dart';
+import 'package:plugdin/utils/helpers/repository_response.dart';
+import 'package:plugdin/utils/response_data_model/api_response_parser.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl({
@@ -12,4 +18,41 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   final ApiService _apiService;
   final AppPreferences _cache;
+
+  @override
+  Future<RepositoryResponse<UserModel>> fetchProfileInfo() async {
+    try {
+      // final userModel = _cache.getUserModel();
+      // if (userModel != null && !forceRefresh) {
+      //   return RepositoryResponse(
+      //     isSuccess: true,
+      //     data: userModel,
+      //   );
+      // }
+
+      final response = await _apiService.get(
+        Endpoints.getProfileInfo,
+      );
+
+      final responseData = ApiResponseParser.parse<ProfileResponseModel>(
+        json: response.data,
+        fromJson: ProfileResponseModel.fromJson,
+      );
+
+      if (responseData.isSuccess && responseData.responseData != null) {
+        _cache.setUserModel(responseData.responseData!.user);
+      }
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.user,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching profile info:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

@@ -13,6 +13,7 @@ class UserModel extends Equatable {
     required this.id,
     required this.email,
     required this.name,
+    required this.username,
     required this.role,
   });
 
@@ -23,6 +24,7 @@ class UserModel extends Equatable {
       id: userData['id']?.toString() ?? '',
       email: userData['email']?.toString() ?? '',
       name: userData['name']?.toString() ?? '',
+      username: userData['username']?.toString() ?? '',
       role: userData['role'] != null
           ? RoleType.toEnum(userData['role'].toString())
           : RoleType.none,
@@ -48,12 +50,15 @@ class UserModel extends Equatable {
   @HiveField(2)
   final String name;
   @HiveField(3)
+  final String username;
+  @HiveField(4)
   final RoleType role;
 
   Map<String, dynamic> toJson() => {
     'id': id,
     'email': email,
     'name': name,
+    'username': username,
     'role': role.toName,
   };
 
@@ -62,6 +67,7 @@ class UserModel extends Equatable {
     id,
     email,
     name,
+    username,
     role,
   ];
 }
