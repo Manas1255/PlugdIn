@@ -16,6 +16,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(
       state.copyWith(
         notificationsEnabled: isEnabled,
+        userPreferences: const DataState.loading(),
       ),
     );
   }
@@ -125,6 +126,36 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           changePassword: DataState.failure(
             error: changePasswordResponse.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> updateUserPreferences() async {
+    emit(
+      state.copyWith(
+        userPreferences: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.updateUserPreferences(
+      inAppNotifications: state.notificationsEnabled,
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          userPreferences: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          userPreferences: DataState.failure(
+            error: response.message,
           ),
         ),
       );

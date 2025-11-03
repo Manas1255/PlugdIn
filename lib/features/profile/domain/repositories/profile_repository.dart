@@ -15,4 +15,8 @@ abstract class ProfileRepository {
     required String oldPassword,
     required String newPassword,
   });
+
+  Future<RepositoryResponse<bool>> updateUserPreferences({
+    bool? inAppNotifications,
+  });
 }

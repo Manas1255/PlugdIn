@@ -140,4 +140,31 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> updateUserPreferences({
+    bool? inAppNotifications,
+  }) async {
+    try {
+      final response = await _apiService.patch(
+        Endpoints.setNotification,
+        {},
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error updating user preferences: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

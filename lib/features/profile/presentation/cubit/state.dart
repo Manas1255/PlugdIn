@@ -7,21 +7,25 @@ class ProfileState extends Equatable {
     this.notificationsEnabled = false,
     this.profileInfo = const DataState.initial(),
     this.changePassword = const DataState.initial(),
+    this.userPreferences = const DataState.initial(),
   });
 
   final bool notificationsEnabled;
   final DataState<UserModel> profileInfo;
   final DataState<bool> changePassword;
+  final DataState<bool> userPreferences;
 
   ProfileState copyWith({
     bool? notificationsEnabled,
     DataState<UserModel>? profileInfo,
     DataState<bool>? changePassword,
+    DataState<bool>? userPreferences,
   }) {
     return ProfileState(
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       profileInfo: profileInfo ?? this.profileInfo,
       changePassword: changePassword ?? this.changePassword,
+      userPreferences: userPreferences ?? this.userPreferences,
     );
   }
 
@@ -30,5 +34,6 @@ class ProfileState extends Equatable {
     notificationsEnabled,
     profileInfo,
     changePassword,
+    userPreferences,
   ];
 }
