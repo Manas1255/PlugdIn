@@ -34,7 +34,7 @@ class DeleteAccountService {
     } catch (e, s) {
       AppLogger.error('Error during account deletion:', e, s);
 
-      // Even if there's an error, clear states and navigate to onboarding
+      
       await _clearAllStates(profileCubit);
       _navigateToOnboarding(context);
       return false;
