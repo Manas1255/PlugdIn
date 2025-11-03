@@ -7,6 +7,7 @@ import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/profile/presentation/cubit/state.dart';
 import 'package:plugdin/go_router/exports.dart';
+import 'package:plugdin/utils/helpers/data_state.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 
 class DeleteAccountService {
@@ -49,7 +50,13 @@ class DeleteAccountService {
 
     if (profileCubit != null) {
       profileCubit.emit(
-        const ProfileState(),
+        ProfileState(
+          notificationsEnabled: false,
+          profileInfo: const DataState.initial(),
+          changePassword: const DataState.initial(),
+          userPreferences: const DataState.initial(),
+          deleteAccount: const DataState.initial(),
+        ),
       );
     }
   }
