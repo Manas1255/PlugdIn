@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:plugdin/core/services/delete_account_service.dart';
 import 'package:plugdin/core/services/logout_service.dart';
 import 'package:plugdin/features/profile/domain/repositories/profile_repository.dart';
 import 'package:plugdin/features/profile/presentation/cubit/state.dart';
@@ -62,6 +63,51 @@ class ProfileCubit extends Cubit<ProfileState> {
         );
       },
     );
+  }
+
+  void showDeleteAccountBottomSheet(BuildContext context) {
+    PIBottomSheet.show(
+      context,
+      title: 'Delete Account?',
+      text:
+          'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.',
+      buttonText: 'Delete Account',
+      onTap: () async {
+        context.pop();
+        await DeleteAccountService().deleteAccount(
+          profileCubit: this,
+          context: context,
+        );
+      },
+    );
+  }
+
+  Future<void> deleteAccount() async {
+    emit(
+      state.copyWith(
+        deleteAccount: const DataState.loading(),
+      ),
+    );
+
+    final deleteAccountResponse = await repository.deleteAccount();
+
+    if (deleteAccountResponse.isSuccess) {
+      emit(
+        state.copyWith(
+          deleteAccount: DataState.loaded(
+            data: deleteAccountResponse.data ?? false,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          deleteAccount: DataState.failure(
+            error: deleteAccountResponse.message,
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> updateProfileInfo({

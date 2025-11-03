@@ -167,4 +167,28 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> deleteAccount() async {
+    try {
+      final response = await _apiService.delete(
+        Endpoints.deleteAccount,
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData ?? false,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error deleting account: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

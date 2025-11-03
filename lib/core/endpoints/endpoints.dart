@@ -20,4 +20,5 @@ class Endpoints {
   static const String getProfileInfo = 'auth/profile';
   static const String updateProfile = 'users/update';
   static const String setNotification = 'users/notifications/toggle';
+  static const String deleteAccount = 'users/delete';
 }

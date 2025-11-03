@@ -19,4 +19,6 @@ abstract class ProfileRepository {
   Future<RepositoryResponse<bool>> updateUserPreferences({
     bool? inAppNotifications,
   });
+
+  Future<RepositoryResponse<bool>> deleteAccount();
 }
