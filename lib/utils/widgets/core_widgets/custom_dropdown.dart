@@ -23,7 +23,7 @@ class PIDropdown<T> extends StatefulWidget {
     this.hintFontWeight,
     this.padding = EdgeInsets.zero,
     this.leading,
-    this.textColor = AppColors.lightGreyShade3,
+    this.textColor = AppColors.black,
     this.borderColor = AppColors.textFieldBorderColor,
     this.width,
     this.titleTextStyle,
@@ -229,7 +229,7 @@ class _PIDropdownState<T> extends State<PIDropdown<T>> {
                                     style: context.b1.copyWith(
                                       color:
                                           widget.hintColor ??
-                                          AppColors.lightGreyColor,
+                                          AppColors.lightGreyShade2,
                                       fontWeight:
                                           widget.hintFontWeight ??
                                           FontWeight.w400,
