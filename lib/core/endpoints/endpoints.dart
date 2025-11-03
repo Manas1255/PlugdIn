@@ -14,7 +14,11 @@ class Endpoints {
   static const String resetPassword = 'auth/reset-password';
   static const String googleLogin = 'auth/google';
   static const String vendorSignup = 'vendor/register';
+  static const String changePassword = 'auth/resetpassword';
 
   /// Profile Endpoints
   static const String getProfileInfo = 'auth/profile';
+  static const String updateProfile = 'users/update';
+  static const String setNotification = 'users/notifications/toggle';
+  static const String deleteAccount = 'users/delete';
 }

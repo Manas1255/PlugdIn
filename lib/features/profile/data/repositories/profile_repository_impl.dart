@@ -77,4 +77,118 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<UserModel>> updateProfileInfo({
+    required String name,
+    required String username,
+  }) async {
+    try {
+      final response = await _apiService.put(
+        Endpoints.updateProfile,
+        {
+          'name': name,
+          'username': username,
+        },
+      );
+
+      final responseData = ApiResponseParser.parse<ProfileResponseModel>(
+        json: response.data,
+        fromJson: ProfileResponseModel.fromJson,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.user,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error updating profile info:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await _apiService.put(
+        Endpoints.changePassword,
+        {
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        },
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData ?? false,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error changing password:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> updateUserPreferences({
+    bool? inAppNotifications,
+  }) async {
+    try {
+      final response = await _apiService.patch(
+        Endpoints.setNotification,
+        {},
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error updating user preferences: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> deleteAccount() async {
+    try {
+      final response = await _apiService.delete(
+        Endpoints.deleteAccount,
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData ?? false,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error deleting account: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

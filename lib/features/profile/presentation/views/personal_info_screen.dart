@@ -6,6 +6,7 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/profile/presentation/cubit/state.dart';
+import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
@@ -58,23 +59,23 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
-          if (state.profileInfo.isLoading) {
-            return const LoadingWidget();
-          }
-          if (state.profileInfo.isFailure) {
-            return PIErrorWidget(
-              errorText:
-                  state.profileInfo.errorMessage ?? 'Unexpected error occurred',
-              onPressed: () {
-                context.read<ProfileCubit>().fetchProfileInfo();
-              },
-            );
-          }
-          if (state.profileInfo.isEmpty) {
-            return const EmptyWidget(
-              text: 'No profile data found',
-            );
-          }
+          // if (state.profileInfo.isLoading) {
+          //   return const LoadingWidget();
+          // }
+          // if (state.profileInfo.isFailure) {
+          //   return PIErrorWidget(
+          //     errorText:
+          //         state.profileInfo.errorMessage ?? 'Unexpected error occurred',
+          //     onPressed: () {
+          //       context.read<ProfileCubit>().fetchProfileInfo();
+          //     },
+          //   );
+          // }
+          // if (state.profileInfo.isEmpty) {
+          //   return const EmptyWidget(
+          //     text: 'No profile data found',
+          //   );
+          // }
           return Padding(
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: 16,
@@ -135,13 +136,37 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         },
       ),
       bottomNavigationBar: SafeArea(
-        child: PIButton(
-          text: 'Update',
-          onPressed: () {},
-          outsidePadding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 16,
-            vertical: 24,
-          ),
+        child: BlocConsumer<ProfileCubit, ProfileState>(
+          listenWhen: (previous, current) =>
+              previous.profileInfo != current.profileInfo,
+          listener: (context, state) {
+            if (state.profileInfo.isLoaded) {
+              ToastHelper.showSuccessToast(
+                'Profile info updated successfully',
+              );
+              context.pop();
+            } else if (state.profileInfo.isFailure) {
+              ToastHelper.showErrorToast(
+                '${state.profileInfo.errorMessage}',
+              );
+            }
+          },
+          builder: (context, state) {
+            return PIButton(
+              text: 'Update',
+              onPressed: () {
+                context.read<ProfileCubit>().updateProfileInfo(
+                  name: _fullNameController.text.trim(),
+                  username: _userNameController.text.trim(),
+                );
+              },
+              isLoading: state.profileInfo.isLoading,
+              outsidePadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 16,
+                vertical: 24,
+              ),
+            );
+          },
         ),
       ),
     );

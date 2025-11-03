@@ -35,6 +35,7 @@ class NotificationsToggleWidget extends StatelessWidget {
                   context.read<ProfileCubit>().toggleNotifications(
                     isEnabled: value,
                   );
+                  context.read<ProfileCubit>().updateUserPreferences();
                 },
               ),
             ),

@@ -122,13 +122,8 @@ class ProfileScreen extends StatelessWidget {
                     const NotificationsToggleWidget(),
                     GestureDetector(
                       onTap: () {
-                        PIBottomSheet.show(
+                        context.read<ProfileCubit>().showDeleteAccountBottomSheet(
                           context,
-                          title: 'Are you sure?',
-                          text:
-                              'Are you sure you want to delete this item? Once deleted, it cannot be recovered and all related data will be permanently removed. Please confirm if you wish to proceed with this action.',
-                          buttonText: 'Delete Account',
-                          onTap: () {},
                         );
                       },
                       child: Text(
