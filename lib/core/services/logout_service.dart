@@ -24,8 +24,8 @@ class LogoutService {
     BuildContext? context,
   }) async {
     try {
-      await _apiService.post(
-        endpoint: Endpoints.logout,
+      await _apiService.get(
+        Endpoints.logout,
       );
 
       await _clearAllStates(profileCubit);
