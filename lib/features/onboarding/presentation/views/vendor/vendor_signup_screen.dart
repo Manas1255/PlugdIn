@@ -213,7 +213,6 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                               PIDropdown<CategoryType>(
                                 value: state.selectedPrimaryCategory,
                                 hintText: 'Primary Category',
-                                textColor: AppColors.black,
                                 items: CategoryType.values.map((category) {
                                   return DropdownItem<CategoryType>(
                                     value: category,
