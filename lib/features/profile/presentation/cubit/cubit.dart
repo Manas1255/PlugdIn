@@ -96,4 +96,42 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
     }
   }
+
+  Future<void> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    emit(
+      state.copyWith(
+        changePassword: const DataState.loading(),
+      ),
+    );
+
+    final changePasswordResponse = await repository.changePassword(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    );
+
+    if (changePasswordResponse.isSuccess) {
+      emit(
+        state.copyWith(
+          changePassword: DataState.loaded(
+            data: changePasswordResponse.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          changePassword: DataState.failure(
+            error: changePasswordResponse.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> clearState() async {
+    emit(const ProfileState());
+  }
 }

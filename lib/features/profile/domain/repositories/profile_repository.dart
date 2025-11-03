@@ -10,4 +10,9 @@ abstract class ProfileRepository {
     required String name,
     required String username,
   });
+
+  Future<RepositoryResponse<bool>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  });
 }

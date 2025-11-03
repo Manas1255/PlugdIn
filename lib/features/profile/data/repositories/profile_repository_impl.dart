@@ -109,4 +109,35 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<bool>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await _apiService.put(
+        Endpoints.changePassword,
+        {
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        },
+      );
+
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData ?? false,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error changing password:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }

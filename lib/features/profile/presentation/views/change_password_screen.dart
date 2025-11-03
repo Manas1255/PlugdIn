@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
+import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/profile/presentation/cubit/state.dart';
+import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 import 'package:plugdin/utils/widgets/core_widgets/text_field.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key});
+
   final TextEditingController _currentPasswordController =
       TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
@@ -68,15 +73,37 @@ class ChangePasswordScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: PIButton(
-          text: 'Change Password',
-          onPressed: () {},
-          outsidePadding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 16,
-            vertical: 24,
-          ),
-        ),
+      bottomNavigationBar: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          if (state.changePassword.isLoaded) {
+            ToastHelper.showSuccessToast(
+              'Your password is successfully changed',
+            );
+            context.pop();
+          } else if (state.changePassword.isFailure) {
+            ToastHelper.showErrorToast(
+              '${state.changePassword.errorMessage}',
+            );
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: PIButton(
+              text: 'Change Password',
+              isLoading: state.changePassword.isLoading,
+              onPressed: () {
+                context.read<ProfileCubit>().changePassword(
+                  oldPassword: _currentPasswordController.text.trim(),
+                  newPassword: _newPasswordController.text.trim(),
+                );
+              },
+              outsidePadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 16,
+                vertical: 24,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
