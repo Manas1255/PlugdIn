@@ -62,4 +62,38 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
   }
+
+  Future<void> updateProfileInfo({
+    required String name,
+    required String username,
+  }) async {
+    emit(
+      state.copyWith(
+        profileInfo: const DataState.loading(),
+      ),
+    );
+
+    final updateProfileResponse = await repository.updateProfileInfo(
+      name: name,
+      username: username,
+    );
+
+    if (updateProfileResponse.isSuccess) {
+      emit(
+        state.copyWith(
+          profileInfo: DataState.loaded(
+            data: updateProfileResponse.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          profileInfo: DataState.failure(
+            error: updateProfileResponse.message,
+          ),
+        ),
+      );
+    }
+  }
 }

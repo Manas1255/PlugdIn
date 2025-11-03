@@ -77,4 +77,36 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
     }
   }
+
+  @override
+  Future<RepositoryResponse<UserModel>> updateProfileInfo({
+    required String name,
+    required String username,
+  }) async {
+    try {
+      final response = await _apiService.put(
+        Endpoints.updateProfile,
+        {
+          'name': name,
+          'username': username,
+        },
+      );
+
+      final responseData = ApiResponseParser.parse<ProfileResponseModel>(
+        json: response.data,
+        fromJson: ProfileResponseModel.fromJson,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.user,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error updating profile info:', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
 }
