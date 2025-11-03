@@ -145,6 +145,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 'Profile info updated successfully',
               );
               context.pop();
+            } else if (state.profileInfo.isFailure) {
+              ToastHelper.showErrorToast(
+                '${state.profileInfo.errorMessage}',
+              );
             }
           },
           builder: (context, state) {

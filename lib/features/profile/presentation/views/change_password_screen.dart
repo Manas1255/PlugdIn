@@ -74,6 +74,8 @@ class ChangePasswordScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BlocConsumer<ProfileCubit, ProfileState>(
+        listenWhen: (previous, current) =>
+            previous.changePassword != current.changePassword,
         listener: (context, state) {
           if (state.changePassword.isLoaded) {
             ToastHelper.showSuccessToast(
