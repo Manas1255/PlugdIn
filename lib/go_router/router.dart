@@ -117,57 +117,57 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: AppRoutes.personalInfoScreen,
-        name: AppRouteNames.personalInfoScreen,
+        path: AppRoutes.customerPersonalInfoScreen,
+        name: AppRouteNames.customerPersonalInfoScreen,
         builder: (context, state) {
-          return PersonalInfoScreen();
+          return CustomerPersonalInfoScreen();
         },
       ),
 
       GoRoute(
-        path: AppRoutes.changePasswordScreen,
-        name: AppRouteNames.changePasswordScreen,
+        path: AppRoutes.customerChangePasswordScreen,
+        name: AppRouteNames.customerChangePasswordScreen,
         builder: (context, state) {
-          return ChangePasswordScreen();
+          return CustomerChangePasswordScreen();
         },
       ),
 
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
-            initialLocation: AppRoutes.homeScreen,
+            initialLocation: AppRoutes.customerHomeScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.homeScreen,
-                name: AppRouteNames.homeScreen,
-                builder: (context, state) => const HomeScreen(),
+                path: AppRoutes.customerHomeScreen,
+                name: AppRouteNames.customerHomeScreen,
+                builder: (context, state) => const CustomerHomeScreen(),
               ),
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoutes.searchScreen,
+            initialLocation: AppRoutes.customerSearchScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.searchScreen,
-                name: AppRouteNames.searchScreen,
-                builder: (context, state) => const SearchScreen(),
+                path: AppRoutes.customerSearchScreen,
+                name: AppRouteNames.customerSearchScreen,
+                builder: (context, state) => const CustomerSearchScreen(),
               ),
             ],
           ),
 
           StatefulShellBranch(
-            initialLocation: AppRoutes.profileScreen,
+            initialLocation: AppRoutes.customerProfileScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.profileScreen,
-                name: AppRouteNames.profileScreen,
-                builder: (context, state) => const ProfileScreen(),
+                path: AppRoutes.customerProfileScreen,
+                name: AppRouteNames.customerProfileScreen,
+                builder: (context, state) => const CustomerProfileScreen(),
               ),
             ],
           ),
         ],
         builder: (context, state, shell) {
-          return UserNavigation(shell: shell);
+          return CustomerNavigation(shell: shell);
         },
       ),
     ],

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:plugdin/core/models/user_model.dart';
+import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/features/onboarding/data/models/tokens_model.dart';
 import 'package:plugdin/utils/helpers/json_helper.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -13,12 +13,12 @@ class AuthResponseModel extends Equatable {
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) {
     try {
       return AuthResponseModel(
-        user: UserModel.fromJson(
+        user: CustomerModel.fromJson(
           JsonHelper.safeMapCast(
             json['user'],
           ),
         ),
-        
+
         tokens: TokensModel.fromJson(json),
       );
     } catch (e, s) {
@@ -27,7 +27,7 @@ class AuthResponseModel extends Equatable {
     }
   }
 
-  final UserModel user;
+  final CustomerModel user;
   final TokensModel tokens;
 
   Map<String, dynamic> toJson() => {
@@ -37,7 +37,7 @@ class AuthResponseModel extends Equatable {
   };
 
   AuthResponseModel copyWith({
-    UserModel? user,
+    CustomerModel? user,
     TokensModel? tokens,
   }) {
     return AuthResponseModel(

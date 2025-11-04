@@ -1,5 +1,5 @@
 import 'package:plugdin/core/app_preferences/base_storage.dart';
-import 'package:plugdin/core/models/user_model.dart';
+import 'package:plugdin/core/models/customer_model.dart';
 
 class AppPreferences extends BaseStorage {
   AppPreferences() {
@@ -49,12 +49,12 @@ class AppPreferences extends BaseStorage {
     return retrieve<String>(_refreshTokenKey);
   }
 
-  void setUserModel(UserModel user) {
-    store<UserModel>(_userModelKey, user);
+  void setUserModel(CustomerModel user) {
+    store<CustomerModel>(_userModelKey, user);
   }
 
-  UserModel? getUserModel() {
-    return retrieve<UserModel>(_userModelKey);
+  CustomerModel? getUserModel() {
+    return retrieve<CustomerModel>(_userModelKey);
   }
 
   void removeUserModel() {

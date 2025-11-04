@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (token != null && token.isNotEmpty) {
         if (!mounted) return;
-        context.goNamed(AppRouteNames.homeScreen);
+        context.goNamed(AppRouteNames.customerHomeScreen);
       } else {
         context.goNamed(AppRouteNames.onboarding);
       }

@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
             'Login successful!',
           );
           context.goNamed(
-            AppRouteNames.homeScreen,
+            AppRouteNames.customerHomeScreen,
           );
         }
         if (state.emailLogin.isFailure) {
