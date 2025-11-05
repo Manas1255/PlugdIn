@@ -4,8 +4,10 @@ import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
-import 'package:plugdin/features/profile/presentation/cubit/cubit.dart';
-import 'package:plugdin/features/profile/presentation/cubit/state.dart';
+import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -21,7 +23,8 @@ class DeleteAccountService {
   final AppPreferences _appPreferences;
 
   Future<bool> deleteAccount({
-    ProfileCubit? profileCubit,
+    CustomerProfileCubit? customerProfileCubit,
+    VendorProfileCubit? vendorProfileCubit,
     BuildContext? context,
   }) async {
     try {
@@ -29,28 +32,48 @@ class DeleteAccountService {
         Endpoints.deleteAccount,
       );
 
-      await _clearAllStates(profileCubit);
+      await _clearAllStates(
+        customerProfileCubit: customerProfileCubit,
+        vendorProfileCubit: vendorProfileCubit,
+      );
       _navigateToOnboarding(context);
       return true;
     } catch (e, s) {
       AppLogger.error('Error during account deletion:', e, s);
 
-      
-      await _clearAllStates(profileCubit);
+      await _clearAllStates(
+        customerProfileCubit: customerProfileCubit,
+        vendorProfileCubit: vendorProfileCubit,
+      );
       _navigateToOnboarding(context);
       return false;
     }
   }
 
-  Future<void> _clearAllStates(ProfileCubit? profileCubit) async {
+  Future<void> _clearAllStates({
+    CustomerProfileCubit? customerProfileCubit,
+    VendorProfileCubit? vendorProfileCubit,
+  }) async {
     _appPreferences
       ..clearAuthData()
       ..removeUserModel()
       ..clearAll();
 
-    if (profileCubit != null) {
-      profileCubit.emit(
-        ProfileState(
+    if (customerProfileCubit != null) {
+      customerProfileCubit.emit(
+        CustomerProfileState(
+          notificationsEnabled: false,
+          profileInfo: const DataState.initial(),
+          changePassword: const DataState.initial(),
+          userPreferences: const DataState.initial(),
+          deleteAccount: const DataState.initial(),
+        ),
+      );
+    }
+
+    if (vendorProfileCubit != null) {
+      vendorProfileCubit.emit(
+        VendorProfileState(
           notificationsEnabled: false,
           profileInfo: const DataState.initial(),
           changePassword: const DataState.initial(),
@@ -70,4 +93,3 @@ class DeleteAccountService {
     }
   }
 }
-

@@ -4,7 +4,7 @@ import 'package:plugdin/core/api_service/app_api_exception.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
-import 'package:plugdin/core/models/user_model.dart';
+import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/data/models/auth_response_model.dart';
 import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
@@ -64,7 +64,7 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
   }
 
   @override
-  Future<RepositoryResponse<UserModel?>> emailLogin({
+  Future<RepositoryResponse<CustomerModel?>> emailLogin({
     required String email,
     required String password,
   }) async {
@@ -83,6 +83,7 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
 
       if (responseData.isSuccess && responseData.responseData != null) {
+        print('in ifff hapa, ${responseData.responseData?.user.role}');
         _cache
           ..setUserModel(responseData.responseData!.user)
           ..setToken(responseData.responseData!.tokens.accessToken);

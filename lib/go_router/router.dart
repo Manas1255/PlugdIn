@@ -117,57 +117,210 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: AppRoutes.personalInfoScreen,
-        name: AppRouteNames.personalInfoScreen,
+        path: AppRoutes.customerPersonalInfoScreen,
+        name: AppRouteNames.customerPersonalInfoScreen,
         builder: (context, state) {
-          return PersonalInfoScreen();
+          return CustomerPersonalInfoScreen();
         },
       ),
 
       GoRoute(
-        path: AppRoutes.changePasswordScreen,
-        name: AppRouteNames.changePasswordScreen,
+        path: AppRoutes.vendorPersonalInfoScreen,
+        name: AppRouteNames.vendorPersonalInfoScreen,
         builder: (context, state) {
-          return ChangePasswordScreen();
+          return VendorPersonalInfoScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.customerChangePasswordScreen,
+        name: AppRouteNames.customerChangePasswordScreen,
+        builder: (context, state) {
+          return CustomerChangePasswordScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.vendorChangePasswordScreen,
+        name: AppRouteNames.vendorChangePasswordScreen,
+        builder: (context, state) {
+          return VendorChangePasswordScreen();
         },
       ),
 
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
-            initialLocation: AppRoutes.homeScreen,
+            initialLocation: AppRoutes.customerHomeScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.homeScreen,
-                name: AppRouteNames.homeScreen,
-                builder: (context, state) => const HomeScreen(),
+                path: AppRoutes.customerHomeScreen,
+                name: AppRouteNames.customerHomeScreen,
+                builder: (context, state) => const CustomerHomeScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerHomeScreen;
+                  }
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
               ),
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoutes.searchScreen,
+            initialLocation: AppRoutes.customerSearchScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.searchScreen,
-                name: AppRouteNames.searchScreen,
-                builder: (context, state) => const SearchScreen(),
+                path: AppRoutes.customerSearchScreen,
+                name: AppRouteNames.customerSearchScreen,
+                builder: (context, state) => const CustomerSearchScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerSearchScreen;
+                  }
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
               ),
             ],
           ),
-
           StatefulShellBranch(
-            initialLocation: AppRoutes.profileScreen,
+            initialLocation: AppRoutes.customerProfileScreen,
             routes: [
               GoRoute(
-                path: AppRoutes.profileScreen,
-                name: AppRouteNames.profileScreen,
-                builder: (context, state) => const ProfileScreen(),
+                path: AppRoutes.customerProfileScreen,
+                name: AppRouteNames.customerProfileScreen,
+                builder: (context, state) => const CustomerProfileScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerProfileScreen;
+                  }
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
               ),
             ],
           ),
         ],
         builder: (context, state, shell) {
-          return UserNavigation(shell: shell);
+          return CustomerNavigation(shell: shell);
+        },
+      ),
+
+      StatefulShellRoute.indexedStack(
+        branches: [
+          StatefulShellBranch(
+            initialLocation: AppRoutes.vendorHomeScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.vendorHomeScreen,
+                name: AppRouteNames.vendorHomeScreen,
+                builder: (context, state) => const VendorHomeScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorHomeScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoutes.vendorSearchScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.vendorSearchScreen,
+                name: AppRouteNames.vendorSearchScreen,
+                builder: (context, state) => const VendorSearchScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorSearchScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoutes.vendorPostScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.vendorPostScreen,
+                name: AppRouteNames.vendorPostScreen,
+                builder: (context, state) => const VendorPostScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorPostScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoutes.vendorStoreScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.vendorStoreScreen,
+                name: AppRouteNames.vendorStoreScreen,
+                builder: (context, state) => const VendorStoreScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorStoreScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoutes.vendorProfileScreen,
+            routes: [
+              GoRoute(
+                path: AppRoutes.vendorProfileScreen,
+                name: AppRouteNames.vendorProfileScreen,
+                builder: (context, state) => const VendorProfileScreen(),
+                redirect: (context, state) {
+                  final appPreferences = Injector.resolve<AppPreferences>();
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorProfileScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ],
+        builder: (context, state, shell) {
+          return VendorNavigation(shell: shell);
         },
       ),
     ],
