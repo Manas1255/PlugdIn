@@ -25,7 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (token != null && token.isNotEmpty) {
         if (!mounted) return;
-        context.goNamed(AppRouteNames.customerHomeScreen);
+        // Check if vendor model exists to determine which navigation to use
+        final vendorModel = prefs.getVendorModel();
+        final customerModel = prefs.getUserModel();
+        
+        if (vendorModel != null) {
+          context.goNamed(AppRouteNames.vendorHomeScreen);
+        } else if (customerModel != null) {
+          context.goNamed(AppRouteNames.customerHomeScreen);
+        } else {
+          // No model found, go to onboarding
+          context.goNamed(AppRouteNames.onboarding);
+        }
       } else {
         context.goNamed(AppRouteNames.onboarding);
       }

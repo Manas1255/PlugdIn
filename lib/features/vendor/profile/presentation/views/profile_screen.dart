@@ -12,8 +12,8 @@ import 'package:plugdin/features/customer/profile/presentation/widgets/settings_
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
-class CustomerProfileScreen extends StatelessWidget {
-  const CustomerProfileScreen({super.key});
+class VendorProfileScreen extends StatelessWidget {
+  const VendorProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

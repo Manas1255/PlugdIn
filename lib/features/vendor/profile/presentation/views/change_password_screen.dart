@@ -10,8 +10,8 @@ import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 import 'package:plugdin/utils/widgets/core_widgets/text_field.dart';
 
-class CustomerChangePasswordScreen extends StatelessWidget {
-  CustomerChangePasswordScreen({super.key});
+class VendorChangePasswordScreen extends StatelessWidget {
+  VendorChangePasswordScreen({super.key});
 
   final TextEditingController _currentPasswordController =
       TextEditingController();

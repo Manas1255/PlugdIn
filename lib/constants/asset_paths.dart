@@ -96,4 +96,7 @@ class AssetPaths {
   static const keyIcon = '${_svg}key_icon.svg';
   static const termsOfUseIcon = '${_svg}terms_of_use_icon.svg';
   static const lockIcon = '${_svg}lock_icon.svg';
+  static const postIcon = '${_svg}post_icon.svg';
+  static const storeUnselectedIcon = '${_svg}store_unselected_icon.svg';
+  static const storeSelectedIcon = '${_svg}store_selected_icon.svg';
 }

@@ -1,5 +1,6 @@
 import 'package:plugdin/core/app_preferences/base_storage.dart';
 import 'package:plugdin/core/models/customer_model.dart';
+import 'package:plugdin/core/models/vendor_model.dart';
 
 class AppPreferences extends BaseStorage {
   AppPreferences() {
@@ -11,6 +12,7 @@ class AppPreferences extends BaseStorage {
   final String _refreshTokenKey = 'refresh_token';
   final String _appLocale = 'app_locale';
   final String _userModelKey = 'user_model';
+  final String _vendorModelKey = 'vendor_model';
   final String _adsRemovedKey = 'ads_removed';
 
   void setAppLocale(String locale) {
@@ -59,6 +61,18 @@ class AppPreferences extends BaseStorage {
 
   void removeUserModel() {
     remove(_userModelKey);
+  }
+
+  void setVendorModel(VendorModel vendor) {
+    store<VendorModel>(_vendorModelKey, vendor);
+  }
+
+  VendorModel? getVendorModel() {
+    return retrieve<VendorModel>(_vendorModelKey);
+  }
+
+  void removeVendorModel() {
+    remove(_vendorModelKey);
   }
 
   void clearAuthData() {

@@ -10,16 +10,15 @@ import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
-class CustomerPersonalInfoScreen extends StatefulWidget {
-  const CustomerPersonalInfoScreen({super.key});
+class VendorPersonalInfoScreen extends StatefulWidget {
+  const VendorPersonalInfoScreen({super.key});
 
   @override
-  State<CustomerPersonalInfoScreen> createState() =>
-      _CustomerPersonalInfoScreenState();
+  State<VendorPersonalInfoScreen> createState() =>
+      _VendorPersonalInfoScreenState();
 }
 
-class _CustomerPersonalInfoScreenState
-    extends State<CustomerPersonalInfoScreen> {
+class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
   late final TextEditingController _fullNameController;
   late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
