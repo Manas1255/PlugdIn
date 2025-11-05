@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/core/app_preferences/app_preferences.dart';
+import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
@@ -31,8 +33,12 @@ class LoginScreen extends StatelessWidget {
           ToastHelper.showSuccessToast(
             'Login successful!',
           );
+          final isVendor = Injector.resolve<AppPreferences>().isVendor();
+
           context.goNamed(
-            AppRouteNames.customerHomeScreen,
+            isVendor
+                ? AppRouteNames.vendorHomeScreen
+                : AppRouteNames.customerHomeScreen,
           );
         }
         if (state.emailLogin.isFailure) {

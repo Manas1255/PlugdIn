@@ -8,6 +8,10 @@ import 'package:plugdin/features/customer/profile/data/repositories/profile_repo
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/data/repositories/onboarding_flow_repository_impl.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/home/data/repositories/vendor_home_repository_impl.dart';
+import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/profile/data/repositories/profile_repository_impl.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -31,8 +35,20 @@ class App extends StatelessWidget {
         ),
 
         BlocProvider(
+          create: (context) => VendorHomeCubit(
+            repository: VendorHomeRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
           create: (context) => CustomerProfileCubit(
             repository: CustomerProfileRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => VendorProfileCubit(
+            repository: VendorProfileRepositoryImpl(),
           ),
         ),
       ],

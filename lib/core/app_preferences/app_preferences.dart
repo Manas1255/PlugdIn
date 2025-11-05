@@ -1,6 +1,7 @@
 import 'package:plugdin/core/app_preferences/base_storage.dart';
 import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/core/models/vendor_model.dart';
+import 'package:plugdin/enums/role_type.dart';
 
 class AppPreferences extends BaseStorage {
   AppPreferences() {
@@ -95,5 +96,26 @@ class AppPreferences extends BaseStorage {
 
   Future<void> clearAdsRemoved() {
     return remove(_adsRemovedKey);
+  }
+
+  RoleType? getUserRole() {
+    if (!hasData(_userModelKey)) {
+      return null;
+    }
+
+    final userModel = retrieve<CustomerModel>(_userModelKey);
+    return userModel?.role;
+  }
+
+  bool isVendor() {
+    final role = getUserRole();
+    print('vendor role: $role');
+    return role == RoleType.vendor;
+  }
+
+  bool isCustomer() {
+    final role = getUserRole();
+    print('customer role: $role');
+    return role == RoleType.customer;
   }
 }

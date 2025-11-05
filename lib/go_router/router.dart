@@ -148,7 +148,6 @@ class AppRouter {
         },
       ),
 
-      // Customer navigation routes
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
@@ -160,14 +159,10 @@ class AppRouter {
                 builder: (context, state) => const CustomerHomeScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to vendor home if vendor model exists
-                  if (vendorModel != null) {
-                    return AppRoutes.vendorHomeScreen;
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerHomeScreen;
                   }
-                  // Redirect to onboarding if customer model doesn't exist
-                  if (customerModel == null) {
+                  if (appPreferences.isVendor()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -184,14 +179,10 @@ class AppRouter {
                 builder: (context, state) => const CustomerSearchScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to vendor search if vendor model exists
-                  if (vendorModel != null) {
-                    return AppRoutes.vendorSearchScreen;
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerSearchScreen;
                   }
-                  // Redirect to onboarding if customer model doesn't exist
-                  if (customerModel == null) {
+                  if (appPreferences.isVendor()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -208,14 +199,10 @@ class AppRouter {
                 builder: (context, state) => const CustomerProfileScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to vendor profile if vendor model exists
-                  if (vendorModel != null) {
-                    return AppRoutes.vendorProfileScreen;
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.customerProfileScreen;
                   }
-                  // Redirect to onboarding if customer model doesn't exist
-                  if (customerModel == null) {
+                  if (appPreferences.isVendor()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -225,19 +212,10 @@ class AppRouter {
           ),
         ],
         builder: (context, state, shell) {
-          final appPreferences = Injector.resolve<AppPreferences>();
-          final vendorModel = appPreferences.getVendorModel();
-          final customerModel = appPreferences.getUserModel();
-          
-          // Only show customer navigation if vendor model doesn't exist and customer model exists
-          if (vendorModel == null && customerModel != null) {
-            return CustomerNavigation(shell: shell);
-          }
-          // If vendor model exists or customer model doesn't exist, show empty and let vendor route handle it
-          return const SizedBox.shrink();
+          return CustomerNavigation(shell: shell);
         },
       ),
-      // Vendor navigation routes
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
@@ -249,14 +227,10 @@ class AppRouter {
                 builder: (context, state) => const VendorHomeScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to customer home if vendor model doesn't exist and customer model exists
-                  if (vendorModel == null && customerModel != null) {
-                    return AppRoutes.customerHomeScreen;
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorHomeScreen;
                   }
-                  // Redirect to onboarding if neither model exists
-                  if (vendorModel == null && customerModel == null) {
+                  if (appPreferences.isCustomer()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -273,10 +247,11 @@ class AppRouter {
                 builder: (context, state) => const VendorSearchScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  // Redirect to customer search if vendor model doesn't exist
-                  if (vendorModel == null) {
-                    return AppRoutes.customerSearchScreen;
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorSearchScreen;
+                  }
+                  if (appPreferences.isCustomer()) {
+                    return AppRoutes.onboarding;
                   }
                   return null;
                 },
@@ -292,14 +267,10 @@ class AppRouter {
                 builder: (context, state) => const VendorPostScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to customer home if vendor model doesn't exist and customer model exists
-                  if (vendorModel == null && customerModel != null) {
-                    return AppRoutes.customerHomeScreen;
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorPostScreen;
                   }
-                  // Redirect to onboarding if neither model exists
-                  if (vendorModel == null && customerModel == null) {
+                  if (appPreferences.isCustomer()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -316,14 +287,10 @@ class AppRouter {
                 builder: (context, state) => const VendorStoreScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to customer home if vendor model doesn't exist and customer model exists
-                  if (vendorModel == null && customerModel != null) {
-                    return AppRoutes.customerHomeScreen;
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorStoreScreen;
                   }
-                  // Redirect to onboarding if neither model exists
-                  if (vendorModel == null && customerModel == null) {
+                  if (appPreferences.isCustomer()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -340,14 +307,10 @@ class AppRouter {
                 builder: (context, state) => const VendorProfileScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
-                  final vendorModel = appPreferences.getVendorModel();
-                  final customerModel = appPreferences.getUserModel();
-                  // Redirect to customer profile if vendor model doesn't exist and customer model exists
-                  if (vendorModel == null && customerModel != null) {
-                    return AppRoutes.customerProfileScreen;
+                  if (appPreferences.isVendor()) {
+                    return AppRoutes.vendorProfileScreen;
                   }
-                  // Redirect to onboarding if neither model exists
-                  if (vendorModel == null && customerModel == null) {
+                  if (appPreferences.isCustomer()) {
                     return AppRoutes.onboarding;
                   }
                   return null;
@@ -357,15 +320,7 @@ class AppRouter {
           ),
         ],
         builder: (context, state, shell) {
-          final appPreferences = Injector.resolve<AppPreferences>();
-          final vendorModel = appPreferences.getVendorModel();
-          
-          // Only show vendor navigation if vendor model exists
-          if (vendorModel != null) {
-            return VendorNavigation(shell: shell);
-          }
-          // If vendor model doesn't exist, show empty and let customer route handle it
-          return const SizedBox.shrink();
+          return VendorNavigation(shell: shell);
         },
       ),
     ],

@@ -83,6 +83,7 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
 
       if (responseData.isSuccess && responseData.responseData != null) {
+        print('in ifff hapa, ${responseData.responseData?.user.role}');
         _cache
           ..setUserModel(responseData.responseData!.user)
           ..setToken(responseData.responseData!.tokens.accessToken);
