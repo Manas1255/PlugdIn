@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:plugdin/core/models/customer_model.dart';
+import 'package:plugdin/core/models/vendor_model.dart';
 import 'package:plugdin/utils/helpers/json_helper.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 
 class VendorProfileResponseModel extends Equatable {
   const VendorProfileResponseModel({
-    required this.user,
+    required this.vendor,
   });
 
   factory VendorProfileResponseModel.fromJson(Map<String, dynamic> json) {
     try {
       return VendorProfileResponseModel(
-        user: CustomerModel.fromJson(
+        vendor: VendorModel.fromJson(
           JsonHelper.safeMapCast(
-            json['user'],
+            json['vendor'],
           ),
         ),
       );
@@ -22,22 +22,22 @@ class VendorProfileResponseModel extends Equatable {
       rethrow;
     }
   }
-  final CustomerModel user;
+  final VendorModel vendor;
 
   Map<String, dynamic> toJson() => {
     'user': {},
   };
 
   VendorProfileResponseModel copyWith({
-    CustomerModel? user,
+    VendorModel? vendor,
   }) {
     return VendorProfileResponseModel(
-      user: user ?? this.user,
+      vendor: vendor ?? this.vendor,
     );
   }
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [vendor];
 
   static VendorProfileResponseModel fromApiResponse(
     Map<String, dynamic> json,

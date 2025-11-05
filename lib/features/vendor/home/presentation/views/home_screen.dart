@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
+import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
   const VendorHomeScreen({super.key});
@@ -17,7 +19,7 @@ class VendorHomeScreen extends StatefulWidget {
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
   @override
   void initState() {
-    // context.read<CustomerProfileCubit>().fetchProfileInfo();
+    context.read<VendorProfileCubit>().fetchProfileInfo();
     super.initState();
   }
 
@@ -26,18 +28,15 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        // leading: PICNIWidget(
-        //   imageUrl: AppConstants.appPlaceHolderSellerImage,
-        //   borderRadius: BorderRadius.circular(100),
-        // ),
+        leading: PICNIWidget(
+          imageUrl: AppConstants.appPlaceHolderSellerImage,
+          borderRadius: BorderRadius.circular(100),
+        ),
         title: BlocBuilder<VendorProfileCubit, VendorProfileState>(
           builder: (context, state) {
             return Text(
-              // state.profileInfo.data?.name ?? '',
-              'Welcome, Seller',
-              style: context.h3.copyWith(
-                fontSize: 18,
-              ),
+              state.profileInfo.data?.personName ?? '',
+              style: context.h3,
             );
           },
         ),
