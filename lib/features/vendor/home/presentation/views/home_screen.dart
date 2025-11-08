@@ -101,9 +101,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                         label: category.toDisplayName(),
                         isSelected: state.selectedFilter == category,
                         onTap: () {
-                          context
-                              .read<VendorHomeCubit>()
-                              .updateSelectedFilter(filter: category);
+                          context.read<VendorHomeCubit>().updateSelectedFilter(
+                            filter: category,
+                          );
+                          context.read<VendorHomeCubit>().fetchAllVendors(
+                            filter: category,
+                          );
                         },
                       );
                     },
@@ -116,6 +119,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     scrollDirection: Axis.horizontal,
                   ),
                 ),
+                const SizedBox(height: 20),
                 Text(
                   'Featured',
                   style: context.h1,
