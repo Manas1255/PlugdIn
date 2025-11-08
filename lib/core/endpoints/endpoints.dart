@@ -18,11 +18,12 @@ class Endpoints {
 
   /// Customer Profile Endpoints
   static const String getProfileInfo = 'auth/profile';
-  static const String updateProfile = 'users/update';
+  static const String updateCustomerProfile = 'users/update';
   static const String setNotification = 'users/notifications/toggle';
   static const String deleteCustomerAccount = 'users/delete';
 
   /// Vendor Endpoints
   static const String getAllVendors = 'vendor/all';
   static const String deleteVendorAccount = 'vendor/delete';
+  static const String updateVendorProfile = 'vendor/profile';
 }

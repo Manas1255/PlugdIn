@@ -86,7 +86,7 @@ class CustomerProfileRepositoryImpl implements CustomerProfileRepository {
   }) async {
     try {
       final response = await _apiService.put(
-        Endpoints.updateProfile,
+        Endpoints.updateCustomerProfile,
         {
           'name': name,
           'username': username,

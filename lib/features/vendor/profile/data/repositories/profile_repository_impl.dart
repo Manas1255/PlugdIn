@@ -80,15 +80,23 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
 
   @override
   Future<RepositoryResponse<VendorModel>> updateProfileInfo({
-    required String name,
-    required String username,
+    required String companyName,
+    required String personName,
+    required String address,
+    required String city,
+    required String phoneNumber,
+    required String businessDescription,
   }) async {
     try {
       final response = await _apiService.put(
-        Endpoints.updateProfile,
+        Endpoints.updateVendorProfile,
         {
-          'name': name,
-          'username': username,
+          'companyName': companyName,
+          'personName': personName,
+          'address': address,
+          'city': city,
+          'phoneNumber': phoneNumber,
+          'businessDescription': businessDescription,
         },
       );
 

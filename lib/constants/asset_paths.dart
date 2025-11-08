@@ -99,4 +99,6 @@ class AssetPaths {
   static const postIcon = '${_svg}post_icon.svg';
   static const storeUnselectedIcon = '${_svg}store_unselected_icon.svg';
   static const storeSelectedIcon = '${_svg}store_selected_icon.svg';
+  static const cameraIcon = '${_svg}camera_icon.svg';
+  static const galleryIcon = '${_svg}gallery_icon.svg';
 }
