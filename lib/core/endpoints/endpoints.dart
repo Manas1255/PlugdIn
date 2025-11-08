@@ -21,4 +21,7 @@ class Endpoints {
   static const String updateProfile = 'users/update';
   static const String setNotification = 'users/notifications/toggle';
   static const String deleteAccount = 'users/delete';
+
+  /// Vendor Endpoints
+  static const String getAllVendors = 'vendor/all';
 }
