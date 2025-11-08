@@ -84,7 +84,7 @@ class VendorProfileScreen extends StatelessWidget {
                       title: 'Personal Information',
                       onTap: () {
                         context.pushNamed(
-                          AppRouteNames.customerPersonalInfoScreen,
+                          AppRouteNames.vendorPersonalInfoScreen,
                         );
                       },
                     ),
