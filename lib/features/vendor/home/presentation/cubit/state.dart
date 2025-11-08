@@ -8,7 +8,7 @@ class VendorHomeState extends Equatable {
   const VendorHomeState({
     this.selectedRoleType = RoleType.none,
     this.allVendors = const DataState.initial(),
-    this.selectedFilter = CategoryType.none,
+    this.selectedFilter = CategoryType.all,
   });
 
   final RoleType? selectedRoleType;

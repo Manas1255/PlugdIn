@@ -65,36 +65,21 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<VendorHomeCubit, VendorHomeState>(
-        builder: (context, state) {
-          if (state.allVendors.isLoading) {
-            return const LoadingWidget();
-          }
-          if (state.allVendors.isFailure) {
-            return PIErrorWidget(
-              errorText:
-                  state.allVendors.errorMessage ?? 'Something went wrong',
-              onPressed: () {
-                context.read<VendorHomeCubit>().fetchAllVendors();
-              },
-            );
-          }
-          if (state.allVendors.isEmpty) {
-            return const EmptyWidget(
-              text: 'No Vendors Found',
-            );
-          }
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 16,
-              vertical: 24,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 34,
-                  child: ListView.separated(
+      body: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 16,
+          vertical: 24,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 34,
+              child: BlocBuilder<VendorHomeCubit, VendorHomeState>(
+                buildWhen: (previous, current) =>
+                    previous.selectedFilter != current.selectedFilter,
+                builder: (context, state) {
+                  return ListView.separated(
                     itemBuilder: (context, index) {
                       final category = CategoryType.values[index];
                       return PIFilterChipWidget(
@@ -102,11 +87,11 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                         isSelected: state.selectedFilter == category,
                         onTap: () {
                           context.read<VendorHomeCubit>().updateSelectedFilter(
-                            filter: category,
-                          );
+                                filter: category,
+                              );
                           context.read<VendorHomeCubit>().fetchAllVendors(
-                            filter: category,
-                          );
+                                filter: category,
+                              );
                         },
                       );
                     },
@@ -117,16 +102,39 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     },
                     itemCount: CategoryType.values.length,
                     scrollDirection: Axis.horizontal,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Featured',
-                  style: context.h1,
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ListView.separated(
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Featured',
+              style: context.h1,
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: BlocBuilder<VendorHomeCubit, VendorHomeState>(
+                builder: (context, state) {
+                  if (state.allVendors.isLoading) {
+                    return const LoadingWidget();
+                  }
+                  if (state.allVendors.isFailure) {
+                    return PIErrorWidget(
+                      errorText:
+                          state.allVendors.errorMessage ?? 'Something went wrong',
+                      onPressed: () {
+                        context.read<VendorHomeCubit>().fetchAllVendors(
+                              filter: state.selectedFilter,
+                            );
+                      },
+                    );
+                  }
+                  if (state.allVendors.isEmpty) {
+                    return const EmptyWidget(
+                      text: 'No Vendors Found',
+                    );
+                  }
+                  return ListView.separated(
                     itemBuilder: (context, index) {
                       final vendor = state.allVendors.data?.vendors[index];
                       return VendorCardWidget(
@@ -143,12 +151,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     itemCount: state.allVendors.data?.vendors.length ?? 0,
                     shrinkWrap: true,
                     physics: const AlwaysScrollableScrollPhysics(),
-                  ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

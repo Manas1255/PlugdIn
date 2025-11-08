@@ -10,6 +10,10 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
   final VendorHomeRepository repository;
 
   Future<void> fetchAllVendors({CategoryType? filter}) async {
+    final selectedFilter = filter ?? state.selectedFilter;
+    final categoryFilter =
+        selectedFilter == CategoryType.all ? null : selectedFilter;
+
     emit(
       state.copyWith(
         allVendors: const DataState.loading(),
@@ -17,7 +21,7 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
     );
 
     final response = await repository.getAllVendors(
-      filter: filter,
+      filter: categoryFilter,
     );
 
     if (response.isSuccess && response.data != null) {

@@ -24,11 +24,14 @@ class VendorHomeRepositoryImpl implements VendorHomeRepository {
     CategoryType? filter,
   }) async {
     try {
+      final queryParams = <String, dynamic>{};
+      if (filter != null) {
+        queryParams['category'] = filter.toName();
+      }
+
       final response = await _apiService.get(
         Endpoints.getAllVendors,
-        queryParams: {
-          'category': filter?.toName(),
-        },
+        queryParams: queryParams.isEmpty ? null : queryParams,
       );
       final responseData = ApiResponseParser.parse<AllVendorsResponseModel>(
         json: response.data,
