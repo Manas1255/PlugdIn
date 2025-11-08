@@ -1,12 +1,12 @@
-import 'package:plugdin/core/models/customer_model.dart';
+import 'package:plugdin/core/models/vendor_model.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
 
 abstract class VendorProfileRepository {
-  Future<RepositoryResponse<CustomerModel>> fetchProfileInfo();
+  Future<RepositoryResponse<VendorModel>> fetchProfileInfo();
 
   Future<RepositoryResponse<bool>> logout();
 
-  Future<RepositoryResponse<CustomerModel>> updateProfileInfo({
+  Future<RepositoryResponse<VendorModel>> updateProfileInfo({
     required String name,
     required String username,
   });

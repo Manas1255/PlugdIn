@@ -6,9 +6,10 @@ import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
-import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
 import 'package:plugdin/features/customer/profile/presentation/widgets/notifications_toggle_widget.dart';
 import 'package:plugdin/features/customer/profile/presentation/widgets/settings_tile_widget.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
@@ -24,7 +25,7 @@ class VendorProfileScreen extends StatelessWidget {
           style: context.h3,
         ),
       ),
-      body: BlocBuilder<CustomerProfileCubit, CustomerProfileState>(
+      body: BlocBuilder<VendorProfileCubit, VendorProfileState>(
         builder: (context, state) {
           if (state.profileInfo.isLoading) {
             return const LoadingWidget();
@@ -63,7 +64,7 @@ class VendorProfileScreen extends StatelessWidget {
                   height: 24,
                 ),
                 Text(
-                  state.profileInfo.data?.name ?? '',
+                  state.profileInfo.data?.personName ?? '',
                   style: context.h3,
                 ),
                 Text(
@@ -83,7 +84,7 @@ class VendorProfileScreen extends StatelessWidget {
                       title: 'Personal Information',
                       onTap: () {
                         context.pushNamed(
-                          AppRouteNames.customerPersonalInfoScreen,
+                          AppRouteNames.vendorPersonalInfoScreen,
                         );
                       },
                     ),

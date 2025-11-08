@@ -2,8 +2,8 @@ import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
-import 'package:plugdin/core/models/customer_model.dart';
-import 'package:plugdin/features/customer/profile/data/models/profile_response_model.dart';
+import 'package:plugdin/core/models/vendor_model.dart';
+import 'package:plugdin/features/vendor/profile/data/models/profile_response_model.dart';
 import 'package:plugdin/features/vendor/profile/domain/repositories/profile_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
@@ -20,7 +20,7 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
   final AppPreferences _cache;
 
   @override
-  Future<RepositoryResponse<CustomerModel>> fetchProfileInfo() async {
+  Future<RepositoryResponse<VendorModel>> fetchProfileInfo() async {
     try {
       // final userModel = _cache.getUserModel();
       // if (userModel != null && !forceRefresh) {
@@ -34,19 +34,18 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
         Endpoints.getProfileInfo,
       );
 
-      final responseData =
-          ApiResponseParser.parse<CustomerProfileResponseModel>(
-            json: response.data,
-            fromJson: CustomerProfileResponseModel.fromJson,
-          );
+      final responseData = ApiResponseParser.parse<VendorProfileResponseModel>(
+        json: response.data,
+        fromJson: VendorProfileResponseModel.fromJson,
+      );
 
       if (responseData.isSuccess && responseData.responseData != null) {
-        _cache.setUserModel(responseData.responseData!.user);
+        _cache.setVendorModel(responseData.responseData!.vendor);
       }
 
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,
-        data: responseData.responseData?.user,
+        data: responseData.responseData?.vendor,
       );
     } catch (e, s) {
       AppLogger.error('Error fetching profile info:', e, s);
@@ -80,7 +79,7 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
   }
 
   @override
-  Future<RepositoryResponse<CustomerModel>> updateProfileInfo({
+  Future<RepositoryResponse<VendorModel>> updateProfileInfo({
     required String name,
     required String username,
   }) async {
@@ -93,15 +92,14 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
         },
       );
 
-      final responseData =
-          ApiResponseParser.parse<CustomerProfileResponseModel>(
-            json: response.data,
-            fromJson: CustomerProfileResponseModel.fromJson,
-          );
+      final responseData = ApiResponseParser.parse<VendorProfileResponseModel>(
+        json: response.data,
+        fromJson: VendorProfileResponseModel.fromJson,
+      );
 
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,
-        data: responseData.responseData?.user,
+        data: responseData.responseData?.vendor,
       );
     } catch (e, s) {
       AppLogger.error('Error updating profile info:', e, s);
@@ -174,7 +172,7 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
   Future<RepositoryResponse<bool>> deleteAccount() async {
     try {
       final response = await _apiService.delete(
-        Endpoints.deleteAccount,
+        Endpoints.deleteVendorAccount,
       );
 
       final responseData = ApiResponseParser.parseBooleanResponse(

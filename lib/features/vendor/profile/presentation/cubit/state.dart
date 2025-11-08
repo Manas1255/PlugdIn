@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:plugdin/core/models/customer_model.dart';
+import 'package:plugdin/core/models/vendor_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
 class VendorProfileState extends Equatable {
@@ -12,14 +12,14 @@ class VendorProfileState extends Equatable {
   });
 
   final bool notificationsEnabled;
-  final DataState<CustomerModel> profileInfo;
+  final DataState<VendorModel> profileInfo;
   final DataState<bool> changePassword;
   final DataState<bool> userPreferences;
   final DataState<bool> deleteAccount;
 
   VendorProfileState copyWith({
     bool? notificationsEnabled,
-    DataState<CustomerModel>? profileInfo,
+    DataState<VendorModel>? profileInfo,
     DataState<bool>? changePassword,
     DataState<bool>? userPreferences,
     DataState<bool>? deleteAccount,

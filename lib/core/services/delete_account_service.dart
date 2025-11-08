@@ -28,9 +28,11 @@ class DeleteAccountService {
     BuildContext? context,
   }) async {
     try {
-      await _apiService.delete(
-        Endpoints.deleteAccount,
-      );
+      final endpoint = vendorProfileCubit != null
+          ? Endpoints.deleteVendorAccount
+          : Endpoints.deleteCustomerAccount;
+
+      await _apiService.delete(endpoint);
 
       await _clearAllStates(
         customerProfileCubit: customerProfileCubit,
@@ -61,12 +63,12 @@ class DeleteAccountService {
 
     if (customerProfileCubit != null) {
       customerProfileCubit.emit(
-        CustomerProfileState(
+        const CustomerProfileState(
           notificationsEnabled: false,
-          profileInfo: const DataState.initial(),
-          changePassword: const DataState.initial(),
-          userPreferences: const DataState.initial(),
-          deleteAccount: const DataState.initial(),
+          profileInfo: DataState.initial(),
+          changePassword: DataState.initial(),
+          userPreferences: DataState.initial(),
+          deleteAccount: DataState.initial(),
         ),
       );
     }

@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/field_validators.dart';
-import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
-import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
@@ -19,32 +19,48 @@ class VendorPersonalInfoScreen extends StatefulWidget {
 }
 
 class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
-  late final TextEditingController _fullNameController;
-  late final TextEditingController _userNameController;
   late final TextEditingController _emailController;
+  late final TextEditingController _personNameController;
+  late final TextEditingController _addressController;
+  late final TextEditingController _cityController;
+  late final TextEditingController _phoneNumberController;
+  late final TextEditingController _companyNameController;
+  late final TextEditingController _userNameController;
 
   @override
   void initState() {
     super.initState();
-    _fullNameController = TextEditingController();
-    _userNameController = TextEditingController();
     _emailController = TextEditingController();
+    _personNameController = TextEditingController();
+    _addressController = TextEditingController();
+    _cityController = TextEditingController();
+    _phoneNumberController = TextEditingController();
+    _companyNameController = TextEditingController();
+    _userNameController = TextEditingController();
 
     final profileData = context
-        .read<CustomerProfileCubit>()
+        .read<VendorProfileCubit>()
         .state
         .profileInfo
         .data;
-    _fullNameController.text = profileData?.name ?? '';
-    _userNameController.text = profileData?.username ?? '';
     _emailController.text = profileData?.email ?? '';
+    _personNameController.text = profileData?.personName ?? '';
+    _addressController.text = profileData?.address ?? '';
+    _cityController.text = profileData?.city ?? '';
+    _phoneNumberController.text = profileData?.phoneNumber ?? '';
+    _companyNameController.text = profileData?.companyName ?? '';
+    _userNameController.text = profileData?.username ?? '';
   }
 
   @override
   void dispose() {
-    _fullNameController.dispose();
-    _userNameController.dispose();
     _emailController.dispose();
+    _personNameController.dispose();
+    _addressController.dispose();
+    _cityController.dispose();
+    _phoneNumberController.dispose();
+    _companyNameController.dispose();
+    _userNameController.dispose();
     super.dispose();
   }
 
@@ -62,7 +78,7 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
           style: context.h3,
         ),
       ),
-      body: BlocBuilder<CustomerProfileCubit, CustomerProfileState>(
+      body: BlocBuilder<VendorProfileCubit, VendorProfileState>(
         builder: (context, state) {
           // if (state.profileInfo.isLoading) {
           //   return const LoadingWidget();
@@ -81,7 +97,7 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
           //     text: 'No profile data found',
           //   );
           // }
-          return Padding(
+          return SingleChildScrollView(
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: 16,
               vertical: 24,
@@ -89,6 +105,87 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Email',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'Email',
+                  controller: _emailController,
+                  readOnly: true,
+                  backgroundColor: AppColors.lightGreyColor,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+
+                Text(
+                  'Person Name',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'Person Name',
+                  controller: _personNameController,
+                  validator: FieldValidators.nameValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+
+                Text(
+                  'Address',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'Address',
+                  controller: _addressController,
+                  validator: FieldValidators.locationValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+
+                Text(
+                  'City',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'City',
+                  controller: _cityController,
+                  validator: FieldValidators.locationValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+
+                Text(
+                  'Phone Number',
+                  style: context.b2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                PITextField(
+                  hintText: 'Phone Number',
+                  controller: _phoneNumberController,
+                  validator: FieldValidators.phoneValidator,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+
                 Text(
                   'Full Name',
                   style: context.b2,
@@ -98,7 +195,7 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
                 ),
                 PITextField(
                   hintText: 'Full Name',
-                  controller: _fullNameController,
+                  controller: _companyNameController,
                   validator: FieldValidators.nameValidator,
                 ),
                 const SizedBox(
@@ -117,31 +214,13 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
                   controller: _userNameController,
                   validator: FieldValidators.usernameValidator,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-
-                Text(
-                  'Email',
-                  style: context.b2,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-
-                PITextField(
-                  hintText: 'Email',
-                  controller: _emailController,
-                  readOnly: true,
-                  backgroundColor: AppColors.lightGreyColor,
-                ),
               ],
             ),
           );
         },
       ),
       bottomNavigationBar: SafeArea(
-        child: BlocConsumer<CustomerProfileCubit, CustomerProfileState>(
+        child: BlocConsumer<VendorProfileCubit, VendorProfileState>(
           listenWhen: (previous, current) =>
               previous.profileInfo != current.profileInfo,
           listener: (context, state) {
@@ -160,8 +239,8 @@ class _VendorPersonalInfoScreenState extends State<VendorPersonalInfoScreen> {
             return PIButton(
               text: 'Update',
               onPressed: () {
-                context.read<CustomerProfileCubit>().updateProfileInfo(
-                  name: _fullNameController.text.trim(),
+                context.read<VendorProfileCubit>().updateProfileInfo(
+                  name: _companyNameController.text.trim(),
                   username: _userNameController.text.trim(),
                 );
               },

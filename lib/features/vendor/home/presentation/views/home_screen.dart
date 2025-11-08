@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
+import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/no_data_widget.dart';
+import 'package:plugdin/utils/widgets/filter_chip_widget.dart';
+import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
   const VendorHomeScreen({super.key});
@@ -17,7 +27,8 @@ class VendorHomeScreen extends StatefulWidget {
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
   @override
   void initState() {
-    // context.read<CustomerProfileCubit>().fetchProfileInfo();
+    context.read<VendorProfileCubit>().fetchProfileInfo();
+    context.read<VendorHomeCubit>().fetchAllVendors();
     super.initState();
   }
 
@@ -26,18 +37,15 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        // leading: PICNIWidget(
-        //   imageUrl: AppConstants.appPlaceHolderSellerImage,
-        //   borderRadius: BorderRadius.circular(100),
-        // ),
+        leading: PICNIWidget(
+          imageUrl: AppConstants.appPlaceHolderSellerImage,
+          borderRadius: BorderRadius.circular(100),
+        ),
         title: BlocBuilder<VendorProfileCubit, VendorProfileState>(
           builder: (context, state) {
             return Text(
-              // state.profileInfo.data?.name ?? '',
-              'Welcome, Seller',
-              style: context.h3.copyWith(
-                fontSize: 18,
-              ),
+              state.profileInfo.data?.personName ?? '',
+              style: context.h3,
             );
           },
         ),
@@ -57,8 +65,99 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           ),
         ],
       ),
-      body: Text(
-        'Welcomeeee ',
+      body: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 16,
+          vertical: 24,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 34,
+              child: BlocBuilder<VendorHomeCubit, VendorHomeState>(
+                buildWhen: (previous, current) =>
+                    previous.selectedFilter != current.selectedFilter,
+                builder: (context, state) {
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final category = CategoryType.values[index];
+                      return PIFilterChipWidget(
+                        label: category.toDisplayName(),
+                        isSelected: state.selectedFilter == category,
+                        onTap: () {
+                          context.read<VendorHomeCubit>().updateSelectedFilter(
+                            filter: category,
+                          );
+                          context.read<VendorHomeCubit>().fetchAllVendors(
+                            filter: category,
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        width: 6,
+                      );
+                    },
+                    itemCount: CategoryType.values.length,
+                    scrollDirection: Axis.horizontal,
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Featured',
+              style: context.h1,
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: BlocBuilder<VendorHomeCubit, VendorHomeState>(
+                builder: (context, state) {
+                  if (state.allVendors.isLoading) {
+                    return const LoadingWidget();
+                  }
+                  if (state.allVendors.isFailure) {
+                    return PIErrorWidget(
+                      errorText:
+                          state.allVendors.errorMessage ??
+                          'Something went wrong',
+                      onPressed: () {
+                        context.read<VendorHomeCubit>().fetchAllVendors(
+                          filter: state.selectedFilter,
+                        );
+                      },
+                    );
+                  }
+                  if (state.allVendors.isEmpty) {
+                    return const EmptyWidget(
+                      text: 'No Vendors Found',
+                    );
+                  }
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final vendor = state.allVendors.data?.vendors[index];
+                      return VendorCardWidget(
+                        companyName: vendor?.companyName ?? '',
+                        primaryCategory: vendor?.primaryCategory ?? '',
+                        location: vendor?.address ?? '',
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 8,
+                      );
+                    },
+                    itemCount: state.allVendors.data?.vendors.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -174,7 +174,7 @@ class CustomerProfileRepositoryImpl implements CustomerProfileRepository {
   Future<RepositoryResponse<bool>> deleteAccount() async {
     try {
       final response = await _apiService.delete(
-        Endpoints.deleteAccount,
+        Endpoints.deleteCustomerAccount,
       );
 
       final responseData = ApiResponseParser.parseBooleanResponse(
