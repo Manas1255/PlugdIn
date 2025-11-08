@@ -16,12 +16,13 @@ class Endpoints {
   static const String vendorSignup = 'vendor/register';
   static const String changePassword = 'auth/resetpassword';
 
-  /// Profile Endpoints
+  /// Customer Profile Endpoints
   static const String getProfileInfo = 'auth/profile';
   static const String updateProfile = 'users/update';
   static const String setNotification = 'users/notifications/toggle';
-  static const String deleteAccount = 'users/delete';
+  static const String deleteCustomerAccount = 'users/delete';
 
   /// Vendor Endpoints
   static const String getAllVendors = 'vendor/all';
+  static const String deleteVendorAccount = 'vendor/delete';
 }

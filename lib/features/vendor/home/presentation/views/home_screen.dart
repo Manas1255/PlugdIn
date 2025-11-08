@@ -87,11 +87,11 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                         isSelected: state.selectedFilter == category,
                         onTap: () {
                           context.read<VendorHomeCubit>().updateSelectedFilter(
-                                filter: category,
-                              );
+                            filter: category,
+                          );
                           context.read<VendorHomeCubit>().fetchAllVendors(
-                                filter: category,
-                              );
+                            filter: category,
+                          );
                         },
                       );
                     },
@@ -121,11 +121,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   if (state.allVendors.isFailure) {
                     return PIErrorWidget(
                       errorText:
-                          state.allVendors.errorMessage ?? 'Something went wrong',
+                          state.allVendors.errorMessage ??
+                          'Something went wrong',
                       onPressed: () {
                         context.read<VendorHomeCubit>().fetchAllVendors(
-                              filter: state.selectedFilter,
-                            );
+                          filter: state.selectedFilter,
+                        );
                       },
                     );
                   }

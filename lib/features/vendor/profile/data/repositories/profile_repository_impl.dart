@@ -172,7 +172,7 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
   Future<RepositoryResponse<bool>> deleteAccount() async {
     try {
       final response = await _apiService.delete(
-        Endpoints.deleteAccount,
+        Endpoints.deleteVendorAccount,
       );
 
       final responseData = ApiResponseParser.parseBooleanResponse(
