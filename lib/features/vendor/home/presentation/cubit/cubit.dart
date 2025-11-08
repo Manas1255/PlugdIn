@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:plugdin/enums/category_type.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -34,5 +35,13 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
         ),
       );
     }
+  }
+
+  void updateSelectedFilter({required CategoryType filter}) {
+    emit(
+      state.copyWith(
+        selectedFilter: filter,
+      ),
+    );
   }
 }

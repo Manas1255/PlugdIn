@@ -1,4 +1,5 @@
 enum CategoryType {
+  none,
   venues,
   caterers,
   photographers,
@@ -29,6 +30,8 @@ extension CategoryTypeExtension on CategoryType {
         return 'Decorators';
       case CategoryType.musicians:
         return 'Musicians';
+      case CategoryType.none:
+        return 'None';
     }
   }
 

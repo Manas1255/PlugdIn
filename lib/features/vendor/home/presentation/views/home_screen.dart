@@ -5,6 +5,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/enums/category_type.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
@@ -13,6 +14,7 @@ import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/no_data_widget.dart';
+import 'package:plugdin/utils/widgets/filter_chip_widget.dart';
 import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
@@ -90,6 +92,30 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 34,
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      final category = CategoryType.values[index];
+                      return PIFilterChipWidget(
+                        label: category.toDisplayName(),
+                        isSelected: state.selectedFilter == category,
+                        onTap: () {
+                          context
+                              .read<VendorHomeCubit>()
+                              .updateSelectedFilter(filter: category);
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        width: 6,
+                      );
+                    },
+                    itemCount: CategoryType.values.length,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                ),
                 Text(
                   'Featured',
                   style: context.h1,
