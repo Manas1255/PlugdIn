@@ -94,7 +94,26 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                   style: context.h1,
                 ),
                 const SizedBox(height: 8),
-                VendorCardWidget(),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      final vendor = state.allVendors.data?.vendors[index];
+                      return VendorCardWidget(
+                        companyName: vendor?.companyName ?? '',
+                        primaryCategory: vendor?.primaryCategory ?? '',
+                        location: vendor?.address ?? '',
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 8,
+                      );
+                    },
+                    itemCount: state.allVendors.data?.vendors.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                  ),
+                ),
               ],
             ),
           );
