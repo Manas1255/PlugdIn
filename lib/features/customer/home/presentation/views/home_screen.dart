@@ -7,10 +7,10 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/state.dart';
-import 'package:plugdin/features/customer/home/presentation/widgets/vendor_card_widget.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
+import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});

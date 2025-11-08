@@ -5,9 +5,15 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
+import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/no_data_widget.dart';
+import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
 
 class VendorHomeScreen extends StatefulWidget {
   const VendorHomeScreen({super.key});
@@ -20,6 +26,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
   @override
   void initState() {
     context.read<VendorProfileCubit>().fetchProfileInfo();
+    context.read<VendorHomeCubit>().fetchAllVendors();
     super.initState();
   }
 
@@ -56,8 +63,62 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
           ),
         ],
       ),
-      body: Text(
-        'Welcomeeee ',
+      body: BlocBuilder<VendorHomeCubit, VendorHomeState>(
+        builder: (context, state) {
+          if (state.allVendors.isLoading) {
+            return const LoadingWidget();
+          }
+          if (state.allVendors.isFailure) {
+            return PIErrorWidget(
+              errorText:
+                  state.allVendors.errorMessage ?? 'Something went wrong',
+              onPressed: () {
+                context.read<VendorHomeCubit>().fetchAllVendors();
+              },
+            );
+          }
+          if (state.allVendors.isEmpty) {
+            return const EmptyWidget(
+              text: 'No Vendors Found',
+            );
+          }
+          return Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: 16,
+              vertical: 24,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Featured',
+                  style: context.h1,
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      final vendor = state.allVendors.data?.vendors[index];
+                      return VendorCardWidget(
+                        companyName: vendor?.companyName ?? '',
+                        primaryCategory: vendor?.primaryCategory ?? '',
+                        location: vendor?.address ?? '',
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 8,
+                      );
+                    },
+                    itemCount: state.allVendors.data?.vendors.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -29,7 +29,7 @@ class VendorCardWidget extends StatelessWidget {
             color: AppColors.black.withValues(
               alpha: 0.25,
             ),
-            blurRadius: 10,
+            blurRadius: 6,
           ),
         ],
       ),
