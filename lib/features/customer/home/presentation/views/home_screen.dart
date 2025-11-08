@@ -5,11 +5,13 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/enums/category_type.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
+import 'package:plugdin/utils/widgets/filter_chip_widget.dart';
 import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
@@ -62,40 +64,77 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<CustomerHomeCubit, CustomerHomeState>(
-        builder: (context, state) {
-          if (state.allVendors.isLoading) {
-            return const LoadingWidget();
-          }
-          if (state.allVendors.isFailure) {
-            return PIErrorWidget(
-              errorText:
-                  state.allVendors.errorMessage ?? 'Something went wrong',
-              onPressed: () {
-                context.read<CustomerHomeCubit>().fetchAllVendors();
-              },
-            );
-          }
-          if (state.allVendors.isEmpty) {
-            return const EmptyWidget(
-              text: 'No Vendors Found',
-            );
-          }
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 16,
-              vertical: 24,
+      body: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 16,
+          vertical: 24,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 34,
+              child: BlocBuilder<CustomerHomeCubit, CustomerHomeState>(
+                buildWhen: (previous, current) =>
+                    previous.selectedFilter != current.selectedFilter,
+                builder: (context, state) {
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final category = CategoryType.values[index];
+                      return PIFilterChipWidget(
+                        label: category.toDisplayName(),
+                        isSelected: state.selectedFilter == category,
+                        onTap: () {
+                          context
+                              .read<CustomerHomeCubit>()
+                              .updateSelectedFilter(
+                                filter: category,
+                              );
+                          context.read<CustomerHomeCubit>().fetchAllVendors(
+                            filter: category,
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        width: 6,
+                      );
+                    },
+                    itemCount: CategoryType.values.length,
+                    scrollDirection: Axis.horizontal,
+                  );
+                },
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Featured',
-                  style: context.h1,
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ListView.separated(
+            const SizedBox(height: 20),
+            Text(
+              'Featured',
+              style: context.h1,
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: BlocBuilder<CustomerHomeCubit, CustomerHomeState>(
+                builder: (context, state) {
+                  if (state.allVendors.isLoading) {
+                    return const LoadingWidget();
+                  }
+                  if (state.allVendors.isFailure) {
+                    return PIErrorWidget(
+                      errorText:
+                          state.allVendors.errorMessage ??
+                          'Something went wrong',
+                      onPressed: () {
+                        context.read<CustomerHomeCubit>().fetchAllVendors();
+                      },
+                    );
+                  }
+                  if (state.allVendors.isEmpty) {
+                    return const EmptyWidget(
+                      text: 'No Vendors Found',
+                    );
+                  }
+                  return ListView.separated(
                     itemBuilder: (context, index) {
                       final vendor = state.allVendors.data?.vendors[index];
                       return VendorCardWidget(
@@ -112,12 +151,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                     itemCount: state.allVendors.data?.vendors.length ?? 0,
                     shrinkWrap: true,
                     physics: const AlwaysScrollableScrollPhysics(),
-                  ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
