@@ -2,20 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 
-class FTTabBar extends StatelessWidget {
-  const FTTabBar({
+class PITabBar extends StatelessWidget {
+  const PITabBar({
     required this.tabOneText,
     required this.tabTwoText,
     required this.onTabOnePress,
     required this.onTabTwoPress,
     required this.selectedIndex,
+    required this.tabThreeText,
+    required this.onTabThreePress,
+    required this.tabFourText,
+    required this.onTabFourPress,
     super.key,
   });
 
   final String tabOneText;
   final String tabTwoText;
+  final String tabThreeText;
+  final String tabFourText;
   final VoidCallback onTabOnePress;
   final VoidCallback onTabTwoPress;
+  final VoidCallback onTabThreePress;
+  final VoidCallback onTabFourPress;
   final int selectedIndex;
 
   @override
@@ -52,10 +60,10 @@ class FTTabBar extends StatelessWidget {
             duration: const Duration(milliseconds: 250),
             curve: Curves.ease,
             child: FractionallySizedBox(
-              widthFactor: 0.5,
+              widthFactor: 0.25,
               child: Container(
                 height: 4,
-                color: AppColors.black,
+                color: AppColors.secondaryColor,
               ),
             ),
           ),
@@ -72,7 +80,7 @@ class FTTabBar extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: context.b2.copyWith(
                         color: selectedIndex == 0
-                            ? AppColors.black
+                            ? AppColors.secondaryColor
                             : AppColors.darkGreyTextColor,
                         fontWeight: selectedIndex == 0
                             ? FontWeight.bold
@@ -92,9 +100,49 @@ class FTTabBar extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: context.b2.copyWith(
                         color: selectedIndex == 1
-                            ? AppColors.black
+                            ? AppColors.secondaryColor
                             : AppColors.darkGreyTextColor,
                         fontWeight: selectedIndex == 1
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: onTabThreePress,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      tabThreeText,
+                      textAlign: TextAlign.center,
+                      style: context.b2.copyWith(
+                        color: selectedIndex == 2
+                            ? AppColors.secondaryColor
+                            : AppColors.darkGreyTextColor,
+                        fontWeight: selectedIndex == 2
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: onTabFourPress,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      tabFourText,
+                      textAlign: TextAlign.center,
+                      style: context.b2.copyWith(
+                        color: selectedIndex == 3
+                            ? AppColors.secondaryColor
+                            : AppColors.darkGreyTextColor,
+                        fontWeight: selectedIndex == 3
                             ? FontWeight.bold
                             : FontWeight.normal,
                       ),

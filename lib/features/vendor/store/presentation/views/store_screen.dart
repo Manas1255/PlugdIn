@@ -3,6 +3,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
+import 'package:plugdin/utils/widgets/pi_tab_bar.dart';
 
 class VendorStoreScreen extends StatelessWidget {
   const VendorStoreScreen({super.key});
@@ -38,6 +39,17 @@ class VendorStoreScreen extends StatelessWidget {
             StoreHeaderWidget(),
             const SizedBox(height: 16),
             StoreDetailsWidget(),
+            PITabBar(
+              tabOneText: 'Store',
+              tabTwoText: 'Details',
+              tabThreeText: 'Packages',
+              tabFourText: 'Reviews',
+              onTabOnePress: () {},
+              onTabTwoPress: () {},
+              onTabThreePress: () {},
+              onTabFourPress: () {},
+              selectedIndex: 0,
+            ),
           ],
         ),
       ),
