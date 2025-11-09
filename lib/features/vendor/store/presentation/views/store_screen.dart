@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
@@ -10,6 +11,15 @@ class VendorStoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 8,
+        shadowColor: AppColors.black.withValues(alpha: 0.25),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(24),
+          ),
+        ),
+        surfaceTintColor: AppColors.white,
         title: Text(
           '@username',
           style: context.h3.copyWith(
@@ -23,6 +33,7 @@ class VendorStoreScreen extends StatelessWidget {
           vertical: 20,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StoreHeaderWidget(),
             const SizedBox(height: 16),
