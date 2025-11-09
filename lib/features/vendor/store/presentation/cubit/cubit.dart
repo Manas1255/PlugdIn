@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:plugdin/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 
@@ -7,4 +8,12 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     : super(const VendorStoreState());
 
   final VendorStoreRepository repository;
+
+  void updateSelectedStoreViewType(StoreViewType viewType) {
+    emit(
+      state.copyWith(
+        storeViewType: viewType,
+      ),
+    );
+  }
 }

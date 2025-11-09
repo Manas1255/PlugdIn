@@ -56,6 +56,8 @@ class PITabBar extends StatelessWidget {
           AnimatedAlign(
             alignment: selectedIndex == 0
                 ? Alignment.bottomLeft
+                : selectedIndex == 1
+                ? Alignment.bottomCenter
                 : Alignment.bottomRight,
             duration: const Duration(milliseconds: 250),
             curve: Curves.ease,
