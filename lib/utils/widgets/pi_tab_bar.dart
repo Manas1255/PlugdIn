@@ -30,131 +30,119 @@ class PITabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 4,
-                    color: AppColors.lightGreyColor,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 4,
-                    color: AppColors.lightGreyColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          AnimatedAlign(
-            alignment: selectedIndex == 0
-                ? Alignment.bottomLeft
-                : selectedIndex == 1
-                ? Alignment.bottomCenter
-                : Alignment.bottomRight,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.ease,
-            child: FractionallySizedBox(
-              widthFactor: 0.25,
-              child: Container(
-                height: 4,
-                color: AppColors.secondaryColor,
-              ),
-            ),
-          ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final tabWidth = constraints.maxWidth / 4;
 
-          Row(
+          return Stack(
             children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: onTabOnePress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      tabOneText,
-                      textAlign: TextAlign.center,
-                      style: context.b2.copyWith(
-                        color: selectedIndex == 0
-                            ? AppColors.secondaryColor
-                            : AppColors.darkGreyTextColor,
-                        fontWeight: selectedIndex == 0
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                  ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 4,
+                  color: AppColors.lightGreyColor,
                 ),
               ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onTabTwoPress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      tabTwoText,
-                      textAlign: TextAlign.center,
-                      style: context.b2.copyWith(
-                        color: selectedIndex == 1
-                            ? AppColors.secondaryColor
-                            : AppColors.darkGreyTextColor,
-                        fontWeight: selectedIndex == 1
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                  ),
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.ease,
+                bottom: 0,
+                left: tabWidth * selectedIndex,
+                child: Container(
+                  height: 4,
+                  width: tabWidth,
+                  color: AppColors.secondaryColor,
                 ),
               ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onTabThreePress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      tabThreeText,
-                      textAlign: TextAlign.center,
-                      style: context.b2.copyWith(
-                        color: selectedIndex == 2
-                            ? AppColors.secondaryColor
-                            : AppColors.darkGreyTextColor,
-                        fontWeight: selectedIndex == 2
-                            ? FontWeight.bold
-                            : FontWeight.normal,
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTabOnePress,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          tabOneText,
+                          textAlign: TextAlign.center,
+                          style: context.b2.copyWith(
+                            color: selectedIndex == 0
+                                ? AppColors.secondaryColor
+                                : AppColors.darkGreyTextColor,
+                            fontWeight: selectedIndex == 0
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onTabFourPress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      tabFourText,
-                      textAlign: TextAlign.center,
-                      style: context.b2.copyWith(
-                        color: selectedIndex == 3
-                            ? AppColors.secondaryColor
-                            : AppColors.darkGreyTextColor,
-                        fontWeight: selectedIndex == 3
-                            ? FontWeight.bold
-                            : FontWeight.normal,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTabTwoPress,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          tabTwoText,
+                          textAlign: TextAlign.center,
+                          style: context.b2.copyWith(
+                            color: selectedIndex == 1
+                                ? AppColors.secondaryColor
+                                : AppColors.darkGreyTextColor,
+                            fontWeight: selectedIndex == 1
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTabThreePress,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          tabThreeText,
+                          textAlign: TextAlign.center,
+                          style: context.b2.copyWith(
+                            color: selectedIndex == 2
+                                ? AppColors.secondaryColor
+                                : AppColors.darkGreyTextColor,
+                            fontWeight: selectedIndex == 2
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: onTabFourPress,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          tabFourText,
+                          textAlign: TextAlign.center,
+                          style: context.b2.copyWith(
+                            color: selectedIndex == 3
+                                ? AppColors.secondaryColor
+                                : AppColors.darkGreyTextColor,
+                            fontWeight: selectedIndex == 3
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
