@@ -142,6 +142,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                         companyName: vendor?.companyName ?? '',
                         primaryCategory: vendor?.primaryCategory ?? '',
                         location: vendor?.address ?? '',
+                        onTap: () {
+                          // Navigate to vendor details
+                        },
                       );
                     },
                     separatorBuilder: (context, index) {

@@ -9,61 +9,66 @@ class VendorCardWidget extends StatelessWidget {
     required this.companyName,
     required this.primaryCategory,
     required this.location,
+    required this.onTap,
     super.key,
   });
 
   final String companyName;
   final String primaryCategory;
   final String location;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(
-          20,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(
+            20,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(
+                alpha: 0.25,
+              ),
+              blurRadius: 6,
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(
-              alpha: 0.25,
+        width: double.infinity,
+        padding: const EdgeInsetsDirectional.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PICNIWidget(
+              imageUrl: AppConstants.dummyVendorCoverImage,
+              height: 125,
+              borderRadius: BorderRadius.circular(10),
             ),
-            blurRadius: 6,
-          ),
-        ],
-      ),
-      width: double.infinity,
-      padding: const EdgeInsetsDirectional.all(18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PICNIWidget(
-            imageUrl: AppConstants.dummyVendorCoverImage,
-            height: 125,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            companyName,
-            style: context.h2.copyWith(
-              fontSize: 24,
+            const SizedBox(height: 8),
+            Text(
+              companyName,
+              style: context.h2.copyWith(
+                fontSize: 24,
+              ),
             ),
-          ),
-          Text(
-            primaryCategory,
-            style: context.l3.copyWith(
-              fontWeight: FontWeight.w500,
+            Text(
+              primaryCategory,
+              style: context.l3.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            location,
-            style: context.l3.copyWith(
-              fontSize: 8,
+            const SizedBox(height: 4),
+            Text(
+              location,
+              style: context.l3.copyWith(
+                fontSize: 8,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
