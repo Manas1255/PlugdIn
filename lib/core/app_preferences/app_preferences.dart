@@ -1,7 +1,7 @@
 import 'package:plugdin/core/app_preferences/base_storage.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/core/models/vendor_model.dart';
-import 'package:plugdin/enums/role_type.dart';
 
 class AppPreferences extends BaseStorage {
   AppPreferences() {

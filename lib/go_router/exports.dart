@@ -25,6 +25,7 @@ import 'package:plugdin/features/vendor/navigation/presentation/views/vendor_nav
 import 'package:plugdin/features/vendor/profile/presentation/views/change_password_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/personal_info_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/profile_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 
 part 'router.dart';

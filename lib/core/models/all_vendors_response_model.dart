@@ -1,4 +1,4 @@
-import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 
 class AllVendorsResponseModel {
   const AllVendorsResponseModel({

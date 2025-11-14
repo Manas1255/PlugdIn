@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/features/customer/home/domain/repositories/customer_home_repository.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';

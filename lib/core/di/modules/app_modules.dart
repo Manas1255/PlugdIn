@@ -2,9 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/core/models/vendor_model.dart';
-import 'package:plugdin/enums/role_type.dart';
 
 abstract class AppModule {
   static late final GetIt _container;

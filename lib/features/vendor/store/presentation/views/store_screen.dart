@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
-import 'package:plugdin/enums/store_view_type.dart';
+import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/details_view.dart';

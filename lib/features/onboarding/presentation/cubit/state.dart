@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:plugdin/enums/category_type.dart';
-import 'package:plugdin/enums/city.dart';
-import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/core/enums/category_type.dart';
+import 'package:plugdin/core/enums/city.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
 class OnboardingState extends Equatable {

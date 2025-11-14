@@ -5,7 +5,7 @@ import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
-import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';

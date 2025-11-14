@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
+import 'package:plugdin/core/enums/category_type.dart';
+import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/field_validators.dart';
-import 'package:plugdin/enums/category_type.dart';
-import 'package:plugdin/enums/city.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
@@ -184,7 +184,6 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                               PIDropdown<City>(
                                 value: state.selectedCity,
                                 hintText: 'Select City',
-                                textColor: AppColors.black,
                                 items: City.values.map((city) {
                                   return DropdownItem<City>(
                                     value: city,

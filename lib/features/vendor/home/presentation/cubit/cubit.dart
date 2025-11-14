@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:plugdin/enums/category_type.dart';
+import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -11,8 +11,9 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
 
   Future<void> fetchAllVendors({CategoryType? filter}) async {
     final selectedFilter = filter ?? state.selectedFilter;
-    final categoryFilter =
-        selectedFilter == CategoryType.all ? null : selectedFilter;
+    final categoryFilter = selectedFilter == CategoryType.all
+        ? null
+        : selectedFilter;
 
     emit(
       state.copyWith(

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:plugdin/enums/category_type.dart';
-import 'package:plugdin/enums/city.dart';
-import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/core/enums/category_type.dart';
+import 'package:plugdin/core/enums/city.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';

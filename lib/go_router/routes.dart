@@ -28,6 +28,7 @@ class AppRoutes {
       '/customer-change-password-screen';
   static const String vendorChangePasswordScreen =
       '/vendor-change-password-screen';
+  static const String addFeaturesScreen = '/add-features-screen';
 }
 
 class AppRouteNames {
@@ -57,4 +58,5 @@ class AppRouteNames {
       'customer-change-password-screen';
   static const String vendorChangePasswordScreen =
       'vendor-change-password-screen';
+  static const String addFeaturesScreen = 'add-features-screen';
 }
