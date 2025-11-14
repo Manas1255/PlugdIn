@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 
 class StoreDetailsWidget extends StatelessWidget {
-  const StoreDetailsWidget({super.key});
+  const StoreDetailsWidget({
+    required this.companyName,
+    required this.primaryCategory,
+    required this.location,
+    required this.businessDescription,
+    super.key,
+  });
+  final String companyName;
+  final String primaryCategory;
+  final String location;
+  final String businessDescription;
 
   @override
   Widget build(BuildContext context) {

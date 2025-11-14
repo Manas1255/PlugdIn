@@ -95,7 +95,13 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                               children: [
                                 StoreHeaderWidget(),
                                 const SizedBox(height: 16),
-                                StoreDetailsWidget(),
+                                StoreDetailsWidget(
+                                  companyName: 'Company Name',
+                                  primaryCategory: 'Primary Category',
+                                  location: 'Location',
+                                  businessDescription:
+                                      'Business Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                                ),
                               ],
                             ),
                           ),
