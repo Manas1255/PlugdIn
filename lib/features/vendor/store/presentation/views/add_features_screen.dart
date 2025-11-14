@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
+import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 import 'package:plugdin/utils/widgets/filter_chip_widget.dart';
@@ -63,7 +64,12 @@ class _AddFeaturesScreenState extends State<AddFeaturesScreen> {
               final feature = features[index];
               return PIFilterChipWidget(
                 label: feature,
-                onTap: () {},
+                onTap: () {
+                  context.read<VendorStoreCubit>().addFeatureToRequest(
+                    feature,
+                  );
+                },
+                isSelected: state.featuresRequest.features.contains(feature),
               );
             },
             separatorBuilder: (context, index) => const SizedBox(height: 12),
@@ -71,15 +77,32 @@ class _AddFeaturesScreenState extends State<AddFeaturesScreen> {
           );
         },
       ),
-      bottomNavigationBar: SafeArea(
-        child: PIButton(
-          text: 'Update',
-          onPressed: () {},
-          outsidePadding: const EdgeInsetsDirectional.symmetric(
-            horizontal: 16,
-            vertical: 24,
-          ),
-        ),
+      bottomNavigationBar: BlocConsumer<VendorStoreCubit, VendorStoreState>(
+        listener: (context, state) {
+          if (state.updateFeaturesState.isLoaded) {
+            context.pop();
+            ToastHelper.showSuccessToast('Features updated successfully');
+          } else if (state.updateFeaturesState.isFailure) {
+            ToastHelper.showErrorToast(
+              state.updateFeaturesState.errorMessage ?? 'Update failed',
+            );
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: PIButton(
+              text: 'Update',
+              onPressed: () {
+                context.read<VendorStoreCubit>().updateStoreFeatures();
+              },
+              outsidePadding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 16,
+                vertical: 24,
+              ),
+              isLoading: state.updateFeaturesState.isLoading,
+            ),
+          );
+        },
       ),
     );
   }
