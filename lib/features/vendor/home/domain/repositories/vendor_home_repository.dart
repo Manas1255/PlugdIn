@@ -5,5 +5,6 @@ import 'package:plugdin/utils/helpers/repository_response.dart';
 abstract class VendorHomeRepository {
   Future<RepositoryResponse<AllVendorsResponseModel>> getAllVendors({
     CategoryType? filter,
+    int pageNumber = 1,
   });
 }

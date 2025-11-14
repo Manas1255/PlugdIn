@@ -1,3 +1,4 @@
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
@@ -22,17 +23,22 @@ class VendorHomeRepositoryImpl implements VendorHomeRepository {
   @override
   Future<RepositoryResponse<AllVendorsResponseModel>> getAllVendors({
     CategoryType? filter,
+    int pageNumber = 1,
   }) async {
     try {
-      final queryParams = <String, dynamic>{};
+      final queryParams = <String, dynamic>{
+        'page': pageNumber,
+        'limit': AppConstants.paginationLimit,
+      };
       if (filter != null) {
         queryParams['category'] = filter.toName();
       }
 
       final response = await _apiService.get(
         Endpoints.getAllVendors,
-        queryParams: queryParams.isEmpty ? null : queryParams,
+        queryParams: queryParams,
       );
+
       final responseData = ApiResponseParser.parse<AllVendorsResponseModel>(
         json: response.data,
         fromJson: AllVendorsResponseModel.fromJson,
