@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/core/models/api_response/api_response_model.dart';
 import 'package:plugdin/core/models/api_response/base_api_response.dart';
-import 'package:plugdin/enums/role_type.dart';
 
 part 'customer_model.g.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:plugdin/core/di/injector.dart';
-import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/app/view/splash_screen.dart';
+import 'package:plugdin/core/app_preferences/app_preferences.dart';
+import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/features/customer/home/presentation/views/home_screen.dart';
 import 'package:plugdin/features/customer/home/presentation/views/search_screen.dart';
 import 'package:plugdin/features/customer/navigation/presentation/views/customer_navigation.dart';
@@ -18,14 +18,15 @@ import 'package:plugdin/features/onboarding/presentation/views/role_selection_sc
 import 'package:plugdin/features/onboarding/presentation/views/vendor/vendor_onboarding_success_screen.dart';
 import 'package:plugdin/features/onboarding/presentation/views/vendor/vendor_signup_screen.dart';
 import 'package:plugdin/features/onboarding/presentation/views/welcome_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/home_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/post_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/search_screen.dart';
+import 'package:plugdin/features/vendor/navigation/presentation/views/vendor_navigation.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/change_password_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/personal_info_screen.dart';
-import 'package:plugdin/features/vendor/navigation/presentation/views/vendor_navigation.dart';
-import 'package:plugdin/features/vendor/home/presentation/views/home_screen.dart';
-import 'package:plugdin/features/vendor/home/presentation/views/search_screen.dart';
-import 'package:plugdin/features/vendor/home/presentation/views/post_screen.dart';
-import 'package:plugdin/features/vendor/home/presentation/views/store_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/profile_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 
 part 'router.dart';
 part 'routes.dart';

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/constants/asset_paths.dart';
-import 'package:plugdin/enums/role_type.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/features/onboarding/presentation/widgets/role_selection_widget.dart';

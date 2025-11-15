@@ -1,29 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
-import 'package:plugdin/constants/asset_paths.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/core/field_validators.dart';
-import 'package:plugdin/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
+import 'package:plugdin/utils/widgets/image_picker_bottom_sheet.dart';
+import 'package:plugdin/utils/widgets/picture_upload_widget.dart';
 
-class CustomerSignupScreen extends StatelessWidget {
-  CustomerSignupScreen({super.key});
+class CustomerSignupScreen extends StatefulWidget {
+  const CustomerSignupScreen({super.key});
 
+  @override
+  State<CustomerSignupScreen> createState() => _CustomerSignupScreenState();
+}
+
+class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
   final TextEditingController _fullNameController = TextEditingController();
+
   final TextEditingController _userNameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Future<void> _showImagePickerBottomSheet() async {
+    await ImagePickerBottomSheet.show(
+      context,
+      onCameraTap: () async {
+        context.pop();
+        await context.read<OnboardingCubit>().pickTeamImageFromCamera();
+      },
+      onGalleryTap: () async {
+        context.pop();
+        await context.read<OnboardingCubit>().pickTeamImageFromGallery();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +69,7 @@ class CustomerSignupScreen extends StatelessWidget {
       child: FocusHandler(
         child: Scaffold(
           appBar: AppBar(
+            forceMaterialTransparency: true,
             leading: BackArrowIcon(
               onTap: () {
                 context.pop();
@@ -78,41 +103,10 @@ class CustomerSignupScreen extends StatelessWidget {
                     height: 32,
                   ),
 
-                  Center(
-                    child: Stack(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: const BoxDecoration(
-                            color: AppColors.lightGreyColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: SvgPicture.asset(
-                            AssetPaths.unselectedCustomerIcon,
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.black,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: SvgPicture.asset(
-                                AssetPaths.uploadImageIcon,
-                                colorFilter: const ColorFilter.mode(
-                                  AppColors.white,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  PictureUploadWidget(
+                    onTap: () {
+                      _showImagePickerBottomSheet();
+                    },
                   ),
 
                   const SizedBox(

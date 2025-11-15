@@ -7,8 +7,12 @@ abstract class VendorProfileRepository {
   Future<RepositoryResponse<bool>> logout();
 
   Future<RepositoryResponse<VendorModel>> updateProfileInfo({
-    required String name,
-    required String username,
+    required String companyName,
+    required String personName,
+    required String address,
+    required String city,
+    required String phoneNumber,
+    required String businessDescription,
   });
 
   Future<RepositoryResponse<bool>> changePassword({

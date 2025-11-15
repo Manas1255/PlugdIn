@@ -148,6 +148,14 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.addFeaturesScreen,
+        name: AppRouteNames.addFeaturesScreen,
+        builder: (context, state) {
+          return AddFeaturesScreen();
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

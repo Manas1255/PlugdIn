@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
+import 'package:plugdin/core/enums/category_type.dart';
+import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/field_validators.dart';
-import 'package:plugdin/enums/category_type.dart';
-import 'package:plugdin/enums/city.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
@@ -41,6 +42,7 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
       TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _additionalInfoFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -60,8 +62,8 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
           previous.vendorEmailSignUp != current.vendorEmailSignUp,
       listener: (context, state) {
         if (state.vendorEmailSignUp.isLoaded) {
-          ToastHelper.showSuccessToast(
-            'Sign up successful!',
+          context.goNamed(
+            AppRouteNames.vendorOnboardingSuccessScreen,
           );
         } else if (state.vendorEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
@@ -75,7 +77,16 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
           appBar: AppBar(
             leading: BackArrowIcon(
               onTap: () {
-                context.pop();
+                if (context.read<OnboardingCubit>().state.currentPage == 1) {
+                  context.read<OnboardingCubit>().previousPage();
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                  return;
+                } else {
+                  context.pop();
+                }
               },
             ),
           ),
@@ -117,153 +128,169 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                           height: 32,
                         ),
                         if (index == 0) ...[
-                          PITextField(
-                            hintText: 'Company Name',
-                            controller: _companyNameController,
-                            validator: FieldValidators.nameValidator,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                PITextField(
+                                  hintText: 'Company Name',
+                                  controller: _companyNameController,
+                                  validator: FieldValidators.nameValidator,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                          PITextField(
-                            hintText: 'User Name',
-                            controller: _userNameController,
-                            validator: FieldValidators.usernameValidator,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                                PITextField(
+                                  hintText: 'User Name',
+                                  controller: _userNameController,
+                                  validator: FieldValidators.usernameValidator,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                          PITextField(
-                            hintText: 'Email',
-                            controller: _emailController,
-                            validator: FieldValidators.emailValidator,
-                            type: PITextFieldType.email,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                                PITextField(
+                                  hintText: 'Email',
+                                  controller: _emailController,
+                                  validator: FieldValidators.emailValidator,
+                                  type: PITextFieldType.email,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                          PITextField(
-                            hintText: 'Password',
-                            controller: _passwordController,
-                            validator: FieldValidators.passwordValidator,
-                            type: PITextFieldType.password,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          PITextField(
-                            hintText: 'Confirm Password',
-                            controller: _confirmPasswordController,
-                            validator: FieldValidators.passwordValidator,
-                            type: PITextFieldType.password,
-                          ),
-                          const SizedBox(
-                            height: 16,
+                                PITextField(
+                                  hintText: 'Password',
+                                  controller: _passwordController,
+                                  validator: FieldValidators.passwordValidator,
+                                  type: PITextFieldType.password,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                PITextField(
+                                  hintText: 'Confirm Password',
+                                  controller: _confirmPasswordController,
+                                  validator: (value) {
+                                    FieldValidators.confirmPasswordValidator(
+                                      value,
+                                      _passwordController,
+                                    );
+                                  },
+                                  type: PITextFieldType.confirmPassword,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                              ],
+                            ),
                           ),
                         ] else ...[
-                          Column(
-                            children: [
-                              PITextField(
-                                hintText: 'Person Name',
-                                controller: _personNameController,
-                                validator: FieldValidators.nameValidator,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              PITextField(
-                                hintText: 'Address',
-                                controller: _addressController,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              PIDropdown<City>(
-                                value: state.selectedCity,
-                                hintText: 'Select City',
-                                textColor: AppColors.black,
-                                items: City.values.map((city) {
-                                  return DropdownItem<City>(
-                                    value: city,
-                                    label: city.toDisplayName(),
-                                  );
-                                }).toList(),
-                                onChanged: (city) {
-                                  context
-                                      .read<OnboardingCubit>()
-                                      .setSelectedCity(city);
-                                },
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              PITextField(
-                                hintText: 'Phone Number',
-                                controller: _phoneController,
-                                validator: FieldValidators.notNull,
-                                type: PITextFieldType.number,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
+                          Form(
+                            key: _additionalInfoFormKey,
+                            child: Column(
+                              children: [
+                                PITextField(
+                                  hintText: 'Person Name',
+                                  controller: _personNameController,
+                                  validator: FieldValidators.nameValidator,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                PITextField(
+                                  hintText: 'Address',
+                                  controller: _addressController,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                PIDropdown<City>(
+                                  value: state.selectedCity,
+                                  hintText: 'Select City',
+                                  items: City.values.map((city) {
+                                    return DropdownItem<City>(
+                                      value: city,
+                                      label: city.toDisplayName(),
+                                    );
+                                  }).toList(),
+                                  onChanged: (city) {
+                                    context
+                                        .read<OnboardingCubit>()
+                                        .setSelectedCity(city);
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                PITextField(
+                                  hintText: 'Phone Number',
+                                  controller: _phoneController,
+                                  validator: FieldValidators.notNull,
+                                  type: PITextFieldType.number,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                              PIDropdown<CategoryType>(
-                                value: state.selectedPrimaryCategory,
-                                hintText: 'Primary Category',
-                                items: CategoryType.values.map((category) {
-                                  return DropdownItem<CategoryType>(
-                                    value: category,
-                                    label: category.toDisplayName(),
-                                  );
-                                }).toList(),
-                                onChanged: (category) {
-                                  context
-                                      .read<OnboardingCubit>()
-                                      .setSelectedPrimaryCategory(category);
-                                },
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
+                                PIDropdown<CategoryType>(
+                                  value: state.selectedPrimaryCategory,
+                                  hintText: 'Primary Category',
+                                  items: CategoryType.values.map((category) {
+                                    return DropdownItem<CategoryType>(
+                                      value: category,
+                                      label: category.toDisplayName(),
+                                    );
+                                  }).toList(),
+                                  onChanged: (category) {
+                                    context
+                                        .read<OnboardingCubit>()
+                                        .setSelectedPrimaryCategory(category);
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                              PIDropdown<CategoryType>(
-                                value: state.selectedAdditionalCategory,
-                                hintText: 'Additional Category',
-                                items: CategoryType.values.map((category) {
-                                  return DropdownItem<CategoryType>(
-                                    value: category,
-                                    label: category.toDisplayName(),
-                                  );
-                                }).toList(),
-                                onChanged: (category) {
-                                  context
-                                      .read<OnboardingCubit>()
-                                      .setSelectedAdditionalCategory(category);
-                                },
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              PITextField(
-                                hintText: 'Paste link here',
-                                controller: _linkController,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
+                                PIDropdown<CategoryType>(
+                                  value: state.selectedAdditionalCategory,
+                                  hintText: 'Additional Category',
+                                  items: CategoryType.values.map((category) {
+                                    return DropdownItem<CategoryType>(
+                                      value: category,
+                                      label: category.toDisplayName(),
+                                    );
+                                  }).toList(),
+                                  onChanged: (category) {
+                                    context
+                                        .read<OnboardingCubit>()
+                                        .setSelectedAdditionalCategory(
+                                          category,
+                                        );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                PITextField(
+                                  hintText: 'Paste link here',
+                                  controller: _linkController,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
 
-                              PITextField(
-                                hintText: 'Business Description',
-                                controller: _businessDescriptionController,
-                                type: PITextFieldType.description,
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                            ],
+                                PITextField(
+                                  hintText: 'Business Description',
+                                  controller: _businessDescriptionController,
+                                  type: PITextFieldType.description,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ],
@@ -280,38 +307,42 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
                   text: state.currentPage == 0 ? 'Next' : 'Send Request',
                   onPressed: () {
                     if (state.currentPage == 0) {
-                      context.read<OnboardingCubit>().nextPage();
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        context.read<OnboardingCubit>().nextPage();
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      }
                     } else {
-                      context.read<OnboardingCubit>().vendorEmailSignUp(
-                        name: _personNameController.text,
-                        username: _userNameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        companyName: _companyNameController.text,
-                        personName: _personNameController.text,
-                        address: _addressController.text,
-                        city: state.selectedCity?.toDisplayName() ?? '',
-                        phoneNumber: _phoneController.text,
-                        primaryCategory:
-                            state.selectedPrimaryCategory?.toDisplayName() ??
-                            '',
-                        businessDescription:
-                            _businessDescriptionController.text,
-                        additionalCategories:
-                            state.selectedAdditionalCategory != null
-                            ? [
-                                state.selectedAdditionalCategory!
-                                    .toDisplayName(),
-                              ]
-                            : null,
-                        links: _linkController.text.isNotEmpty
-                            ? [_linkController.text]
-                            : null,
-                      );
+                      if (_additionalInfoFormKey.currentState!.validate()) {
+                        context.read<OnboardingCubit>().vendorEmailSignUp(
+                          name: _personNameController.text,
+                          username: _userNameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          companyName: _companyNameController.text,
+                          personName: _personNameController.text,
+                          address: _addressController.text,
+                          city: state.selectedCity?.toDisplayName() ?? '',
+                          phoneNumber: _phoneController.text,
+                          primaryCategory:
+                              state.selectedPrimaryCategory?.toDisplayName() ??
+                              '',
+                          businessDescription:
+                              _businessDescriptionController.text,
+                          additionalCategories:
+                              state.selectedAdditionalCategory != null
+                              ? [
+                                  state.selectedAdditionalCategory!
+                                      .toDisplayName(),
+                                ]
+                              : null,
+                          links: _linkController.text.isNotEmpty
+                              ? [_linkController.text]
+                              : null,
+                        );
+                      }
                     }
                   },
                   isLoading: state.vendorEmailSignUp.isLoading,

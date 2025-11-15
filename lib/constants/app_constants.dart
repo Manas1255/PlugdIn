@@ -16,6 +16,7 @@ class AppConstants {
       'https://i.ibb.co/C3NFb8QC/Rectangle-85.png';
 
   // Pagination constants
+  static const int paginationLimit = 15;
   static const defaultPageSizeIPhone = 15;
   static const defaultPageSizeIPad = 30;
 }

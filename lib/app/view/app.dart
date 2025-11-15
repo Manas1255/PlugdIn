@@ -12,6 +12,8 @@ import 'package:plugdin/features/vendor/home/data/repositories/vendor_home_repos
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/data/repositories/profile_repository_impl.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/store/data/repositories/vendor_store_repository_impl.dart';
+import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -49,6 +51,12 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => VendorProfileCubit(
             repository: VendorProfileRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => VendorStoreCubit(
+            repository: VendorStoreRepositoryImpl(),
           ),
         ),
       ],

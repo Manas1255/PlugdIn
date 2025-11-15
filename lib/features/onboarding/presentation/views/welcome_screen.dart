@@ -19,26 +19,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       backgroundColor: AppColors.secondaryColor,
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: 32,
-        ),
-        child: Column(
-          children: [
-            Image.asset(
-              AssetPaths.appLogo,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(
-              'Your event, your way, we’ll connect you with the best.',
-              textAlign: TextAlign.center,
-              style: context.h3.copyWith(
-                color: AppColors.white,
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 32,
+          ),
+          child: Column(
+            children: [
+              Image.asset(
+                AssetPaths.appLogo,
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 12,
+              ),
+              Text(
+                'Your event, your way, we’ll connect you with the best.',
+                textAlign: TextAlign.center,
+                style: context.h3.copyWith(
+                  color: AppColors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: SafeArea(
@@ -68,6 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               outsidePadding: const EdgeInsetsDirectional.symmetric(
                 horizontal: 16,
+                vertical: 16,
               ),
             ),
           ],

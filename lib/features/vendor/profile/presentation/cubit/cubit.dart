@@ -112,8 +112,12 @@ class VendorProfileCubit extends Cubit<VendorProfileState> {
   }
 
   Future<void> updateProfileInfo({
-    required String name,
-    required String username,
+    required String companyName,
+    required String personName,
+    required String address,
+    required String city,
+    required String phoneNumber,
+    required String businessDescription,
   }) async {
     emit(
       state.copyWith(
@@ -122,8 +126,12 @@ class VendorProfileCubit extends Cubit<VendorProfileState> {
     );
 
     final updateProfileResponse = await repository.updateProfileInfo(
-      name: name,
-      username: username,
+      companyName: companyName,
+      personName: personName,
+      address: address,
+      city: city,
+      phoneNumber: phoneNumber,
+      businessDescription: businessDescription,
     );
 
     if (updateProfileResponse.isSuccess) {

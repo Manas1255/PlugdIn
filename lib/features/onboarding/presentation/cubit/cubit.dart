@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:plugdin/enums/category_type.dart';
-import 'package:plugdin/enums/city.dart';
-import 'package:plugdin/enums/role_type.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:plugdin/core/enums/category_type.dart';
+import 'package:plugdin/core/enums/city.dart';
+import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/features/onboarding/data/models/vendor_onboarding_request_model.dart';
 import 'package:plugdin/features/onboarding/domain/repositories/onboarding_flow_repository.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
@@ -11,6 +12,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   OnboardingCubit({required this.repository}) : super(const OnboardingState());
 
   final OnboardingFlowRepository repository;
+
+  final ImagePicker _picker = ImagePicker();
 
   void selectRole(RoleType roleType) {
     emit(
@@ -338,5 +341,25 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         ),
       );
     }
+  }
+
+  Future<void> pickTeamImage({ImageSource source = ImageSource.gallery}) async {
+    final pickedFile = await _picker.pickImage(
+      source: source,
+    );
+
+    // if (pickedFile != null) {
+    //   addTeamImage(
+    //     File(pickedFile.path),
+    //   );
+    // }
+  }
+
+  Future<void> pickTeamImageFromCamera() async {
+    await pickTeamImage(source: ImageSource.camera);
+  }
+
+  Future<void> pickTeamImageFromGallery() async {
+    await pickTeamImage();
   }
 }
