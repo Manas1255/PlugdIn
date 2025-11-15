@@ -8,6 +8,7 @@ import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/field_validators.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/state.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/helpers/focus_handler.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/back_arrow.dart';
@@ -60,8 +61,8 @@ class _VendorSignupScreenState extends State<VendorSignupScreen> {
           previous.vendorEmailSignUp != current.vendorEmailSignUp,
       listener: (context, state) {
         if (state.vendorEmailSignUp.isLoaded) {
-          ToastHelper.showSuccessToast(
-            'Sign up successful!',
+          context.goNamed(
+            AppRouteNames.vendorOnboardingSuccessScreen,
           );
         } else if (state.vendorEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
