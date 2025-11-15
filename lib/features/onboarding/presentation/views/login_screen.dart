@@ -155,20 +155,25 @@ class LoginScreen extends StatelessWidget {
                           ),
                           onPressed: () {},
                         ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        Text(
-                          'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
-                          textAlign: TextAlign.center,
-                          style: context.b3,
-                        ),
                       ],
                     ),
                   ),
                 ),
               );
             },
+          ),
+          bottomNavigationBar: SafeArea(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 24,
+                vertical: 16,
+              ),
+              child: Text(
+                'By choosing to continue, you agree to PlugdIn’s Terms and Privacy Policy.',
+                textAlign: TextAlign.center,
+                style: context.b3,
+              ),
+            ),
           ),
         ),
       ),
