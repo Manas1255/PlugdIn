@@ -19,4 +19,8 @@ abstract class VendorStoreRepository {
   });
 
   Future<RepositoryResponse<VendorStoreInfoModel>> getVendorStoreInfo();
+
+  Future<RepositoryResponse<VendorStoreInfoModel>> getVendorById(
+    String vendorId,
+  );
 }

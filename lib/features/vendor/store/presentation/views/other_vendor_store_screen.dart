@@ -5,10 +5,10 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
-import 'package:plugdin/features/vendor/store/presentation/views/details_view.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_details_view.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/packages_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/reviews_view.dart';
-import 'package:plugdin/features/vendor/store/presentation/views/store_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
@@ -16,27 +16,32 @@ import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/no_data_widget.dart';
 import 'package:plugdin/utils/widgets/pi_tab_bar.dart';
 
-class VendorStoreScreen extends StatefulWidget {
-  const VendorStoreScreen({super.key});
+class OtherVendorStoreScreen extends StatefulWidget {
+  const OtherVendorStoreScreen({
+    required this.vendorId,
+    super.key,
+  });
+
+  final String vendorId;
 
   @override
-  State<VendorStoreScreen> createState() => _VendorStoreScreenState();
+  State<OtherVendorStoreScreen> createState() => _OtherVendorStoreScreenState();
 }
 
-class _VendorStoreScreenState extends State<VendorStoreScreen> {
+class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
   late PageController _pageController;
 
   void _onPageChanged(int index) {
     final viewType = index == 0
         ? StoreViewType.storeView
         : index == 1
-        ? StoreViewType.detailsView
-        : index == 2
-        ? StoreViewType.packagesView
-        : StoreViewType.reviewsView;
+            ? StoreViewType.detailsView
+            : index == 2
+                ? StoreViewType.packagesView
+                : StoreViewType.reviewsView;
     context.read<VendorStoreCubit>().updateSelectedStoreViewType(
-      viewType,
-    );
+          viewType,
+        );
   }
 
   void _animateToPage(int index) {
@@ -49,7 +54,7 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
 
   @override
   void initState() {
-    context.read<VendorStoreCubit>().getVendorStoreInfo();
+    context.read<VendorStoreCubit>().getVendorById(widget.vendorId);
     _pageController = PageController();
     super.initState();
   }
@@ -76,7 +81,7 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
         title: BlocBuilder<VendorStoreCubit, VendorStoreState>(
           builder: (context, state) {
             return Text(
-              '@${state.vendorStoreInfo.data?.userId.username ?? 'N/A'}',
+              '@${state.otherVendorStoreInfo.data?.userId.username ?? 'N/A'}',
               style: context.h3.copyWith(
                 fontSize: 18,
               ),
@@ -86,20 +91,20 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
       ),
       body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
         builder: (context, state) {
-          if (state.vendorStoreInfo.isLoading) {
+          if (state.otherVendorStoreInfo.isLoading) {
             return const LoadingWidget();
           }
-          if (state.vendorStoreInfo.isFailure) {
+          if (state.otherVendorStoreInfo.isFailure) {
             return PIErrorWidget(
               onPressed: () {
-                context.read<VendorStoreCubit>().getVendorStoreInfo();
+                context.read<VendorStoreCubit>().getVendorById(widget.vendorId);
               },
               errorText:
-                  state.vendorStoreInfo.errorMessage ??
+                  state.otherVendorStoreInfo.errorMessage ??
                   'Unexpected error occurred',
             );
           }
-          if (state.vendorStoreInfo.isEmpty) {
+          if (state.otherVendorStoreInfo.isEmpty) {
             return const EmptyWidget(
               text: 'No store information available.',
             );
@@ -116,78 +121,78 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                   child: NestedScrollView(
                     headerSliverBuilder:
                         (BuildContext context, bool innerBoxIsScrolled) => [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                StoreHeaderWidget(
-                                  reviewCount:
-                                      state.vendorStoreInfo.data?.reviews ?? 0,
-                                  rating:
-                                      state.vendorStoreInfo.data?.ratings ?? 0,
-                                  listingCount: 12,
-                                ),
-                                const SizedBox(height: 16),
-                                StoreDetailsWidget(
-                                  companyName:
-                                      state.vendorStoreInfo.data?.companyName ??
+                      SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StoreHeaderWidget(
+                              reviewCount:
+                                  state.otherVendorStoreInfo.data?.reviews ?? 0,
+                              rating:
+                                  state.otherVendorStoreInfo.data?.ratings ?? 0,
+                              listingCount: 12,
+                            ),
+                            const SizedBox(height: 16),
+                            StoreDetailsWidget(
+                              companyName:
+                                  state.otherVendorStoreInfo.data?.companyName ??
                                       'N/A',
-                                  primaryCategory:
-                                      state
-                                          .vendorStoreInfo
-                                          .data
-                                          ?.primaryCategory ??
+                              primaryCategory:
+                                  state
+                                      .otherVendorStoreInfo
+                                      .data
+                                      ?.primaryCategory ??
                                       'N/A',
-                                  location:
-                                      state.vendorStoreInfo.data?.address ??
+                              location:
+                                  state.otherVendorStoreInfo.data?.address ??
                                       'N/A',
-                                  businessDescription:
-                                      state
-                                          .vendorStoreInfo
-                                          .data
-                                          ?.businessDescription ??
+                              businessDescription:
+                                  state
+                                      .otherVendorStoreInfo
+                                      .data
+                                      ?.businessDescription ??
                                       'N/A',
-                                ),
-                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: _SliverTabBarDelegate(
+                          child: PreferredSize(
+                            preferredSize: const Size.fromHeight(48),
+                            child: PITabBar(
+                              tabOneText: 'Store',
+                              tabTwoText: 'Details',
+                              tabThreeText: 'Packages',
+                              tabFourText: 'Reviews',
+                              onTabOnePress: () => _animateToPage(0),
+                              onTabTwoPress: () => _animateToPage(1),
+                              onTabThreePress: () => _animateToPage(2),
+                              onTabFourPress: () => _animateToPage(3),
+                              selectedIndex:
+                                  state.storeViewType ==
+                                      StoreViewType.storeView
+                                  ? 0
+                                  : state.storeViewType ==
+                                        StoreViewType.detailsView
+                                  ? 1
+                                  : state.storeViewType ==
+                                        StoreViewType.packagesView
+                                  ? 2
+                                  : 3,
                             ),
                           ),
-                          SliverPersistentHeader(
-                            pinned: true,
-                            delegate: _SliverTabBarDelegate(
-                              child: PreferredSize(
-                                preferredSize: const Size.fromHeight(48),
-                                child: PITabBar(
-                                  tabOneText: 'Store',
-                                  tabTwoText: 'Details',
-                                  tabThreeText: 'Packages',
-                                  tabFourText: 'Reviews',
-                                  onTabOnePress: () => _animateToPage(0),
-                                  onTabTwoPress: () => _animateToPage(1),
-                                  onTabThreePress: () => _animateToPage(2),
-                                  onTabFourPress: () => _animateToPage(3),
-                                  selectedIndex:
-                                      state.storeViewType ==
-                                          StoreViewType.storeView
-                                      ? 0
-                                      : state.storeViewType ==
-                                            StoreViewType.detailsView
-                                      ? 1
-                                      : state.storeViewType ==
-                                            StoreViewType.packagesView
-                                      ? 2
-                                      : 3,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
+                      ),
+                    ],
                     body: PageView(
                       controller: _pageController,
                       onPageChanged: _onPageChanged,
                       physics: const ClampingScrollPhysics(),
-                      children: [
-                        StoreView(),
-                        DetailsView(),
+                      children: const [
+                        OtherVendorStoreView(),
+                        OtherVendorDetailsView(),
                         PackagesView(),
                         ReviewsView(),
                       ],

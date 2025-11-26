@@ -21,6 +21,7 @@ class VendorStoreState extends Equatable {
     this.isPostBottomSheetShown = false,
     this.storeMedia = const DataState.initial(),
     this.vendorStoreInfo = const DataState.initial(),
+    this.otherVendorStoreInfo = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -33,6 +34,7 @@ class VendorStoreState extends Equatable {
   final bool isPostBottomSheetShown;
   final DataState<StoreMediaResponseModel> storeMedia;
   final DataState<VendorStoreInfoModel> vendorStoreInfo;
+  final DataState<VendorStoreInfoModel> otherVendorStoreInfo;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -46,6 +48,7 @@ class VendorStoreState extends Equatable {
     bool? isPostBottomSheetShown,
     DataState<StoreMediaResponseModel>? storeMedia,
     DataState<VendorStoreInfoModel>? vendorStoreInfo,
+    DataState<VendorStoreInfoModel>? otherVendorStoreInfo,
   }) {
     return VendorStoreState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
@@ -61,6 +64,7 @@ class VendorStoreState extends Equatable {
           isPostBottomSheetShown ?? this.isPostBottomSheetShown,
       storeMedia: storeMedia ?? this.storeMedia,
       vendorStoreInfo: vendorStoreInfo ?? this.vendorStoreInfo,
+      otherVendorStoreInfo: otherVendorStoreInfo ?? this.otherVendorStoreInfo,
     );
   }
 
@@ -76,5 +80,6 @@ class VendorStoreState extends Equatable {
     isPostBottomSheetShown,
     storeMedia,
     vendorStoreInfo,
+    otherVendorStoreInfo,
   ];
 }

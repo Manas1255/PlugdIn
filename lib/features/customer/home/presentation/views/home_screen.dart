@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
@@ -10,6 +11,7 @@ import 'package:plugdin/features/customer/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/state.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 import 'package:plugdin/utils/widgets/filter_chip_widget.dart';
 import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
@@ -145,7 +147,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           companyName: vendor?.companyName ?? '',
                           primaryCategory: vendor?.primaryCategory ?? '',
                           location: vendor?.address ?? '',
-                          onTap: () {},
+                          onTap: () {
+                            context.pushNamed(
+                              AppRouteNames.vendorOtherVendorStoreScreen,
+                              pathParameters: {'vendorId': ?vendor?.id},
+                            );
+                          },
                         );
                       },
                       separatorBuilder: (context, index) {

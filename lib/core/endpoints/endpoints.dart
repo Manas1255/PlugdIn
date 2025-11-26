@@ -26,6 +26,7 @@ class Endpoints {
   /// Vendor Endpoints
   static const String getAllVendors = 'vendor/all';
   static const String getVendorDetails = 'vendor';
+  static String getVendorById(String vendorId) => 'vendor/$vendorId';
   static const String deleteVendorAccount = 'vendor/delete';
   static const String updateVendorProfile = 'vendor/profile';
   static const String features = 'vendor/features';

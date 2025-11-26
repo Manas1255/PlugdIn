@@ -164,6 +164,15 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: '${AppRoutes.vendorOtherVendorStoreScreen}/:vendorId',
+        name: AppRouteNames.vendorOtherVendorStoreScreen,
+        builder: (context, state) {
+          final vendorId = state.pathParameters['vendorId'] ?? '';
+          return OtherVendorStoreScreen(vendorId: vendorId);
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

@@ -170,7 +170,10 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                             primaryCategory: vendor?.primaryCategory ?? '',
                             location: vendor?.address ?? '',
                             onTap: () {
-                              // Navigate to vendor details
+                              context.pushNamed(
+                                AppRouteNames.vendorOtherVendorStoreScreen,
+                                pathParameters: {'vendorId': ?vendor?.id},
+                              );
                             },
                           ),
                         );

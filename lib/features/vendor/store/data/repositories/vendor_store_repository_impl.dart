@@ -145,16 +145,43 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       final response = await _apiService.get(
         Endpoints.getVendorDetails,
       );
-      final responseData = ApiResponseParser.parse<VendorStoreInfoResponseModel>(
-        json: response.data,
-        fromJson: VendorStoreInfoResponseModel.fromJson,
-      );
+      final responseData =
+          ApiResponseParser.parse<VendorStoreInfoResponseModel>(
+            json: response.data,
+            fromJson: VendorStoreInfoResponseModel.fromJson,
+          );
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,
         data: responseData.responseData?.vendor,
       );
     } catch (e, s) {
       AppLogger.error('Error fetching vendor store info', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorStoreInfoModel>> getVendorById(
+    String vendorId,
+  ) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorById(vendorId),
+      );
+      final responseData =
+          ApiResponseParser.parse<VendorStoreInfoResponseModel>(
+            json: response.data,
+            fromJson: VendorStoreInfoResponseModel.fromJson,
+          );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.vendor,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor by ID', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),
