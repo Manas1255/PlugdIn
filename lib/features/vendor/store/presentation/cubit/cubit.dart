@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
@@ -9,6 +12,7 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     : super(const VendorStoreState());
 
   final VendorStoreRepository repository;
+  final ImagePicker _picker = ImagePicker();
 
   void updateSelectedStoreViewType(StoreViewType viewType) {
     emit(
@@ -78,6 +82,107 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
       emit(
         state.copyWith(
           updateFeaturesState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> uploadStoreMedia(List<String> filePaths) async {
+    emit(
+      state.copyWith(
+        uploadMediaState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.uploadStoreMedia(filePaths);
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          uploadMediaState: DataState.loaded(
+            data: response.isSuccess,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          uploadMediaState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> pickStoreImage({
+    ImageSource source = ImageSource.gallery,
+  }) async {
+    final pickedFile = await _picker.pickImage(
+      source: source,
+    );
+
+    if (pickedFile != null) {
+      addStoreImage(
+        File(pickedFile.path),
+      );
+    }
+  }
+
+  Future<void> pickStoreImageFromCamera() async {
+    await pickStoreImage(source: ImageSource.camera);
+  }
+
+  Future<void> pickStoreImageFromGallery() async {
+    await pickStoreImage();
+  }
+
+  void addStoreImage(File image) {
+    emit(
+      state.copyWith(
+        storeImageFile: image,
+      ),
+    );
+  }
+
+  void clearStoreImage() {
+    emit(
+      state.copyWith(
+        storeImageFile: null,
+        clearStoreImage: true,
+      ),
+    );
+  }
+
+  void setPostBottomSheetShown(bool isShown) {
+    emit(
+      state.copyWith(
+        isPostBottomSheetShown: isShown,
+      ),
+    );
+  }
+
+  Future<void> getStoreMedia({int pageNumber = 1}) async {
+    emit(
+      state.copyWith(
+        storeMedia: const DataState.loading(),
+      ),
+    );
+    final response = await repository.getStoreMedia(
+      pageNumber: pageNumber,
+    );
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          storeMedia: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          storeMedia: DataState.failure(
             error: response.message,
           ),
         ),

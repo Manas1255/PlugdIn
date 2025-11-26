@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
@@ -10,6 +11,7 @@ import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
@@ -42,9 +44,13 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           forceMaterialTransparency: true,
-          leading: PICNIWidget(
-            imageUrl: AppConstants.appPlaceHolderSellerImage,
-            borderRadius: BorderRadius.circular(100),
+          leadingWidth: 72,
+          leading: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 12),
+            child: PICNIWidget(
+              imageUrl: AppConstants.appPlaceHolderSellerImage,
+              borderRadius: BorderRadius.circular(100),
+            ),
           ),
           title: BlocBuilder<VendorProfileCubit, VendorProfileState>(
             builder: (context, state) {
@@ -55,17 +61,24 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
             },
           ),
           actions: [
-            Container(
-              margin: const EdgeInsets.only(
-                right: 16,
-              ),
-              padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
-                color: AppColors.secondaryColor,
-                shape: BoxShape.circle,
-              ),
-              child: SvgPicture.asset(
-                AssetPaths.bellIcon,
+            GestureDetector(
+              onTap: () {
+                context.pushNamed(
+                  AppRouteNames.vendorNotificationsScreen,
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(
+                  right: 16,
+                ),
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  color: AppColors.secondaryColor,
+                  shape: BoxShape.circle,
+                ),
+                child: SvgPicture.asset(
+                  AssetPaths.bellIcon,
+                ),
               ),
             ),
           ],

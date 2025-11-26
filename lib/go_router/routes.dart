@@ -29,6 +29,8 @@ class AppRoutes {
   static const String vendorChangePasswordScreen =
       '/vendor-change-password-screen';
   static const String addFeaturesScreen = '/add-features-screen';
+  static const String vendorNotificationsScreen =
+      '/vendor-notifications-screen';
 }
 
 class AppRouteNames {
@@ -59,4 +61,5 @@ class AppRouteNames {
   static const String vendorChangePasswordScreen =
       'vendor-change-password-screen';
   static const String addFeaturesScreen = 'add-features-screen';
+  static const String vendorNotificationsScreen = 'vendor-notifications-screen';
 }

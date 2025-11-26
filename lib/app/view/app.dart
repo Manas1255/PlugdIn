@@ -10,6 +10,8 @@ import 'package:plugdin/features/onboarding/data/repositories/onboarding_flow_re
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/data/repositories/vendor_home_repository_impl.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/vendor/notifications/data/repositories/vendor_notifications_repository_impl.dart';
+import 'package:plugdin/features/vendor/notifications/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/data/repositories/profile_repository_impl.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/data/repositories/vendor_store_repository_impl.dart';
@@ -57,6 +59,12 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => VendorStoreCubit(
             repository: VendorStoreRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => VendorNotificationsCubit(
+            repository: VendorNotificationsRepositoryImpl(),
           ),
         ),
       ],

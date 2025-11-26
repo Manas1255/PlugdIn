@@ -156,6 +156,14 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.vendorNotificationsScreen,
+        name: AppRouteNames.vendorNotificationsScreen,
+        builder: (context, state) {
+          return VendorNotificationsScreen();
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

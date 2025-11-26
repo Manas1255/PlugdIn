@@ -58,6 +58,15 @@ class ApiService {
     return _handleRequest(() => _dio.patch(endpoint, data: data));
   }
 
+  /// POST Multipart Request
+  Future<Response<dynamic>> postMultipart(
+    String endpoint,
+    Map<String, dynamic> data,
+  ) async {
+    final formData = FormData.fromMap(data);
+    return _handleRequest(() => _dio.post(endpoint, data: formData));
+  }
+
   /// PUT Multipart Request
   Future<Response<dynamic>> putMultipart(
     String endpoint,
