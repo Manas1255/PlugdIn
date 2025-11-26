@@ -4,7 +4,16 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
 class StoreHeaderWidget extends StatelessWidget {
-  const StoreHeaderWidget({super.key});
+  const StoreHeaderWidget({
+    required this.reviewCount,
+    required this.rating,
+    required this.listingCount,
+    super.key,
+  });
+
+  final int reviewCount;
+  final int rating;
+  final int listingCount;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,7 @@ class StoreHeaderWidget extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '120',
+                    '$reviewCount',
                     style: context.h3.copyWith(
                       fontSize: 18,
                     ),
@@ -39,7 +48,7 @@ class StoreHeaderWidget extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '14.2',
+                    '$rating',
                     style: context.h3.copyWith(
                       fontSize: 18,
                     ),
@@ -54,7 +63,7 @@ class StoreHeaderWidget extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    '30',
+                    '$listingCount',
                     style: context.h3.copyWith(
                       fontSize: 18,
                     ),

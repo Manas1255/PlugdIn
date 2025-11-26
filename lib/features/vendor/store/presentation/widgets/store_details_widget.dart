@@ -20,23 +20,23 @@ class StoreDetailsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Company Name',
+          companyName,
           style: context.h2.copyWith(
             fontSize: 24,
           ),
         ),
         Text(
-          'Primary Category',
+          primaryCategory,
           style: context.b2,
         ),
         const SizedBox(height: 4),
         Text(
-          'Location',
+          location,
           style: context.b3,
         ),
         const SizedBox(height: 4),
         Text(
-          'Business Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+          businessDescription,
           style: context.l2,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,

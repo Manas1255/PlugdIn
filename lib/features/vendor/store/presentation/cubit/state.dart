@@ -6,6 +6,7 @@ import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
 class VendorStoreState extends Equatable {
@@ -19,6 +20,7 @@ class VendorStoreState extends Equatable {
     this.storeImageFile,
     this.isPostBottomSheetShown = false,
     this.storeMedia = const DataState.initial(),
+    this.vendorStoreInfo = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -30,6 +32,7 @@ class VendorStoreState extends Equatable {
   final File? storeImageFile;
   final bool isPostBottomSheetShown;
   final DataState<StoreMediaResponseModel> storeMedia;
+  final DataState<VendorStoreInfoModel> vendorStoreInfo;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -42,6 +45,7 @@ class VendorStoreState extends Equatable {
     bool clearStoreImage = false,
     bool? isPostBottomSheetShown,
     DataState<StoreMediaResponseModel>? storeMedia,
+    DataState<VendorStoreInfoModel>? vendorStoreInfo,
   }) {
     return VendorStoreState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
@@ -56,6 +60,7 @@ class VendorStoreState extends Equatable {
       isPostBottomSheetShown:
           isPostBottomSheetShown ?? this.isPostBottomSheetShown,
       storeMedia: storeMedia ?? this.storeMedia,
+      vendorStoreInfo: vendorStoreInfo ?? this.vendorStoreInfo,
     );
   }
 
@@ -70,5 +75,6 @@ class VendorStoreState extends Equatable {
     storeImageFile,
     isPostBottomSheetShown,
     storeMedia,
+    vendorStoreInfo,
   ];
 }

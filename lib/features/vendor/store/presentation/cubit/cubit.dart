@@ -189,4 +189,30 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
       );
     }
   }
+
+  Future<void> getVendorStoreInfo() async {
+    emit(
+      state.copyWith(
+        vendorStoreInfo: const DataState.loading(),
+      ),
+    );
+    final response = await repository.getVendorStoreInfo();
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          vendorStoreInfo: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorStoreInfo: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
 }

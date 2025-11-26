@@ -7,6 +7,7 @@ import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
@@ -131,6 +132,29 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error fetching store media', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorStoreInfoModel>> getVendorStoreInfo() async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorDetails,
+      );
+      final responseData = ApiResponseParser.parse<VendorStoreInfoResponseModel>(
+        json: response.data,
+        fromJson: VendorStoreInfoResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.vendor,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor store info', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),
