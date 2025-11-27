@@ -104,31 +104,35 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
               text: 'No store information available.',
             );
           }
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 24,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: NestedScrollView(
-                    headerSliverBuilder:
-                        (BuildContext context, bool innerBoxIsScrolled) => [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                StoreHeaderWidget(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) => [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                  vertical: 20,
+                                ),
+                                child: StoreHeaderWidget(
                                   reviewCount:
                                       state.vendorStoreInfo.data?.reviews ?? 0,
                                   rating:
                                       state.vendorStoreInfo.data?.ratings ?? 0,
                                   listingCount: 12,
                                 ),
-                                const SizedBox(height: 16),
-                                StoreDetailsWidget(
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                ),
+                                child: StoreDetailsWidget(
                                   companyName:
                                       state.vendorStoreInfo.data?.companyName ??
                                       'N/A',
@@ -148,54 +152,54 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                                           ?.businessDescription ??
                                       'N/A',
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          SliverPersistentHeader(
-                            pinned: true,
-                            delegate: _SliverTabBarDelegate(
-                              child: PreferredSize(
-                                preferredSize: const Size.fromHeight(48),
-                                child: PITabBar(
-                                  tabOneText: 'Store',
-                                  tabTwoText: 'Details',
-                                  tabThreeText: 'Packages',
-                                  tabFourText: 'Reviews',
-                                  onTabOnePress: () => _animateToPage(0),
-                                  onTabTwoPress: () => _animateToPage(1),
-                                  onTabThreePress: () => _animateToPage(2),
-                                  onTabFourPress: () => _animateToPage(3),
-                                  selectedIndex:
-                                      state.storeViewType ==
-                                          StoreViewType.storeView
-                                      ? 0
-                                      : state.storeViewType ==
-                                            StoreViewType.detailsView
-                                      ? 1
-                                      : state.storeViewType ==
-                                            StoreViewType.packagesView
-                                      ? 2
-                                      : 3,
-                                ),
+                        ),
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: _SliverTabBarDelegate(
+                            child: PreferredSize(
+                              preferredSize: const Size.fromHeight(48),
+                              child: PITabBar(
+                                tabOneText: 'Store',
+                                tabTwoText: 'Details',
+                                tabThreeText: 'Packages',
+                                tabFourText: 'Reviews',
+                                onTabOnePress: () => _animateToPage(0),
+                                onTabTwoPress: () => _animateToPage(1),
+                                onTabThreePress: () => _animateToPage(2),
+                                onTabFourPress: () => _animateToPage(3),
+                                selectedIndex:
+                                    state.storeViewType ==
+                                        StoreViewType.storeView
+                                    ? 0
+                                    : state.storeViewType ==
+                                          StoreViewType.detailsView
+                                    ? 1
+                                    : state.storeViewType ==
+                                          StoreViewType.packagesView
+                                    ? 2
+                                    : 3,
                               ),
                             ),
                           ),
-                        ],
-                    body: PageView(
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      physics: const ClampingScrollPhysics(),
-                      children: [
-                        StoreView(),
-                        DetailsView(),
-                        PackagesView(),
-                        ReviewsView(),
+                        ),
                       ],
-                    ),
+                  body: PageView(
+                    controller: _pageController,
+                    onPageChanged: _onPageChanged,
+                    physics: const ClampingScrollPhysics(),
+                    children: const [
+                      StoreView(),
+                      DetailsView(),
+                      PackagesView(),
+                      ReviewsView(),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

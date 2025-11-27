@@ -6,6 +6,7 @@ import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -28,7 +29,7 @@ class VendorStoreState extends Equatable {
   final StoreViewType storeViewType;
   final DataState<FeaturesResponseModel> allStoreFeatures;
   final FeaturesRequestModel featuresRequest;
-  final DataState<bool> updateFeaturesState;
+  final DataState<VendorFeaturesResponseModel> updateFeaturesState;
   final DataState<bool> uploadMediaState;
   final File? storeImageFile;
   final bool isPostBottomSheetShown;
@@ -41,7 +42,7 @@ class VendorStoreState extends Equatable {
     StoreViewType? storeViewType,
     DataState<FeaturesResponseModel>? allStoreFeatures,
     FeaturesRequestModel? featuresRequest,
-    DataState<bool>? updateFeaturesState,
+    DataState<VendorFeaturesResponseModel>? updateFeaturesState,
     DataState<bool>? uploadMediaState,
     File? storeImageFile,
     bool clearStoreImage = false,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -70,12 +71,23 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     final response = await repository.updateStoreFeatures(
       state.featuresRequest,
     );
-    if (response.isSuccess) {
+    if (response.isSuccess && response.data != null) {
+      VendorStoreInfoModel? updatedVendorStoreInfo;
+      if (state.vendorStoreInfo.isLoaded &&
+          state.vendorStoreInfo.data != null) {
+        updatedVendorStoreInfo = state.vendorStoreInfo.data!.copyWith(
+          features: response.data!.vendor.features,
+        );
+      }
+
       emit(
         state.copyWith(
           updateFeaturesState: DataState.loaded(
-            data: response.isSuccess,
+            data: response.data!,
           ),
+          vendorStoreInfo: updatedVendorStoreInfo != null
+              ? DataState.loaded(data: updatedVendorStoreInfo)
+              : state.vendorStoreInfo,
         ),
       );
     } else {
