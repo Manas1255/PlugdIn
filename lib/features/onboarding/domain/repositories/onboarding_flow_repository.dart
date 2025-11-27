@@ -36,4 +36,8 @@ abstract class OnboardingFlowRepository {
   });
 
   Future<RepositoryResponse<bool>> googleSignIn();
+
+  Future<RepositoryResponse<bool>> uploadProfileImage({
+    required String file,
+  });
 }

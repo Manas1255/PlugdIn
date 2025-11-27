@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/enums/city.dart';
@@ -19,6 +21,8 @@ class OnboardingState extends Equatable {
     this.selectedCity,
     this.selectedPrimaryCategory,
     this.selectedAdditionalCategory,
+    this.profileImageFile,
+    this.uploadProfileImage = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -34,6 +38,8 @@ class OnboardingState extends Equatable {
   final City? selectedCity;
   final CategoryType? selectedPrimaryCategory;
   final CategoryType? selectedAdditionalCategory;
+  final File? profileImageFile;
+  final DataState<bool> uploadProfileImage;
 
   OnboardingState copyWith({
     RoleType? selectedRoleType,
@@ -49,6 +55,8 @@ class OnboardingState extends Equatable {
     City? selectedCity,
     CategoryType? selectedPrimaryCategory,
     CategoryType? selectedAdditionalCategory,
+    File? profileImageFile,
+    DataState<bool>? uploadProfileImage,
   }) {
     return OnboardingState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
@@ -67,6 +75,8 @@ class OnboardingState extends Equatable {
           selectedPrimaryCategory ?? this.selectedPrimaryCategory,
       selectedAdditionalCategory:
           selectedAdditionalCategory ?? this.selectedAdditionalCategory,
+      profileImageFile: profileImageFile ?? this.profileImageFile,
+      uploadProfileImage: uploadProfileImage ?? this.uploadProfileImage,
     );
   }
 
@@ -85,5 +95,7 @@ class OnboardingState extends Equatable {
     selectedCity,
     selectedPrimaryCategory,
     selectedAdditionalCategory,
+    profileImageFile,
+    uploadProfileImage,
   ];
 }

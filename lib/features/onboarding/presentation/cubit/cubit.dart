@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/category_type.dart';
@@ -348,11 +350,11 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       source: source,
     );
 
-    // if (pickedFile != null) {
-    //   addTeamImage(
-    //     File(pickedFile.path),
-    //   );
-    // }
+    if (pickedFile != null) {
+      addProfileImage(
+        File(pickedFile.path),
+      );
+    }
   }
 
   Future<void> pickTeamImageFromCamera() async {
@@ -361,5 +363,43 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   Future<void> pickTeamImageFromGallery() async {
     await pickTeamImage();
+  }
+
+  void addProfileImage(File image) {
+    emit(
+      state.copyWith(
+        profileImageFile: image,
+      ),
+    );
+  }
+
+  Future<void> uploadProfileImage({required File? profileImageFile}) async {
+    emit(
+      state.copyWith(
+        uploadProfileImage: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.uploadProfileImage(
+      file: profileImageFile?.path ?? '',
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          uploadProfileImage: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          uploadProfileImage: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
   }
 }

@@ -156,6 +156,23 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.vendorNotificationsScreen,
+        name: AppRouteNames.vendorNotificationsScreen,
+        builder: (context, state) {
+          return VendorNotificationsScreen();
+        },
+      ),
+
+      GoRoute(
+        path: '${AppRoutes.vendorOtherVendorStoreScreen}/:vendorId',
+        name: AppRouteNames.vendorOtherVendorStoreScreen,
+        builder: (context, state) {
+          final vendorId = state.pathParameters['vendorId'] ?? '';
+          return OtherVendorStoreScreen(vendorId: vendorId);
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

@@ -21,10 +21,15 @@ class Endpoints {
   static const String updateCustomerProfile = 'users/update';
   static const String setNotification = 'users/notifications/toggle';
   static const String deleteCustomerAccount = 'users/delete';
+  static const String uploadProfilePicture = 'users/profile/upload-picture';
 
   /// Vendor Endpoints
   static const String getAllVendors = 'vendor/all';
+  static const String getVendorDetails = 'vendor';
+  static String getVendorById(String vendorId) => 'vendor/$vendorId';
   static const String deleteVendorAccount = 'vendor/delete';
   static const String updateVendorProfile = 'vendor/profile';
   static const String features = 'vendor/features';
+  static const String uploadStoreMedia = 'vendor/upload-media';
+  static const String vendorStoreMedia = 'vendor/storemedia/vendor';
 }

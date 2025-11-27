@@ -24,6 +24,7 @@ abstract class AppModule {
     Hive
       ..registerAdapter(CustomerModelAdapter())
       ..registerAdapter(VendorModelAdapter())
+      ..registerAdapter(VendorMediaAdapter())
       ..registerAdapter(RoleTypeAdapter());
   }
 

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/api_service/app_api_exception.dart';
@@ -263,6 +264,41 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error signing up vendor: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> uploadProfileImage({
+    required String file,
+  }) async {
+    try {
+      AppLogger.info('Uploading profile image: $file');
+      
+      // Convert file path to MultipartFile
+      final multipartFile = await MultipartFile.fromFile(
+        file,
+        filename: file.split('/').last,
+      );
+      
+      final response = await _apiService.postMultipart(
+        Endpoints.uploadProfilePicture,
+        {
+          'file': multipartFile,
+        },
+      );
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error uploading profile image: ', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

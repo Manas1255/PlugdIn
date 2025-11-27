@@ -11,7 +11,12 @@ class BaseApiResponse<T> {
     Map<String, dynamic> json,
     T Function(Map<String, dynamic>) parser,
   ) {
-    final statusCode = json['statusCode'] as int;
+    final dynamic rawStatusCode = json['statusCode'];
+    final statusCode = switch (rawStatusCode) {
+      int value => value,
+      String value => int.tryParse(value) ?? 0,
+      _ => 0,
+    };
     ApiError? parsedError;
     String? directErrorMessage;
 

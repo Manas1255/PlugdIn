@@ -76,92 +76,103 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
               },
             ),
           ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 16,
-              vertical: 24,
-            ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Enter Your Details',
-                    style: context.h1,
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    'This is what will be shown on your profile. Make sure to use your authentic details to help us create a trustworthy community.',
-                    style: context.b2.copyWith(
-                      color: AppColors.darkGreyTextColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
+          body: BlocBuilder<OnboardingCubit, OnboardingState>(
+            builder: (context, state) {
+              return SingleChildScrollView(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Enter Your Details',
+                        style: context.h1,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        'This is what will be shown on your profile. Make sure to use your authentic details to help us create a trustworthy community.',
+                        style: context.b2.copyWith(
+                          color: AppColors.darkGreyTextColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
 
-                  PictureUploadWidget(
-                    onTap: () {
-                      _showImagePickerBottomSheet();
-                    },
-                  ),
+                      if (state.profileImageFile != null) ...[
+                        Center(
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: FileImage(state.profileImageFile!),
+                          ),
+                        ),
+                      ] else ...[
+                        PictureUploadWidget(
+                          onTap: _showImagePickerBottomSheet,
+                        ),
+                      ],
 
-                  const SizedBox(
-                    height: 32,
-                  ),
+                      const SizedBox(
+                        height: 32,
+                      ),
 
-                  PITextField(
-                    hintText: 'Full Name',
-                    controller: _fullNameController,
-                    validator: FieldValidators.nameValidator,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                      PITextField(
+                        hintText: 'Full Name',
+                        controller: _fullNameController,
+                        validator: FieldValidators.nameValidator,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
 
-                  PITextField(
-                    hintText: 'User Name',
-                    controller: _userNameController,
-                    validator: FieldValidators.usernameValidator,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                      PITextField(
+                        hintText: 'User Name',
+                        controller: _userNameController,
+                        validator: FieldValidators.usernameValidator,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
 
-                  PITextField(
-                    hintText: 'Email',
-                    controller: _emailController,
-                    validator: FieldValidators.emailValidator,
-                    type: PITextFieldType.email,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+                      PITextField(
+                        hintText: 'Email',
+                        controller: _emailController,
+                        validator: FieldValidators.emailValidator,
+                        type: PITextFieldType.email,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
 
-                  PITextField(
-                    hintText: 'Password',
-                    controller: _passwordController,
-                    validator: FieldValidators.passwordValidator,
-                    type: PITextFieldType.password,
+                      PITextField(
+                        hintText: 'Password',
+                        controller: _passwordController,
+                        validator: FieldValidators.passwordValidator,
+                        type: PITextFieldType.password,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      PITextField(
+                        hintText: 'Confirm Password',
+                        controller: _confirmPasswordController,
+                        validator: FieldValidators.passwordValidator,
+                        type: PITextFieldType.password,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  PITextField(
-                    hintText: 'Confirm Password',
-                    controller: _confirmPasswordController,
-                    validator: FieldValidators.passwordValidator,
-                    type: PITextFieldType.password,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
           bottomNavigationBar: BlocBuilder<OnboardingCubit, OnboardingState>(
             builder: (context, state) {
@@ -177,6 +188,11 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
                         role: state.selectedRoleType ?? RoleType.customer,
                         userName: _userNameController.text.trim(),
                       );
+                      if (state.profileImageFile != null) {
+                        context.read<OnboardingCubit>().uploadProfileImage(
+                          profileImageFile: state.profileImageFile,
+                        );
+                      }
                     }
                   },
                   isLoading: state.customerEmailSignUp.isLoading,

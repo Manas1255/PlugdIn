@@ -23,12 +23,16 @@ class AppRoutes {
   static const String customerPersonalInfoScreen =
       '/customer-personal-info-screen';
   static const String vendorPersonalInfoScreen = '/vendor-personal-info-screen';
+  static const String vendorOtherVendorStoreScreen =
+      '/vendor-other-vendor-store-screen';
 
   static const String customerChangePasswordScreen =
       '/customer-change-password-screen';
   static const String vendorChangePasswordScreen =
       '/vendor-change-password-screen';
   static const String addFeaturesScreen = '/add-features-screen';
+  static const String vendorNotificationsScreen =
+      '/vendor-notifications-screen';
 }
 
 class AppRouteNames {
@@ -59,4 +63,7 @@ class AppRouteNames {
   static const String vendorChangePasswordScreen =
       'vendor-change-password-screen';
   static const String addFeaturesScreen = 'add-features-screen';
+  static const String vendorNotificationsScreen = 'vendor-notifications-screen';
+  static const String vendorOtherVendorStoreScreen =
+      'vendor-other-vendor-store-screen';
 }

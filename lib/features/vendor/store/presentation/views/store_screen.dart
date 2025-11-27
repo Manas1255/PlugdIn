@@ -11,6 +11,9 @@ import 'package:plugdin/features/vendor/store/presentation/views/reviews_view.da
 import 'package:plugdin/features/vendor/store/presentation/views/store_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
+import 'package:plugdin/utils/widgets/core_widgets/no_data_widget.dart';
 import 'package:plugdin/utils/widgets/pi_tab_bar.dart';
 
 class VendorStoreScreen extends StatefulWidget {
@@ -46,6 +49,7 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
 
   @override
   void initState() {
+    context.read<VendorStoreCubit>().getVendorStoreInfo();
     _pageController = PageController();
     super.initState();
   }
@@ -69,87 +73,133 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
           ),
         ),
         surfaceTintColor: AppColors.white,
-        title: Text(
-          '@username',
-          style: context.h3.copyWith(
-            fontSize: 18,
-          ),
+        title: BlocBuilder<VendorStoreCubit, VendorStoreState>(
+          builder: (context, state) {
+            return Text(
+              '@${state.vendorStoreInfo.data?.userId.username ?? 'N/A'}',
+              style: context.h3.copyWith(
+                fontSize: 18,
+              ),
+            );
+          },
         ),
       ),
       body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 24,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: NestedScrollView(
-                    headerSliverBuilder:
-                        (BuildContext context, bool innerBoxIsScrolled) => [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              children: [
-                                StoreHeaderWidget(),
-                                const SizedBox(height: 16),
-                                StoreDetailsWidget(
-                                  companyName: 'Company Name',
-                                  primaryCategory: 'Primary Category',
-                                  location: 'Location',
+          if (state.vendorStoreInfo.isLoading) {
+            return const LoadingWidget();
+          }
+          if (state.vendorStoreInfo.isFailure) {
+            return PIErrorWidget(
+              onPressed: () {
+                context.read<VendorStoreCubit>().getVendorStoreInfo();
+              },
+              errorText:
+                  state.vendorStoreInfo.errorMessage ??
+                  'Unexpected error occurred',
+            );
+          }
+          if (state.vendorStoreInfo.isEmpty) {
+            return const EmptyWidget(
+              text: 'No store information available.',
+            );
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) => [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                  vertical: 20,
+                                ),
+                                child: StoreHeaderWidget(
+                                  reviewCount:
+                                      state.vendorStoreInfo.data?.reviews ?? 0,
+                                  rating:
+                                      state.vendorStoreInfo.data?.ratings ?? 0,
+                                  listingCount: 12,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                ),
+                                child: StoreDetailsWidget(
+                                  companyName:
+                                      state.vendorStoreInfo.data?.companyName ??
+                                      'N/A',
+                                  primaryCategory:
+                                      state
+                                          .vendorStoreInfo
+                                          .data
+                                          ?.primaryCategory ??
+                                      'N/A',
+                                  location:
+                                      state.vendorStoreInfo.data?.address ??
+                                      'N/A',
                                   businessDescription:
-                                      'Business Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                                      state
+                                          .vendorStoreInfo
+                                          .data
+                                          ?.businessDescription ??
+                                      'N/A',
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          SliverPersistentHeader(
-                            pinned: true,
-                            delegate: _SliverTabBarDelegate(
-                              child: PreferredSize(
-                                preferredSize: const Size.fromHeight(48),
-                                child: PITabBar(
-                                  tabOneText: 'Store',
-                                  tabTwoText: 'Details',
-                                  tabThreeText: 'Packages',
-                                  tabFourText: 'Reviews',
-                                  onTabOnePress: () => _animateToPage(0),
-                                  onTabTwoPress: () => _animateToPage(1),
-                                  onTabThreePress: () => _animateToPage(2),
-                                  onTabFourPress: () => _animateToPage(3),
-                                  selectedIndex:
-                                      state.storeViewType ==
-                                          StoreViewType.storeView
-                                      ? 0
-                                      : state.storeViewType ==
-                                            StoreViewType.detailsView
-                                      ? 1
-                                      : state.storeViewType ==
-                                            StoreViewType.packagesView
-                                      ? 2
-                                      : 3,
-                                ),
+                        ),
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: _SliverTabBarDelegate(
+                            child: PreferredSize(
+                              preferredSize: const Size.fromHeight(48),
+                              child: PITabBar(
+                                tabOneText: 'Store',
+                                tabTwoText: 'Details',
+                                tabThreeText: 'Packages',
+                                tabFourText: 'Reviews',
+                                onTabOnePress: () => _animateToPage(0),
+                                onTabTwoPress: () => _animateToPage(1),
+                                onTabThreePress: () => _animateToPage(2),
+                                onTabFourPress: () => _animateToPage(3),
+                                selectedIndex:
+                                    state.storeViewType ==
+                                        StoreViewType.storeView
+                                    ? 0
+                                    : state.storeViewType ==
+                                          StoreViewType.detailsView
+                                    ? 1
+                                    : state.storeViewType ==
+                                          StoreViewType.packagesView
+                                    ? 2
+                                    : 3,
                               ),
                             ),
                           ),
-                        ],
-                    body: PageView(
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      physics: const ClampingScrollPhysics(),
-                      children: [
-                        StoreView(),
-                        DetailsView(),
-                        PackagesView(),
-                        ReviewsView(),
+                        ),
                       ],
-                    ),
+                  body: PageView(
+                    controller: _pageController,
+                    onPageChanged: _onPageChanged,
+                    physics: const ClampingScrollPhysics(),
+                    children: const [
+                      StoreView(),
+                      DetailsView(),
+                      PackagesView(),
+                      ReviewsView(),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

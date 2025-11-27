@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
@@ -43,13 +48,53 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
   }
 
   @override
-  Future<RepositoryResponse<bool>> updateStoreFeatures(
+  Future<RepositoryResponse<VendorFeaturesResponseModel>> updateStoreFeatures(
     FeaturesRequestModel features,
   ) async {
     try {
       final response = await _apiService.post(
         endpoint: Endpoints.features,
         data: features.toJson(),
+      );
+      final responseData = ApiResponseParser.parse<VendorFeaturesResponseModel>(
+        json: response.data,
+        fromJson: VendorFeaturesResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error updating store features', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> uploadStoreMedia(
+    List<String> filePaths,
+  ) async {
+    try {
+      AppLogger.info('Uploading media: $filePaths');
+
+      // Convert file paths to MultipartFile objects
+      final files = <MultipartFile>[];
+      for (final filePath in filePaths) {
+        final multipartFile = await MultipartFile.fromFile(
+          filePath,
+          filename: filePath.split('/').last,
+        );
+        files.add(multipartFile);
+      }
+
+      final response = await _apiService.postMultipart(
+        Endpoints.uploadStoreMedia,
+        {
+          'files': files,
+        },
       );
       final responseData = ApiResponseParser.parseBooleanResponse(
         json: response.data,
@@ -59,7 +104,86 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
         data: responseData.responseData,
       );
     } catch (e, s) {
-      AppLogger.error('Error updating store features', e, s);
+      AppLogger.error('Error uploading store media', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<StoreMediaResponseModel>> getStoreMedia({
+    int pageNumber = 1,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.vendorStoreMedia,
+        queryParams: {
+          'page': pageNumber,
+          'limit': AppConstants.paginationLimit,
+        },
+      );
+      final responseData = ApiResponseParser.parse<StoreMediaResponseModel>(
+        json: response.data,
+        fromJson: StoreMediaResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching store media', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorStoreInfoModel>> getVendorStoreInfo() async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorDetails,
+      );
+      final responseData =
+          ApiResponseParser.parse<VendorStoreInfoResponseModel>(
+            json: response.data,
+            fromJson: VendorStoreInfoResponseModel.fromJson,
+          );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.vendor,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor store info', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorStoreInfoModel>> getVendorById(
+    String vendorId,
+  ) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorById(vendorId),
+      );
+      final responseData =
+          ApiResponseParser.parse<VendorStoreInfoResponseModel>(
+            json: response.data,
+            fromJson: VendorStoreInfoResponseModel.fromJson,
+          );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.vendor,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor by ID', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),
