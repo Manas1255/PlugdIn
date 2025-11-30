@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -165,17 +166,31 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
   Future<void> getStoreMedia({int pageNumber = 1}) async {
     emit(
       state.copyWith(
-        storeMedia: const DataState.loading(),
+        storeMedia: pageNumber == 1
+            ? const DataState.loading()
+            : DataState.pageLoading(
+                data: state.storeMedia.data,
+              ),
       ),
     );
     final response = await repository.getStoreMedia(
       pageNumber: pageNumber,
     );
-    if (response.isSuccess && response.data != null) {
+    if (response.isSuccess) {
+      final currentData = state.storeMedia.data;
+      final updatedData = currentData != null && pageNumber > 1
+          ? StoreMediaResponseModel(
+              posts: [
+                ...currentData.posts,
+                ...response.data?.posts ?? [],
+              ],
+              pagination: response.data?.pagination ?? currentData.pagination,
+            )
+          : response.data;
       emit(
         state.copyWith(
           storeMedia: DataState.loaded(
-            data: response.data,
+            data: updatedData,
           ),
         ),
       );

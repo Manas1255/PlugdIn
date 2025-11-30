@@ -43,7 +43,6 @@ class _StoreViewState extends State<StoreView> {
         }
         return PaginatedBuilder(
           isGrid: true,
-          useSlivers: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: ResponsiveHelper.responsive<int>(
               context,

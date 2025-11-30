@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
@@ -118,7 +119,7 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
         Endpoints.vendorStoreMedia,
         queryParams: {
           'page': pageNumber,
-          'limit': 6,
+          'limit': AppConstants.paginationLimit,
         },
       );
       final responseData = ApiResponseParser.parse<StoreMediaResponseModel>(
