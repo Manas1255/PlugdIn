@@ -62,49 +62,45 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 8,
-        shadowColor: AppColors.black.withValues(alpha: 0.25),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24),
-          ),
-        ),
-        surfaceTintColor: AppColors.white,
-        title: BlocBuilder<VendorStoreCubit, VendorStoreState>(
-          builder: (context, state) {
-            return Text(
+    return BlocBuilder<VendorStoreCubit, VendorStoreState>(
+      builder: (context, state) {
+        if (state.vendorStoreInfo.isLoading) {
+          return const LoadingWidget();
+        }
+        if (state.vendorStoreInfo.isFailure) {
+          return PIErrorWidget(
+            onPressed: () {
+              context.read<VendorStoreCubit>().getVendorStoreInfo();
+            },
+            errorText:
+                state.vendorStoreInfo.errorMessage ??
+                'Unexpected error occurred',
+          );
+        }
+        if (state.vendorStoreInfo.isEmpty) {
+          return const EmptyWidget(
+            text: 'No store information found.',
+          );
+        }
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColors.white,
+            elevation: 8,
+            shadowColor: AppColors.black.withValues(alpha: 0.25),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(24),
+              ),
+            ),
+            surfaceTintColor: AppColors.white,
+            title: Text(
               '@${state.vendorStoreInfo.data?.userId.username ?? 'N/A'}',
               style: context.h3.copyWith(
                 fontSize: 18,
               ),
-            );
-          },
-        ),
-      ),
-      body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
-        builder: (context, state) {
-          if (state.vendorStoreInfo.isLoading) {
-            return const LoadingWidget();
-          }
-          if (state.vendorStoreInfo.isFailure) {
-            return PIErrorWidget(
-              onPressed: () {
-                context.read<VendorStoreCubit>().getVendorStoreInfo();
-              },
-              errorText:
-                  state.vendorStoreInfo.errorMessage ??
-                  'Unexpected error occurred',
-            );
-          }
-          if (state.vendorStoreInfo.isEmpty) {
-            return const EmptyWidget(
-              text: 'No store information available.',
-            );
-          }
-          return Column(
+            ),
+          ),
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
@@ -200,9 +196,9 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
