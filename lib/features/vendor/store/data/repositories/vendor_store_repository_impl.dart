@@ -7,7 +7,6 @@ import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
-import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -48,7 +47,7 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
   }
 
   @override
-  Future<RepositoryResponse<VendorFeaturesResponseModel>> updateStoreFeatures(
+  Future<RepositoryResponse<bool>> updateStoreFeatures(
     FeaturesRequestModel features,
   ) async {
     try {
@@ -56,9 +55,8 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
         endpoint: Endpoints.features,
         data: features.toJson(),
       );
-      final responseData = ApiResponseParser.parse<VendorFeaturesResponseModel>(
+      final responseData = ApiResponseParser.parseBooleanResponse(
         json: response.data,
-        fromJson: VendorFeaturesResponseModel.fromJson,
       );
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,

@@ -20,6 +20,7 @@ class ImagePickerBottomSheet extends StatelessWidget {
     required VoidCallback onGalleryTap,
   }) {
     return showModalBottomSheet(
+      useRootNavigator: true,
       backgroundColor: AppColors.white,
       context: context,
       isScrollControlled: true,
