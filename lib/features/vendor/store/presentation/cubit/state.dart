@@ -6,7 +6,6 @@ import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
-import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -19,6 +18,7 @@ class VendorStoreState extends Equatable {
     this.updateFeaturesState = const DataState.initial(),
     this.uploadMediaState = const DataState.initial(),
     this.storeImageFile,
+    this.clearStoreImage = false,
     this.isPostBottomSheetShown = false,
     this.storeMedia = const DataState.initial(),
     this.vendorStoreInfo = const DataState.initial(),
@@ -29,9 +29,10 @@ class VendorStoreState extends Equatable {
   final StoreViewType storeViewType;
   final DataState<FeaturesResponseModel> allStoreFeatures;
   final FeaturesRequestModel featuresRequest;
-  final DataState<VendorFeaturesResponseModel> updateFeaturesState;
+  final DataState<bool> updateFeaturesState;
   final DataState<bool> uploadMediaState;
   final File? storeImageFile;
+  final bool clearStoreImage;
   final bool isPostBottomSheetShown;
   final DataState<StoreMediaResponseModel> storeMedia;
   final DataState<VendorStoreInfoModel> vendorStoreInfo;
@@ -42,15 +43,21 @@ class VendorStoreState extends Equatable {
     StoreViewType? storeViewType,
     DataState<FeaturesResponseModel>? allStoreFeatures,
     FeaturesRequestModel? featuresRequest,
-    DataState<VendorFeaturesResponseModel>? updateFeaturesState,
+    DataState<bool>? updateFeaturesState,
     DataState<bool>? uploadMediaState,
     File? storeImageFile,
-    bool clearStoreImage = false,
+    bool? clearStoreImage,
     bool? isPostBottomSheetShown,
     DataState<StoreMediaResponseModel>? storeMedia,
     DataState<VendorStoreInfoModel>? vendorStoreInfo,
     DataState<VendorStoreInfoModel>? otherVendorStoreInfo,
   }) {
+    // If clearStoreImage is being set to true, also clear the storeImageFile
+    final bool willClearImage = clearStoreImage == true;
+    final File? finalStoreImageFile = willClearImage
+        ? null
+        : (storeImageFile ?? this.storeImageFile);
+    
     return VendorStoreState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
       storeViewType: storeViewType ?? this.storeViewType,
@@ -58,9 +65,8 @@ class VendorStoreState extends Equatable {
       featuresRequest: featuresRequest ?? this.featuresRequest,
       updateFeaturesState: updateFeaturesState ?? this.updateFeaturesState,
       uploadMediaState: uploadMediaState ?? this.uploadMediaState,
-      storeImageFile: clearStoreImage
-          ? null
-          : (storeImageFile ?? this.storeImageFile),
+      storeImageFile: finalStoreImageFile,
+      clearStoreImage: clearStoreImage ?? this.clearStoreImage,
       isPostBottomSheetShown:
           isPostBottomSheetShown ?? this.isPostBottomSheetShown,
       storeMedia: storeMedia ?? this.storeMedia,
@@ -78,6 +84,7 @@ class VendorStoreState extends Equatable {
     updateFeaturesState,
     uploadMediaState,
     storeImageFile,
+    clearStoreImage,
     isPostBottomSheetShown,
     storeMedia,
     vendorStoreInfo,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_text_style.dart';
+import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
-import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
+import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 import 'package:plugdin/utils/widgets/image_picker_bottom_sheet.dart';
 
 class VendorPostScreen extends StatefulWidget {
@@ -26,60 +28,93 @@ class _VendorPostScreenState extends State<VendorPostScreen> {
             'Image uploaded successfully!',
           );
 
-          context.read<VendorStoreCubit>().setPostBottomSheetShown(false);
+          if (Navigator.of(context, rootNavigator: true).canPop()) {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
         } else if (state.uploadMediaState.isFailure) {
           ToastHelper.showErrorToast(
             state.uploadMediaState.errorMessage ??
                 'Image upload failed. Please try again.',
           );
-          // Reset flag after failure so user can try again
-          context.read<VendorStoreCubit>().setPostBottomSheetShown(false);
+
+          if (Navigator.of(context, rootNavigator: true).canPop()) {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
         }
       },
       builder: (context, state) {
-        // Show bottom sheet only once per screen visibility
-        if (!state.isPostBottomSheetShown) {
-          context.read<VendorStoreCubit>().setPostBottomSheetShown(true);
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) {
-              _showImagePickerBottomSheet();
-            }
-          });
-        }
+        return Scaffold(
+          backgroundColor: AppColors.primaryColor,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const PISvgPic(
+                    AssetPaths.postIcon,
+                    height: 120,
+                    width: 120,
+                    color: AppColors.secondaryColor,
+                  ),
+                  const SizedBox(height: 32),
 
-        return const Scaffold(
-          body: SizedBox.shrink(),
+                  Text(
+                    'Create a Post',
+                    style: context.t1.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+
+                  Text(
+                    'Upload an image to share with your customers',
+                    style: context.b2.copyWith(
+                      color: AppColors.lightGreyShade2,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 48),
+
+                  PIButton(
+                    text: 'Upload Image',
+                    onPressed: state.uploadMediaState.isLoading
+                        ? null
+                        : _showImagePickerBottomSheet,
+                    isLoading: state.uploadMediaState.isLoading,
+                    prefixIcon: const PISvgPic(
+                      AssetPaths.uploadImageIcon,
+                      height: 20,
+                      width: 20,
+                      color: AppColors.white,
+                    ),
+                    iconSpacing: 8,
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
   }
 
   Future<void> _showImagePickerBottomSheet() async {
-    bool imageSelected = false;
-
     await ImagePickerBottomSheet.show(
       context,
       onCameraTap: () async {
-        imageSelected = true;
-        context.pop();
+        Navigator.of(context, rootNavigator: true).pop();
         await context.read<VendorStoreCubit>().pickStoreImageFromCamera();
         await _uploadImage();
       },
       onGalleryTap: () async {
-        imageSelected = true;
-        context.pop();
+        Navigator.of(context, rootNavigator: true).pop();
         await context.read<VendorStoreCubit>().pickStoreImageFromGallery();
         await _uploadImage();
       },
     );
-
-    if (!imageSelected && mounted) {
-      context.go(AppRoutes.vendorStoreScreen);
-    }
-
-    if (mounted) {
-      context.read<VendorStoreCubit>().setPostBottomSheetShown(false);
-    }
   }
 
   Future<void> _uploadImage() async {
