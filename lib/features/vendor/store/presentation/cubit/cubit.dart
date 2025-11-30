@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -50,10 +52,27 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
   }
 
   void addFeatureToRequest(String feature) {
-    final updatedFeatures = List<String>.from(state.featuresRequest.features)
-      ..add(feature);
+    final currentFeatures = List<String>.from(state.featuresRequest.features);
+    final updatedFeatures = List<String>.from(currentFeatures);
+    if (updatedFeatures.contains(feature)) {
+      updatedFeatures.remove(feature);
+    } else {
+      updatedFeatures.add(feature);
+    }
     final updatedRequest = state.featuresRequest.copyWith(
       features: updatedFeatures,
+    );
+    emit(
+      state.copyWith(
+        featuresRequest: updatedRequest,
+      ),
+    );
+  }
+
+  void initializeFeaturesFromStoreInfo() {
+    final currentFeatures = state.vendorStoreInfo.data?.features ?? [];
+    final updatedRequest = state.featuresRequest.copyWith(
+      features: List<String>.from(currentFeatures),
     );
     emit(
       state.copyWith(
@@ -71,12 +90,21 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     final response = await repository.updateStoreFeatures(
       state.featuresRequest,
     );
-    if (response.isSuccess) {
+    if (response.isSuccess && response.data != null) {
+      // Update vendorStoreInfo with the new features from response
+      final currentVendorInfo = state.vendorStoreInfo.data;
+      final updatedVendorInfo = currentVendorInfo?.copyWith(
+        features: response.data!.vendor.features,
+      );
+      
       emit(
         state.copyWith(
           updateFeaturesState: DataState.loaded(
-            data: response.isSuccess,
+            data: response.data!,
           ),
+          vendorStoreInfo: updatedVendorInfo != null
+              ? DataState.loaded(data: updatedVendorInfo)
+              : state.vendorStoreInfo,
         ),
       );
     } else {
@@ -88,6 +116,14 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
         ),
       );
     }
+  }
+
+  void resetUpdateFeaturesState() {
+    emit(
+      state.copyWith(
+        updateFeaturesState: const DataState.initial(),
+      ),
+    );
   }
 
   Future<void> uploadStoreMedia(List<String> filePaths) async {

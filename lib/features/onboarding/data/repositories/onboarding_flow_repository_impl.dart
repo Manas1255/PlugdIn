@@ -28,7 +28,7 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
   bool _googleInit = false;
 
   @override
-  Future<RepositoryResponse<bool>> emailSignUp({
+  Future<RepositoryResponse<CustomerModel?>> emailSignUp({
     required String fullName,
     required String email,
     required String password,
@@ -47,13 +47,20 @@ class OnboardingFlowRepositoryImpl implements OnboardingFlowRepository {
         },
       );
 
-      final responseData = ApiResponseParser.parseBooleanResponse(
+      final responseData = ApiResponseParser.parse<AuthResponseModel>(
         json: response.data,
+        fromJson: AuthResponseModel.fromJson,
       );
+
+      if (responseData.isSuccess && responseData.responseData != null) {
+        _cache
+          ..setUserModel(responseData.responseData!.user)
+          ..setToken(responseData.responseData!.tokens.accessToken);
+      }
 
       return RepositoryResponse(
         isSuccess: responseData.isSuccess,
-        data: responseData.responseData,
+        data: responseData.responseData?.user,
       );
     } catch (e, s) {
       AppLogger.error('Error signing up: ', e, s);

@@ -60,7 +60,7 @@ class _PIBottomSheetState extends State<PIBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.26,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsetsDirectional.symmetric(

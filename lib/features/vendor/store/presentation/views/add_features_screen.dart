@@ -17,9 +17,23 @@ class AddFeaturesScreen extends StatefulWidget {
 }
 
 class _AddFeaturesScreenState extends State<AddFeaturesScreen> {
+  bool _featuresInitialized = false;
+
   @override
   void initState() {
-    context.read<VendorStoreCubit>().getStoreFeatures();
+    final cubit = context.read<VendorStoreCubit>()..getStoreFeatures();
+    // Reset updateFeaturesState to prevent immediate pop on re-entry
+    cubit.resetUpdateFeaturesState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final state = cubit.state;
+      if (state.vendorStoreInfo.data != null && !_featuresInitialized) {
+        cubit.initializeFeaturesFromStoreInfo();
+        _featuresInitialized = true;
+      } else if (state.vendorStoreInfo.isEmpty && !_featuresInitialized) {
+        cubit.getVendorStoreInfo();
+      }
+    });
     super.initState();
   }
 
@@ -38,46 +52,59 @@ class _AddFeaturesScreenState extends State<AddFeaturesScreen> {
           style: context.h3,
         ),
       ),
-      body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
-        builder: (context, state) {
-          if (state.allStoreFeatures.isLoading) {
-            return const LoadingWidget();
+      body: BlocListener<VendorStoreCubit, VendorStoreState>(
+        listenWhen: (previous, current) =>
+            previous.vendorStoreInfo != current.vendorStoreInfo,
+        listener: (context, state) {
+          if (state.vendorStoreInfo.data != null && !_featuresInitialized) {
+            context.read<VendorStoreCubit>().initializeFeaturesFromStoreInfo();
+            _featuresInitialized = true;
           }
-          if (state.allStoreFeatures.isFailure) {
-            return PIErrorWidget(
-              errorText:
-                  state.allStoreFeatures.errorMessage ?? 'Something went wrong',
-              onPressed: () {
-                context.read<VendorStoreCubit>().getStoreFeatures();
-              },
-            );
-          }
-          if (state.allStoreFeatures.isEmpty) {
-            return const EmptyWidget(
-              text: 'No features available',
-            );
-          }
-          final features = state.allStoreFeatures.data?.features ?? [];
-          return ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemBuilder: (context, index) {
-              final feature = features[index];
-              return PIFilterChipWidget(
-                label: feature,
-                onTap: () {
-                  context.read<VendorStoreCubit>().addFeatureToRequest(
-                    feature,
-                  );
-                },
-                isSelected: state.featuresRequest.features.contains(feature),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemCount: features.length,
-          );
         },
+        child: BlocBuilder<VendorStoreCubit, VendorStoreState>(
+          builder: (context, state) {
+            if (state.allStoreFeatures.isLoading) {
+              return const LoadingWidget();
+            }
+            if (state.allStoreFeatures.isFailure) {
+              return PIErrorWidget(
+                errorText:
+                    state.allStoreFeatures.errorMessage ??
+                    'Something went wrong',
+                onPressed: () {
+                  context.read<VendorStoreCubit>().getStoreFeatures();
+                },
+              );
+            }
+            if (state.allStoreFeatures.isEmpty) {
+              return const EmptyWidget(
+                text: 'No features available',
+              );
+            }
+            final features = state.allStoreFeatures.data?.features ?? [];
+            return ListView.separated(
+              padding: const EdgeInsets.all(16),
+              itemBuilder: (context, index) {
+                final feature = features[index];
+                return PIFilterChipWidget(
+                  label: feature,
+                  onTap: () {
+                    context.read<VendorStoreCubit>().addFeatureToRequest(
+                      feature,
+                    );
+                  },
+                  isSelected: state.featuresRequest.features.contains(feature),
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
+              itemCount: features.length,
+            );
+          },
+        ),
       ),
       bottomNavigationBar: BlocConsumer<VendorStoreCubit, VendorStoreState>(
+        listenWhen: (previous, current) =>
+            previous.updateFeaturesState != current.updateFeaturesState,
         listener: (context, state) {
           if (state.updateFeaturesState.isLoaded) {
             context.pop();
