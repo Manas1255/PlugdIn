@@ -40,6 +40,7 @@ class VendorStoreInfoModel {
     required this.isVerified,
     required this.reviews,
     required this.ratings,
+    required this.listingCount,
     this.companyLogo,
   });
 
@@ -74,6 +75,7 @@ class VendorStoreInfoModel {
       isVerified: json['isVerified'] as bool? ?? false,
       reviews: json['reviews'] as int? ?? 0,
       ratings: json['ratings'] as int? ?? 0,
+      listingCount: json['listingCount'] as int? ?? 0,
     );
   }
   final int pricePerPerson;
@@ -95,6 +97,7 @@ class VendorStoreInfoModel {
   final bool isVerified;
   final int reviews;
   final int ratings;
+  final int listingCount;
 
   Map<String, dynamic> toJson() {
     return {
@@ -117,6 +120,7 @@ class VendorStoreInfoModel {
       'isVerified': isVerified,
       'reviews': reviews,
       'ratings': ratings,
+      'listingCount': listingCount,
     };
   }
 
@@ -140,6 +144,7 @@ class VendorStoreInfoModel {
     bool? isVerified,
     int? reviews,
     int? ratings,
+    int? listingCount,
   }) {
     return VendorStoreInfoModel(
       pricePerPerson: pricePerPerson ?? this.pricePerPerson,
@@ -161,6 +166,7 @@ class VendorStoreInfoModel {
       isVerified: isVerified ?? this.isVerified,
       reviews: reviews ?? this.reviews,
       ratings: ratings ?? this.ratings,
+      listingCount: listingCount ?? this.listingCount,
     );
   }
 }

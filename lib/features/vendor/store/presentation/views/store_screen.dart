@@ -121,7 +121,12 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                                       state.vendorStoreInfo.data?.reviews ?? 0,
                                   rating:
                                       state.vendorStoreInfo.data?.ratings ?? 0,
-                                  listingCount: 12,
+                                  listingCount:
+                                      state
+                                          .vendorStoreInfo
+                                          .data
+                                          ?.listingCount ??
+                                      0,
                                 ),
                               ),
                               Padding(
