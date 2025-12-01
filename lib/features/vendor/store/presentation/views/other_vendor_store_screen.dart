@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
@@ -35,13 +36,13 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
     final viewType = index == 0
         ? StoreViewType.storeView
         : index == 1
-            ? StoreViewType.detailsView
-            : index == 2
-                ? StoreViewType.packagesView
-                : StoreViewType.reviewsView;
+        ? StoreViewType.detailsView
+        : index == 2
+        ? StoreViewType.packagesView
+        : StoreViewType.reviewsView;
     context.read<VendorStoreCubit>().updateSelectedStoreViewType(
-          viewType,
-        );
+      viewType,
+    );
   }
 
   void _animateToPage(int index) {
@@ -121,71 +122,91 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                   child: NestedScrollView(
                     headerSliverBuilder:
                         (BuildContext context, bool innerBoxIsScrolled) => [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            StoreHeaderWidget(
-                              reviewCount:
-                                  state.otherVendorStoreInfo.data?.reviews ?? 0,
-                              rating:
-                                  state.otherVendorStoreInfo.data?.ratings ?? 0,
-                              listingCount: 12,
-                            ),
-                            const SizedBox(height: 16),
-                            StoreDetailsWidget(
-                              companyName:
-                                  state.otherVendorStoreInfo.data?.companyName ??
+                          SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                StoreHeaderWidget(
+                                  reviewCount:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.reviews ??
+                                      0,
+                                  rating:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.ratings ??
+                                      0,
+                                  listingCount: 12,
+                                  companyLogo:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.companyLogo ??
+                                      AppConstants.appPlaceHolderUrlImage,
+                                ),
+                                const SizedBox(height: 16),
+                                StoreDetailsWidget(
+                                  companyName:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.companyName ??
                                       'N/A',
-                              primaryCategory:
-                                  state
-                                      .otherVendorStoreInfo
-                                      .data
-                                      ?.primaryCategory ??
+                                  primaryCategory:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.primaryCategory ??
                                       'N/A',
-                              location:
-                                  state.otherVendorStoreInfo.data?.address ??
+                                  location:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.address ??
                                       'N/A',
-                              businessDescription:
-                                  state
-                                      .otherVendorStoreInfo
-                                      .data
-                                      ?.businessDescription ??
+                                  businessDescription:
+                                      state
+                                          .otherVendorStoreInfo
+                                          .data
+                                          ?.businessDescription ??
                                       'N/A',
-                            ),
-                          ],
-                        ),
-                      ),
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: _SliverTabBarDelegate(
-                          child: PreferredSize(
-                            preferredSize: const Size.fromHeight(48),
-                            child: PITabBar(
-                              tabOneText: 'Store',
-                              tabTwoText: 'Details',
-                              tabThreeText: 'Packages',
-                              tabFourText: 'Reviews',
-                              onTabOnePress: () => _animateToPage(0),
-                              onTabTwoPress: () => _animateToPage(1),
-                              onTabThreePress: () => _animateToPage(2),
-                              onTabFourPress: () => _animateToPage(3),
-                              selectedIndex:
-                                  state.storeViewType ==
-                                      StoreViewType.storeView
-                                  ? 0
-                                  : state.storeViewType ==
-                                        StoreViewType.detailsView
-                                  ? 1
-                                  : state.storeViewType ==
-                                        StoreViewType.packagesView
-                                  ? 2
-                                  : 3,
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ),
-                    ],
+                          SliverPersistentHeader(
+                            pinned: true,
+                            delegate: _SliverTabBarDelegate(
+                              child: PreferredSize(
+                                preferredSize: const Size.fromHeight(48),
+                                child: PITabBar(
+                                  tabOneText: 'Store',
+                                  tabTwoText: 'Details',
+                                  tabThreeText: 'Packages',
+                                  tabFourText: 'Reviews',
+                                  onTabOnePress: () => _animateToPage(0),
+                                  onTabTwoPress: () => _animateToPage(1),
+                                  onTabThreePress: () => _animateToPage(2),
+                                  onTabFourPress: () => _animateToPage(3),
+                                  selectedIndex:
+                                      state.storeViewType ==
+                                          StoreViewType.storeView
+                                      ? 0
+                                      : state.storeViewType ==
+                                            StoreViewType.detailsView
+                                      ? 1
+                                      : state.storeViewType ==
+                                            StoreViewType.packagesView
+                                      ? 2
+                                      : 3,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                     body: PageView(
                       controller: _pageController,
                       onPageChanged: _onPageChanged,

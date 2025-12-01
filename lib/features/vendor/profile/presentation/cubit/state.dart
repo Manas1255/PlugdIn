@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:plugdin/core/models/vendor_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -9,6 +11,8 @@ class VendorProfileState extends Equatable {
     this.changePassword = const DataState.initial(),
     this.userPreferences = const DataState.initial(),
     this.deleteAccount = const DataState.initial(),
+    this.companyLogoFile,
+    this.uploadCompanyLogo = const DataState.initial(),
   });
 
   final bool notificationsEnabled;
@@ -16,6 +20,8 @@ class VendorProfileState extends Equatable {
   final DataState<bool> changePassword;
   final DataState<bool> userPreferences;
   final DataState<bool> deleteAccount;
+  final File? companyLogoFile;
+  final DataState<bool> uploadCompanyLogo;
 
   VendorProfileState copyWith({
     bool? notificationsEnabled,
@@ -23,6 +29,8 @@ class VendorProfileState extends Equatable {
     DataState<bool>? changePassword,
     DataState<bool>? userPreferences,
     DataState<bool>? deleteAccount,
+    File? companyLogoFile,
+    DataState<bool>? uploadCompanyLogo,
   }) {
     return VendorProfileState(
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
@@ -30,6 +38,8 @@ class VendorProfileState extends Equatable {
       changePassword: changePassword ?? this.changePassword,
       userPreferences: userPreferences ?? this.userPreferences,
       deleteAccount: deleteAccount ?? this.deleteAccount,
+      companyLogoFile: companyLogoFile ?? this.companyLogoFile,
+      uploadCompanyLogo: uploadCompanyLogo ?? this.uploadCompanyLogo,
     );
   }
 
@@ -40,5 +50,7 @@ class VendorProfileState extends Equatable {
     changePassword,
     userPreferences,
     deleteAccount,
+    companyLogoFile,
+    uploadCompanyLogo,
   ];
 }

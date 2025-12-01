@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
@@ -62,49 +63,45 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 8,
-        shadowColor: AppColors.black.withValues(alpha: 0.25),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24),
-          ),
-        ),
-        surfaceTintColor: AppColors.white,
-        title: BlocBuilder<VendorStoreCubit, VendorStoreState>(
-          builder: (context, state) {
-            return Text(
+    return BlocBuilder<VendorStoreCubit, VendorStoreState>(
+      builder: (context, state) {
+        if (state.vendorStoreInfo.isLoading) {
+          return const LoadingWidget();
+        }
+        if (state.vendorStoreInfo.isFailure) {
+          return PIErrorWidget(
+            onPressed: () {
+              context.read<VendorStoreCubit>().getVendorStoreInfo();
+            },
+            errorText:
+                state.vendorStoreInfo.errorMessage ??
+                'Unexpected error occurred',
+          );
+        }
+        if (state.vendorStoreInfo.isEmpty) {
+          return const EmptyWidget(
+            text: 'No store information found.',
+          );
+        }
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColors.white,
+            elevation: 8,
+            shadowColor: AppColors.black.withValues(alpha: 0.25),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(24),
+              ),
+            ),
+            surfaceTintColor: AppColors.white,
+            title: Text(
               '@${state.vendorStoreInfo.data?.userId.username ?? 'N/A'}',
               style: context.h3.copyWith(
                 fontSize: 18,
               ),
-            );
-          },
-        ),
-      ),
-      body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
-        builder: (context, state) {
-          if (state.vendorStoreInfo.isLoading) {
-            return const LoadingWidget();
-          }
-          if (state.vendorStoreInfo.isFailure) {
-            return PIErrorWidget(
-              onPressed: () {
-                context.read<VendorStoreCubit>().getVendorStoreInfo();
-              },
-              errorText:
-                  state.vendorStoreInfo.errorMessage ??
-                  'Unexpected error occurred',
-            );
-          }
-          if (state.vendorStoreInfo.isEmpty) {
-            return const EmptyWidget(
-              text: 'No store information available.',
-            );
-          }
-          return Column(
+            ),
+          ),
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
@@ -125,7 +122,15 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                                       state.vendorStoreInfo.data?.reviews ?? 0,
                                   rating:
                                       state.vendorStoreInfo.data?.ratings ?? 0,
-                                  listingCount: 12,
+                                  listingCount:
+                                      state
+                                          .vendorStoreInfo
+                                          .data
+                                          ?.listingCount ??
+                                      0,
+                                  companyLogo:
+                                      state.vendorStoreInfo.data?.companyLogo ??
+                                      AppConstants.appPlaceHolderUrlImage,
                                 ),
                               ),
                               Padding(
@@ -200,9 +205,9 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

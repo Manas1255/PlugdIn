@@ -59,6 +59,12 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
           ToastHelper.showSuccessToast(
             'Sign up successful!',
           );
+
+          if (state.profileImageFile != null) {
+            context.read<OnboardingCubit>().uploadProfileImage(
+              profileImageFile: state.profileImageFile,
+            );
+          }
         } else if (state.customerEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
             state.customerEmailSignUp.errorMessage ??
@@ -188,11 +194,6 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
                         role: state.selectedRoleType ?? RoleType.customer,
                         userName: _userNameController.text.trim(),
                       );
-                      if (state.profileImageFile != null) {
-                        context.read<OnboardingCubit>().uploadProfileImage(
-                          profileImageFile: state.profileImageFile,
-                        );
-                      }
                     }
                   },
                   isLoading: state.customerEmailSignUp.isLoading,

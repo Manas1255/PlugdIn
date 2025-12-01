@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/enums/role_type.dart';
+import 'package:plugdin/core/models/customer_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
 class OnboardingState extends Equatable {
@@ -26,7 +27,7 @@ class OnboardingState extends Equatable {
   });
 
   final RoleType? selectedRoleType;
-  final DataState<bool> customerEmailSignUp;
+  final DataState<CustomerModel?> customerEmailSignUp;
   final DataState<bool> vendorEmailSignUp;
   final DataState<bool> emailLogin;
   final DataState<bool> passwordResetCode;
@@ -43,7 +44,7 @@ class OnboardingState extends Equatable {
 
   OnboardingState copyWith({
     RoleType? selectedRoleType,
-    DataState<bool>? customerEmailSignUp,
+    DataState<CustomerModel?>? customerEmailSignUp,
     DataState<bool>? vendorEmailSignUp,
     DataState<bool>? emailLogin,
     DataState<bool>? passwordResetCode,

@@ -53,7 +53,9 @@ class VendorProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 PICNIWidget(
-                  imageUrl: AppConstants.appPlaceHolderUrlImage,
+                  imageUrl:
+                      state.profileInfo.data?.companyLogo ??
+                      AppConstants.appPlaceHolderUrlImage,
                   height: 158,
                   width: 158,
                   borderRadius: BorderRadius.circular(
