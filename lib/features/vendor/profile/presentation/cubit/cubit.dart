@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/services/delete_account_service.dart';
 import 'package:plugdin/core/services/logout_service.dart';
 import 'package:plugdin/features/customer/profile/presentation/widgets/pi_bottom_sheet.dart';
@@ -13,6 +16,7 @@ class VendorProfileCubit extends Cubit<VendorProfileState> {
     : super(const VendorProfileState());
 
   final VendorProfileRepository repository;
+  final ImagePicker _picker = ImagePicker();
 
   void toggleNotifications({required bool isEnabled}) {
     emit(
@@ -219,5 +223,63 @@ class VendorProfileCubit extends Cubit<VendorProfileState> {
 
   Future<void> clearState() async {
     emit(const VendorProfileState());
+  }
+
+  Future<void> pickCompanyLogo({ImageSource source = ImageSource.gallery}) async {
+    final pickedFile = await _picker.pickImage(
+      source: source,
+    );
+
+    if (pickedFile != null) {
+      addCompanyLogo(
+        File(pickedFile.path),
+      );
+    }
+  }
+
+  Future<void> pickCompanyLogoFromCamera() async {
+    await pickCompanyLogo(source: ImageSource.camera);
+  }
+
+  Future<void> pickCompanyLogoFromGallery() async {
+    await pickCompanyLogo();
+  }
+
+  void addCompanyLogo(File image) {
+    emit(
+      state.copyWith(
+        companyLogoFile: image,
+      ),
+    );
+  }
+
+  Future<void> uploadCompanyLogo({required File? companyLogoFile}) async {
+    emit(
+      state.copyWith(
+        uploadCompanyLogo: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.uploadCompanyLogo(
+      file: companyLogoFile?.path ?? '',
+    );
+
+    if (response.isSuccess) {
+      emit(
+        state.copyWith(
+          uploadCompanyLogo: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          uploadCompanyLogo: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
   }
 }

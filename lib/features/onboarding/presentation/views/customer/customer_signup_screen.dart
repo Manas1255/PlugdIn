@@ -59,11 +59,11 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
           ToastHelper.showSuccessToast(
             'Sign up successful!',
           );
-          // Upload profile image after successful signup when token is available
+
           if (state.profileImageFile != null) {
             context.read<OnboardingCubit>().uploadProfileImage(
-                  profileImageFile: state.profileImageFile,
-                );
+              profileImageFile: state.profileImageFile,
+            );
           }
         } else if (state.customerEmailSignUp.isFailure) {
           ToastHelper.showErrorToast(
@@ -194,7 +194,6 @@ class _CustomerSignupScreenState extends State<CustomerSignupScreen> {
                         role: state.selectedRoleType ?? RoleType.customer,
                         userName: _userNameController.text.trim(),
                       );
-                      // uploadProfileImage will be called in the listener after successful signup
                     }
                   },
                   isLoading: state.customerEmailSignUp.isLoading,

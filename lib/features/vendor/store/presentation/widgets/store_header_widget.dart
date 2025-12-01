@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 
@@ -8,12 +7,14 @@ class StoreHeaderWidget extends StatelessWidget {
     required this.reviewCount,
     required this.rating,
     required this.listingCount,
+    required this.companyLogo,
     super.key,
   });
 
   final int reviewCount;
   final int rating;
   final int listingCount;
+  final String companyLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class StoreHeaderWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         PICNIWidget(
-          imageUrl: AppConstants.appPlaceHolderSellerImage,
+          imageUrl: companyLogo,
           height: 80,
           width: 80,
           borderRadius: BorderRadius.circular(100),

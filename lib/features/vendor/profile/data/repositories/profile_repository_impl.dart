@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
@@ -193,6 +194,41 @@ class VendorProfileRepositoryImpl implements VendorProfileRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error deleting account: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<bool>> uploadCompanyLogo({
+    required String file,
+  }) async {
+    try {
+      AppLogger.info('Uploading company logo: $file');
+      
+      // Convert file path to MultipartFile
+      final multipartFile = await MultipartFile.fromFile(
+        file,
+        filename: file.split('/').last,
+      );
+      
+      final response = await _apiService.postMultipart(
+        Endpoints.uploadCompanyLogo,
+        {
+          'file': multipartFile,
+        },
+      );
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error uploading company logo: ', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

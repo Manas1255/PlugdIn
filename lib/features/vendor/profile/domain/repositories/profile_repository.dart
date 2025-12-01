@@ -25,4 +25,8 @@ abstract class VendorProfileRepository {
   });
 
   Future<RepositoryResponse<bool>> deleteAccount();
+
+  Future<RepositoryResponse<bool>> uploadCompanyLogo({
+    required String file,
+  });
 }

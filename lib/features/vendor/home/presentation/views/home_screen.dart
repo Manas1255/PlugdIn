@@ -98,8 +98,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     }
     if (state.allVendors.isFailure) {
       return PIErrorWidget(
-        errorText:
-            state.allVendors.errorMessage ?? 'Something went wrong',
+        errorText: state.allVendors.errorMessage ?? 'Something went wrong',
         onPressed: () {
           context.read<VendorHomeCubit>().fetchAllVendors(
             filter: state.selectedFilter,
@@ -134,11 +133,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       label: category.toDisplayName(),
                       isSelected: state.selectedFilter == category,
                       onTap: () {
-                        context
-                            .read<VendorHomeCubit>()
-                            .updateSelectedFilter(
-                              filter: category,
-                            );
+                        context.read<VendorHomeCubit>().updateSelectedFilter(
+                          filter: category,
+                        );
                         context.read<VendorHomeCubit>().fetchAllVendors(
                           filter: category,
                         );
@@ -193,8 +190,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
               onLoadMore: () async {
                 await context.read<VendorHomeCubit>().fetchAllVendors(
                   filter: state.selectedFilter,
-                  pageNumber:
-                      state.allVendors.data?.pagination?.nextPage ?? 1,
+                  pageNumber: state.allVendors.data?.pagination?.nextPage ?? 1,
                 );
               },
               isLoading: state.allVendors.isLoading,
