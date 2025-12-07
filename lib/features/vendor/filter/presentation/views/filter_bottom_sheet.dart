@@ -54,9 +54,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     ] else if (state.viewType ==
                         FilterViewType.musiciansFilterView) ...[
                       const Expanded(child: MusiciansFilterView()),
-                    ] else if (state.viewType ==
-                        FilterViewType.normalDisplayView) ...[
-                      const Expanded(child: NormalFilterView()),
                     ],
                   ],
                 ),
