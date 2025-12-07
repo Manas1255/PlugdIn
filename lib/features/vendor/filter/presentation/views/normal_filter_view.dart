@@ -41,6 +41,7 @@ class NormalFilterView extends StatelessWidget {
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
             ListView.builder(
               shrinkWrap: true,

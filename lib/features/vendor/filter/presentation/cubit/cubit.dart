@@ -16,4 +16,13 @@ class VendorFilterCubit extends Cubit<VendorFilterState> {
       ),
     );
   }
+
+  void setCapacityRange(int min, int max) {
+    emit(
+      state.copyWith(
+        minCapacity: min,
+        maxCapacity: max,
+      ),
+    );
+  }
 }
