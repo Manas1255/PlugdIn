@@ -12,7 +12,7 @@ class StoreHeaderWidget extends StatelessWidget {
   });
 
   final int reviewCount;
-  final int rating;
+  final double rating;
   final int listingCount;
   final String companyLogo;
 

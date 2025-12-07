@@ -20,12 +20,12 @@ import 'package:plugdin/features/onboarding/presentation/views/vendor/vendor_sig
 import 'package:plugdin/features/onboarding/presentation/views/welcome_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/home_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/post_screen.dart';
-import 'package:plugdin/features/vendor/home/presentation/views/search_screen.dart';
 import 'package:plugdin/features/vendor/navigation/presentation/views/vendor_navigation.dart';
 import 'package:plugdin/features/vendor/notifications/presentation/views/vendor_notifications_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/change_password_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/personal_info_screen.dart';
 import 'package:plugdin/features/vendor/profile/presentation/views/profile_screen.dart';
+import 'package:plugdin/features/vendor/search/presentation/views/search_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
