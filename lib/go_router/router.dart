@@ -157,6 +157,14 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: AppRoutes.createPackageScreen,
+        name: AppRouteNames.createPackageScreen,
+        builder: (context, state) {
+          return const CreatePackageScreen();
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.vendorNotificationsScreen,
         name: AppRouteNames.vendorNotificationsScreen,
         builder: (context, state) {

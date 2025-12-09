@@ -1,5 +1,7 @@
+import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
@@ -23,5 +25,9 @@ abstract class VendorStoreRepository {
 
   Future<RepositoryResponse<VendorStoreInfoModel>> getVendorById(
     String vendorId,
+  );
+
+  Future<RepositoryResponse<CreatePackageResponseModel>> createPackage(
+    CreatePackageRequestModel package,
   );
 }
