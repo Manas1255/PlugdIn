@@ -8,24 +8,44 @@ class VendorFilterState extends Equatable {
     this.viewType = FilterViewType.normalDisplayView,
     this.minCapacity = 0,
     this.maxCapacity = 1000000,
+    this.city,
+    this.priceFrom,
+    this.priceTo,
+    this.capacity,
+    this.feature,
   });
 
   final RoleType? selectedRoleType;
   final FilterViewType viewType;
   final int minCapacity;
   final int maxCapacity;
+  final String? city;
+  final double? priceFrom;
+  final double? priceTo;
+  final int? capacity;
+  final String? feature;
 
   VendorFilterState copyWith({
     RoleType? selectedRoleType,
     FilterViewType? viewType,
     int? minCapacity,
     int? maxCapacity,
+    String? city,
+    double? priceFrom,
+    double? priceTo,
+    int? capacity,
+    String? feature,
   }) {
     return VendorFilterState(
       selectedRoleType: selectedRoleType ?? this.selectedRoleType,
       viewType: viewType ?? this.viewType,
       minCapacity: minCapacity ?? this.minCapacity,
       maxCapacity: maxCapacity ?? this.maxCapacity,
+      city: city ?? this.city,
+      priceFrom: priceFrom ?? this.priceFrom,
+      priceTo: priceTo ?? this.priceTo,
+      capacity: capacity ?? this.capacity,
+      feature: feature ?? this.feature,
     );
   }
 
@@ -35,5 +55,10 @@ class VendorFilterState extends Equatable {
     viewType,
     minCapacity,
     maxCapacity,
+    city,
+    priceFrom,
+    priceTo,
+    capacity,
+    feature,
   ];
 }

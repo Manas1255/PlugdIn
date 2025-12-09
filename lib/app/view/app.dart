@@ -9,6 +9,7 @@ import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart'
 import 'package:plugdin/features/onboarding/data/repositories/onboarding_flow_repository_impl.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/filter/data/repositories/vendor_filter_repository_impl.dart';
+import 'package:plugdin/features/vendor/filter/presentation/browse/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/filter/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/data/repositories/vendor_home_repository_impl.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
@@ -80,6 +81,12 @@ class App extends StatelessWidget {
 
         BlocProvider(
           create: (context) => VendorFilterCubit(
+            repository: VendorFilterRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => BrowseCubit(
             repository: VendorFilterRepositoryImpl(),
           ),
         ),

@@ -33,6 +33,7 @@ class AppRoutes {
   static const String addFeaturesScreen = '/add-features-screen';
   static const String vendorNotificationsScreen =
       '/vendor-notifications-screen';
+  static const String browseScreen = '/browse-screen';
 }
 
 class AppRouteNames {
@@ -66,4 +67,5 @@ class AppRouteNames {
   static const String vendorNotificationsScreen = 'vendor-notifications-screen';
   static const String vendorOtherVendorStoreScreen =
       'vendor-other-vendor-store-screen';
+  static const String browseScreen = 'browse-screen';
 }

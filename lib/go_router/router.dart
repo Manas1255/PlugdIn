@@ -173,6 +173,14 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.browseScreen,
+        name: AppRouteNames.browseScreen,
+        builder: (context, state) {
+          return const BrowseScreen();
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

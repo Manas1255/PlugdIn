@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:plugdin/constants/app_colors.dart';
+import 'package:plugdin/constants/app_constants.dart';
+import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/core/enums/filter_view_type.dart';
 import 'package:plugdin/features/vendor/filter/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/filter/presentation/cubit/state.dart';
@@ -11,6 +16,8 @@ import 'package:plugdin/features/vendor/filter/presentation/views/normal_filter_
 import 'package:plugdin/features/vendor/filter/presentation/views/photographers_filter_view.dart';
 import 'package:plugdin/features/vendor/filter/presentation/views/venues_filter_view.dart';
 import 'package:plugdin/features/vendor/filter/presentation/views/videographers_filter_view.dart';
+import 'package:plugdin/go_router/exports.dart';
+import 'package:plugdin/utils/widgets/core_widgets/button.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
@@ -58,6 +65,63 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   ],
                 ),
               ),
+              if (state.viewType != FilterViewType.normalDisplayView) ...[
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: 30,
+                    end: 30,
+                    top: 20,
+                    bottom: 30,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: PIButton(
+                          text: 'Clear Filters',
+                          onPressed: () {
+                            // TODO: Implement clear filters logic
+                            context.read<VendorFilterCubit>().setCapacityRange(
+                              AppConstants.minCapacityRange,
+                              AppConstants.maxCapacityRange,
+                            );
+                          },
+                          backgroundColor: Colors.transparent,
+                          textColor: AppColors.secondaryColor,
+                          isExpanded: false,
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            vertical: 12,
+                          ),
+
+                          fontSize: 16,
+                        ),
+                      ),
+                      Expanded(
+                        child: PIButton(
+                          text: 'Apply',
+                          onPressed: () {
+                            context.pop();
+                            context.pushNamed(AppRouteNames.browseScreen);
+                          },
+                          suffixIcon: SvgPicture.asset(
+                            AssetPaths.filterIcon,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          isExpanded: false,
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            vertical: 12,
+                          ),
+                          borderRadius: 8,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ],
           ),
         );

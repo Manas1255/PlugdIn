@@ -29,6 +29,7 @@ import 'package:plugdin/features/vendor/search/presentation/views/search_screen.
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
+import 'package:plugdin/features/vendor/filter/presentation/browse/views/browse_screen.dart';
 
 part 'router.dart';
 part 'routes.dart';
