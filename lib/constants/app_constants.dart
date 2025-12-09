@@ -5,8 +5,8 @@ class AppConstants {
   //       'https://sites.google.com/fightping.com/fightping-privacy';
   // }
 
-  static const minPriceRange = 0;
-  static const maxPriceRange = 11000000;
+  static const minCapacityRange = 0;
+  static const maxCapacityRange = 11000000;
   static const priceRangeDivisions = 100;
   static const appPlaceHolderUrlImage =
       'https://i.ibb.co/0pJtLbph/suggested-for-you-image.png';

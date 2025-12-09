@@ -74,7 +74,7 @@ class VendorStoreInfoModel {
       businessDescription: json['businessDescription'] as String,
       isVerified: json['isVerified'] as bool? ?? false,
       reviews: json['reviews'] as int? ?? 0,
-      ratings: json['ratings'] as int? ?? 0,
+      ratings: (json['ratings'] as num?)?.toDouble() ?? 0.0,
       listingCount: json['listingCount'] as int? ?? 0,
     );
   }
@@ -96,7 +96,7 @@ class VendorStoreInfoModel {
   final String businessDescription;
   final bool isVerified;
   final int reviews;
-  final int ratings;
+  final double ratings;
   final int listingCount;
 
   Map<String, dynamic> toJson() {
@@ -143,7 +143,7 @@ class VendorStoreInfoModel {
     String? businessDescription,
     bool? isVerified,
     int? reviews,
-    int? ratings,
+    double? ratings,
     int? listingCount,
   }) {
     return VendorStoreInfoModel(

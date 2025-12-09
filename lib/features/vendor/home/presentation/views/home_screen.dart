@@ -93,25 +93,6 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
   }
 
   Widget _buildBody(BuildContext context, VendorHomeState state) {
-    if (state.allVendors.isLoading) {
-      return const LoadingWidget();
-    }
-    if (state.allVendors.isFailure) {
-      return PIErrorWidget(
-        errorText: state.allVendors.errorMessage ?? 'Something went wrong',
-        onPressed: () {
-          context.read<VendorHomeCubit>().fetchAllVendors(
-            filter: state.selectedFilter,
-          );
-        },
-      );
-    }
-    if (state.allVendors.isEmpty) {
-      return const EmptyWidget(
-        text: 'No Vendors Found',
-      );
-    }
-
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: 16,
@@ -154,51 +135,74 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          Text(
-            'Featured',
-            style: context.h1,
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: PaginatedBuilder(
-              items: state.allVendors.data?.vendors ?? [],
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemBuilder: (context, item, index) {
-                final vendor = state.allVendors.data?.vendors[index];
-                return Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    bottom: 8,
-                  ),
-                  child: VendorCardWidget(
-                    companyName: vendor?.companyName ?? '',
-                    primaryCategory: vendor?.primaryCategory ?? '',
-                    location: vendor?.address ?? '',
-                    onTap: () {
-                      context.pushNamed(
-                        AppRouteNames.vendorOtherVendorStoreScreen,
-                        pathParameters: {'vendorId': vendor?.id ?? ''},
-                      );
-                    },
-                  ),
-                );
-              },
-              onRefresh: () async {
-                await context.read<VendorHomeCubit>().fetchAllVendors(
+          if (state.allVendors.isLoading)
+            const Expanded(
+              child: Center(
+                child: LoadingWidget(),
+              ),
+            )
+          else if (state.allVendors.isFailure)
+            PIErrorWidget(
+              errorText:
+                  state.allVendors.errorMessage ?? 'Something went wrong',
+              onPressed: () {
+                context.read<VendorHomeCubit>().fetchAllVendors(
                   filter: state.selectedFilter,
                 );
               },
-              onLoadMore: () async {
-                await context.read<VendorHomeCubit>().fetchAllVendors(
-                  filter: state.selectedFilter,
-                  pageNumber: state.allVendors.data?.pagination?.nextPage ?? 1,
-                );
-              },
-              isLoading: state.allVendors.isLoading,
-              isLoadingMore: state.allVendors.isPageLoading,
-              hasMoreData:
-                  state.allVendors.data?.pagination?.hasNextPage ?? false,
+            )
+          else if (state.allVendors.isEmpty)
+            const EmptyWidget(
+              text: 'No Vendors Found',
+            )
+          else ...[
+            Text(
+              'Featured',
+              style: context.h1,
             ),
-          ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: PaginatedBuilder(
+                items: state.allVendors.data?.vendors ?? [],
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, item, index) {
+                  final vendor = state.allVendors.data?.vendors[index];
+                  return Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      bottom: 8,
+                    ),
+                    child: VendorCardWidget(
+                      companyName: vendor?.companyName ?? '',
+                      primaryCategory: vendor?.primaryCategory ?? '',
+                      location: vendor?.address ?? '',
+                      onTap: () {
+                        context.pushNamed(
+                          AppRouteNames.vendorOtherVendorStoreScreen,
+                          pathParameters: {'vendorId': vendor?.id ?? ''},
+                        );
+                      },
+                    ),
+                  );
+                },
+                onRefresh: () async {
+                  await context.read<VendorHomeCubit>().fetchAllVendors(
+                    filter: state.selectedFilter,
+                  );
+                },
+                onLoadMore: () async {
+                  await context.read<VendorHomeCubit>().fetchAllVendors(
+                    filter: state.selectedFilter,
+                    pageNumber:
+                        state.allVendors.data?.pagination?.nextPage ?? 1,
+                  );
+                },
+                isLoading: state.allVendors.isLoading,
+                isLoadingMore: state.allVendors.isPageLoading,
+                hasMoreData:
+                    state.allVendors.data?.pagination?.hasNextPage ?? false,
+              ),
+            ),
+          ],
         ],
       ),
     );

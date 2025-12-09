@@ -173,6 +173,14 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.browseScreen,
+        name: AppRouteNames.browseScreen,
+        builder: (context, state) {
+          return const BrowseScreen();
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
@@ -269,7 +277,7 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.vendorSearchScreen,
                 name: AppRouteNames.vendorSearchScreen,
-                builder: (context, state) => const VendorSearchScreen(),
+                builder: (context, state) => VendorSearchScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
                   if (appPreferences.isVendor()) {

@@ -23,11 +23,16 @@ class PIBottomSheet extends StatefulWidget {
     required String buttonText,
     required VoidCallback onTap,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return showModalBottomSheet(
       useRootNavigator: true,
       backgroundColor: AppColors.white,
       context: context,
       isScrollControlled: true,
+      constraints: BoxConstraints(
+        maxWidth: screenWidth,
+        minWidth: screenWidth,
+      ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(24),
