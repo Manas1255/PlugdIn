@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:plugdin/constants/app_constants.dart';
 import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
+import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
@@ -184,6 +188,77 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error fetching vendor by ID', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<CreatePackageResponseModel>> createPackage(
+    CreatePackageRequestModel package,
+  ) async {
+    try {
+      // Check if we have file paths that need to be uploaded
+      final hasFiles = package.files.isNotEmpty;
+      
+      if (hasFiles) {
+        // Use multipart for file uploads
+        final formData = <String, dynamic>{
+          'title': package.title,
+          'description': package.description,
+          'subprice': package.subprice,
+          'totalPrice': package.totalPrice,
+          'vendorEmails': package.vendorEmails,
+        };
+
+        // Add files as MultipartFile
+        final files = <MultipartFile>[];
+        for (final filePath in package.files) {
+          final file = File(filePath);
+          if (await file.exists()) {
+            final multipartFile = await MultipartFile.fromFile(
+              filePath,
+              filename: filePath.split('/').last,
+            );
+            files.add(multipartFile);
+          }
+        }
+        
+        if (files.isNotEmpty) {
+          formData['files'] = files;
+        }
+
+        final response = await _apiService.postMultipart(
+          Endpoints.createPackage,
+          formData,
+        );
+        final responseData = ApiResponseParser.parse<CreatePackageResponseModel>(
+          json: response.data,
+          fromJson: CreatePackageResponseModel.fromJson,
+        );
+        return RepositoryResponse(
+          isSuccess: responseData.isSuccess,
+          data: responseData.responseData,
+        );
+      } else {
+        // Use regular POST for JSON data without files
+        final response = await _apiService.post(
+          endpoint: Endpoints.createPackage,
+          data: package.toJson(),
+        );
+        final responseData = ApiResponseParser.parse<CreatePackageResponseModel>(
+          json: response.data,
+          fromJson: CreatePackageResponseModel.fromJson,
+        );
+        return RepositoryResponse(
+          isSuccess: responseData.isSuccess,
+          data: responseData.responseData,
+        );
+      }
+    } catch (e, s) {
+      AppLogger.error('Error creating package', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

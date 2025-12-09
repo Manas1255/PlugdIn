@@ -27,6 +27,7 @@ import 'package:plugdin/features/vendor/profile/presentation/views/personal_info
 import 'package:plugdin/features/vendor/profile/presentation/views/profile_screen.dart';
 import 'package:plugdin/features/vendor/search/presentation/views/search_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/views/browse_screen.dart';

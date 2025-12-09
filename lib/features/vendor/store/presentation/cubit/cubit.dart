@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
@@ -291,5 +293,39 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
         ),
       );
     }
+  }
+
+  Future<void> createPackage(CreatePackageRequestModel package) async {
+    emit(
+      state.copyWith(
+        createPackageState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.createPackage(package);
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          createPackageState: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          createPackageState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetCreatePackageState() {
+    emit(
+      state.copyWith(
+        createPackageState: const DataState.initial(),
+      ),
+    );
   }
 }
