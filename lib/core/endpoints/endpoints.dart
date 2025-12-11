@@ -32,6 +32,7 @@ class Endpoints {
   static const String features = 'vendor/features';
   static const String uploadStoreMedia = 'vendor/upload-media';
   static const String vendorStoreMedia = 'vendor/storemedia/vendor';
+  static String deletePost(String postId) => 'vendor/storemedia/$postId';
   static const String uploadCompanyLogo = 'vendor/upload-logo';
   static const String createPackage = 'packages';
   static const String getVendorPackages = 'packages/my';

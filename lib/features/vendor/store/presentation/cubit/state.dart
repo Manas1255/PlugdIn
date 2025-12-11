@@ -28,6 +28,7 @@ class VendorStoreState extends Equatable {
     this.otherVendorStoreInfo = const DataState.initial(),
     this.createPackageState = const DataState.initial(),
     this.vendorPackages = const DataState.initial(),
+    this.deletePostState = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -44,6 +45,7 @@ class VendorStoreState extends Equatable {
   final DataState<VendorStoreInfoModel> otherVendorStoreInfo;
   final DataState<CreatePackageResponseModel> createPackageState;
   final DataState<VendorPackagesResponseModel> vendorPackages;
+  final DataState<bool> deletePostState;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -60,6 +62,7 @@ class VendorStoreState extends Equatable {
     DataState<VendorStoreInfoModel>? otherVendorStoreInfo,
     DataState<CreatePackageResponseModel>? createPackageState,
     DataState<VendorPackagesResponseModel>? vendorPackages,
+    DataState<bool>? deletePostState,
   }) {
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
@@ -82,6 +85,7 @@ class VendorStoreState extends Equatable {
       otherVendorStoreInfo: otherVendorStoreInfo ?? this.otherVendorStoreInfo,
       createPackageState: createPackageState ?? this.createPackageState,
       vendorPackages: vendorPackages ?? this.vendorPackages,
+      deletePostState: deletePostState ?? this.deletePostState,
     );
   }
 
@@ -101,5 +105,6 @@ class VendorStoreState extends Equatable {
     otherVendorStoreInfo,
     createPackageState,
     vendorPackages,
+    deletePostState,
   ];
 }
