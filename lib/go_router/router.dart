@@ -189,6 +189,21 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.packageDetailScreen,
+        name: AppRouteNames.packageDetailScreen,
+        builder: (context, state) {
+          final packageId = state.pathParameters['packageId'] ?? '';
+          final package = state.extra is PackageModel
+              ? state.extra as PackageModel
+              : null;
+          return PackageDetailScreen(
+            packageId: packageId,
+            initialPackage: package,
+          );
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

@@ -6,6 +6,8 @@ import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/models/all_vendors_response_model.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
@@ -82,6 +84,33 @@ class VendorHomeRepositoryImpl implements VendorHomeRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error fetching all packages: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<PackageModel>> getPackageById(
+    String packageId,
+  ) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getPackageById(packageId),
+      );
+
+      final responseData = ApiResponseParser.parse<PackageResponseModel>(
+        json: response.data,
+        fromJson: PackageResponseModel.fromJson,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData?.package,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching package by id: ', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

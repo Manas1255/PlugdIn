@@ -4,9 +4,14 @@ import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 
 class PackageCard extends StatelessWidget {
-  const PackageCard({required this.package, super.key});
+  const PackageCard({
+    required this.package,
+    this.onTap,
+    super.key,
+  });
 
   final PackageModel package;
+  final VoidCallback? onTap;
 
   Color _statusColor(String status) {
     final normalized = status.toLowerCase();
@@ -19,101 +24,105 @@ class PackageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusColor = _statusColor(package.status);
 
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: AppColors.grey.withValues(alpha: 0.2),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: AppColors.grey.withValues(alpha: 0.2),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      package.title,
-                      style: context.h3.copyWith(fontSize: 16),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      package.description,
-                      style: context.l3.copyWith(color: AppColors.darkGrey),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  package.status,
-                  style: context.l3.copyWith(
-                    color: statusColor,
-                    fontWeight: FontWeight.w600,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        package.title,
+                        style: context.h3.copyWith(fontSize: 16),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        package.description,
+                        style: context.l3.copyWith(color: AppColors.darkGrey),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              _InfoChip(
-                icon: Icons.sell_outlined,
-                label: 'Subprice',
-                value: 'PKR ${package.subprice}',
-              ),
-              const SizedBox(width: 8),
-              _InfoChip(
-                icon: Icons.payments_outlined,
-                label: 'Total',
-                value: 'PKR ${package.totalPrice}',
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              _InfoChip(
-                icon: Icons.event_available_outlined,
-                label: 'Bookings',
-                value: '${package.bookingCount}',
-              ),
-              const SizedBox(width: 8),
-              _InfoChip(
-                icon: Icons.person_outline,
-                label: 'Vendors',
-                value: '${package.vendorEmails.length}',
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    package.status,
+                    style: context.l3.copyWith(
+                      color: statusColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                _InfoChip(
+                  icon: Icons.sell_outlined,
+                  label: 'Subprice',
+                  value: 'PKR ${package.subprice}',
+                ),
+                const SizedBox(width: 8),
+                _InfoChip(
+                  icon: Icons.payments_outlined,
+                  label: 'Total',
+                  value: 'PKR ${package.totalPrice}',
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                _InfoChip(
+                  icon: Icons.event_available_outlined,
+                  label: 'Bookings',
+                  value: '${package.bookingCount}',
+                ),
+                const SizedBox(width: 8),
+                _InfoChip(
+                  icon: Icons.person_outline,
+                  label: 'Vendors',
+                  value: '${package.vendorEmails.length}',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

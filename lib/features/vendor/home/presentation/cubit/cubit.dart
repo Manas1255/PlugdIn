@@ -3,6 +3,7 @@ import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/models/all_vendors_response_model.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -110,6 +111,32 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
       emit(
         state.copyWith(
           allPackages: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchPackageById(String packageId) async {
+    emit(
+      state.copyWith(
+        packageDetail: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.getPackageById(packageId);
+
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          packageDetail: DataState.loaded(data: response.data),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          packageDetail: DataState.failure(
             error: response.message,
           ),
         ),

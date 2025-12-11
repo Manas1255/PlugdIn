@@ -29,8 +29,10 @@ import 'package:plugdin/features/vendor/search/presentation/views/search_screen.
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/package_detail_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/views/browse_screen.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 
 part 'router.dart';
 part 'routes.dart';

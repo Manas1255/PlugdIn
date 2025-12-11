@@ -276,7 +276,16 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                                 padding: const EdgeInsetsDirectional.only(
                                   bottom: 8,
                                 ),
-                                child: PackageCard(package: package),
+                                child: PackageCard(
+                                  package: package,
+                                  onTap: () {
+                                    context.pushNamed(
+                                      AppRouteNames.packageDetailScreen,
+                                      pathParameters: {'packageId': package.id},
+                                      extra: package,
+                                    );
+                                  },
+                                ),
                               );
                             },
                             onRefresh: () async {
