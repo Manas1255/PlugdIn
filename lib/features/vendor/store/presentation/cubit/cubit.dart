@@ -8,6 +8,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_response_mode
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -295,6 +296,51 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     }
   }
 
+  Future<void> getVendorPackages({int pageNumber = 1}) async {
+    emit(
+      state.copyWith(
+        vendorPackages: pageNumber == 1
+            ? const DataState.loading()
+            : DataState.pageLoading(
+                data: state.vendorPackages.data,
+              ),
+      ),
+    );
+
+    final response = await repository.getVendorPackages(
+      pageNumber: pageNumber,
+    );
+
+    if (response.isSuccess) {
+      final currentData = state.vendorPackages.data;
+      final updatedData = currentData != null && pageNumber > 1
+          ? VendorPackagesResponseModel(
+              packages: [
+                ...currentData.packages,
+                ...response.data?.packages ?? [],
+              ],
+              pagination: response.data?.pagination ?? currentData.pagination,
+            )
+          : response.data;
+
+      emit(
+        state.copyWith(
+          vendorPackages: DataState.loaded(
+            data: updatedData,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorPackages: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> createPackage(CreatePackageRequestModel package) async {
     emit(
       state.copyWith(
@@ -303,10 +349,21 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     );
     final response = await repository.createPackage(package);
     if (response.isSuccess && response.data != null) {
+      final updatedPackages = VendorPackagesResponseModel(
+        packages: [
+          response.data!.package,
+          ...state.vendorPackages.data?.packages ?? [],
+        ],
+        pagination: state.vendorPackages.data?.pagination,
+      );
+
       emit(
         state.copyWith(
           createPackageState: DataState.loaded(
             data: response.data,
+          ),
+          vendorPackages: DataState.loaded(
+            data: updatedPackages,
           ),
         ),
       );

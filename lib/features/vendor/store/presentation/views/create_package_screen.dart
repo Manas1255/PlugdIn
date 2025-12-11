@@ -95,7 +95,7 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
       setState(() {
         _selectedFiles[index] = state.storeImageFile;
       });
-      // Clear the cubit's storeImageFile after using it
+
       context.read<VendorStoreCubit>().clearStoreImage();
     }
   }
@@ -152,7 +152,8 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
             context.pop();
           } else if (state.createPackageState.isFailure) {
             ToastHelper.showErrorToast(
-              state.createPackageState.errorMessage ?? 'Failed to create package',
+              state.createPackageState.errorMessage ??
+                  'Failed to create package',
             );
           }
         },
@@ -364,12 +365,14 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
                                 ),
                                 PIButton(
                                   text: 'Choose File',
-                                  onPressed: () => _showImagePickerBottomSheet(index),
+                                  onPressed: () =>
+                                      _showImagePickerBottomSheet(index),
                                   isExpanded: false,
-                                  padding: const EdgeInsetsDirectional.symmetric(
-                                    horizontal: 16,
-                                    vertical: 8,
-                                  ),
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
                                   fontSize: 12,
                                 ),
                                 const SizedBox(width: 8),
@@ -409,4 +412,3 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
     );
   }
 }
-

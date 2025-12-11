@@ -214,7 +214,7 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                       children: const [
                         OtherVendorStoreView(),
                         OtherVendorDetailsView(),
-                        PackagesView(),
+                      PackagesView(isOwnStore: false),
                         ReviewsView(),
                       ],
                     ),

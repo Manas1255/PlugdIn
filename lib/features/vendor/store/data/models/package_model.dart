@@ -44,36 +44,43 @@ class PackageModel {
   });
 
   factory PackageModel.fromJson(Map<String, dynamic> json) {
+    final creatorVendor = json['creatorVendorId'];
+    final subpriceValue = json['subprice'];
+    final totalPriceValue = json['totalPrice'];
+    final bookingCountValue = json['bookingCount'];
+
     return PackageModel(
-      id: json['_id'] as String,
-      creatorVendorId: CreatorVendorModel.fromJson(
-        json['creatorVendorId'] as Map<String, dynamic>,
-      ),
-      title: json['title'] as String,
-      description: json['description'] as String,
+      id: json['_id']?.toString() ?? '',
+      creatorVendorId: creatorVendor is Map<String, dynamic>
+          ? CreatorVendorModel.fromJson(creatorVendor)
+          : CreatorVendorModel.fallback(id: creatorVendor?.toString() ?? ''),
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
       media: (json['media'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => e.toString())
               .toList() ??
           [],
-      subprice: json['subprice'] as int,
-      totalPrice: json['totalPrice'] as int,
+      subprice: (subpriceValue as num?)?.toInt() ?? 0,
+      totalPrice: (totalPriceValue as num?)?.toInt() ?? 0,
       vendorEmails: (json['vendorEmails'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => e.toString())
               .toList() ??
           [],
       vendorRequests: (json['vendorRequests'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => e.toString())
               .toList() ??
           [],
       approvedVendors: (json['approvedVendors'] as List<dynamic>?)
-              ?.map((e) => ApprovedVendorModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => ApprovedVendorModel.fromJson(
+                    e as Map<String, dynamic>? ?? <String, dynamic>{},
+                  ))
               .toList() ??
           [],
-      status: json['status'] as String,
-      bookingCount: json['bookingCount'] as int? ?? 0,
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
-      version: json['__v'] as int? ?? 0,
+      status: json['status']?.toString() ?? '',
+      bookingCount: (bookingCountValue as num?)?.toInt() ?? 0,
+      createdAt: json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt']?.toString() ?? '',
+      version: (json['__v'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -119,25 +126,37 @@ class CreatorVendorModel {
     required this.id,
     required this.companyName,
     required this.city,
+    this.companyLogo,
   });
 
   factory CreatorVendorModel.fromJson(Map<String, dynamic> json) {
     return CreatorVendorModel(
-      id: json['_id'] as String,
-      companyName: json['companyName'] as String,
-      city: json['city'] as String,
+      id: json['_id']?.toString() ?? '',
+      companyName: json['companyName']?.toString() ?? '',
+      city: json['city']?.toString() ?? '',
+      companyLogo: json['companyLogo']?.toString(),
+    );
+  }
+
+  factory CreatorVendorModel.fallback({required String id}) {
+    return CreatorVendorModel(
+      id: id,
+      companyName: '',
+      city: '',
     );
   }
 
   final String id;
   final String companyName;
   final String city;
+  final String? companyLogo;
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
       'companyName': companyName,
       'city': city,
+      if (companyLogo != null) 'companyLogo': companyLogo,
     };
   }
 }
@@ -147,25 +166,29 @@ class ApprovedVendorModel {
     required this.id,
     required this.companyName,
     required this.city,
+    this.companyLogo,
   });
 
   factory ApprovedVendorModel.fromJson(Map<String, dynamic> json) {
     return ApprovedVendorModel(
-      id: json['_id'] as String,
-      companyName: json['companyName'] as String,
-      city: json['city'] as String,
+      id: json['_id']?.toString() ?? '',
+      companyName: json['companyName']?.toString() ?? '',
+      city: json['city']?.toString() ?? '',
+      companyLogo: json['companyLogo']?.toString(),
     );
   }
 
   final String id;
   final String companyName;
   final String city;
+  final String? companyLogo;
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
       'companyName': companyName,
       'city': city,
+      if (companyLogo != null) 'companyLogo': companyLogo,
     };
   }
 }
