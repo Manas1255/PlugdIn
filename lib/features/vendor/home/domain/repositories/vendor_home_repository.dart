@@ -1,5 +1,7 @@
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/models/all_vendors_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/utils/helpers/repository_response.dart';
 
 abstract class VendorHomeRepository {
@@ -7,4 +9,10 @@ abstract class VendorHomeRepository {
     CategoryType? filter,
     int pageNumber = 1,
   });
+
+  Future<RepositoryResponse<VendorPackagesResponseModel>> getAllPackages({
+    int pageNumber = 1,
+  });
+
+  Future<RepositoryResponse<PackageModel>> getPackageById(String packageId);
 }

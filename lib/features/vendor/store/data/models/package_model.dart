@@ -49,6 +49,18 @@ class PackageModel {
     final totalPriceValue = json['totalPrice'];
     final bookingCountValue = json['bookingCount'];
 
+    final mediaList = (json['media'] as List<dynamic>?) ?? [];
+    final parsedMedia = mediaList
+        .map((e) {
+          if (e is Map<String, dynamic>) {
+            final fileUrl = e['fileUrl']?.toString();
+            if (fileUrl != null && fileUrl.isNotEmpty) return fileUrl;
+          }
+          return e.toString();
+        })
+        .where((url) => url.isNotEmpty)
+        .toList();
+
     return PackageModel(
       id: json['_id']?.toString() ?? '',
       creatorVendorId: creatorVendor is Map<String, dynamic>
@@ -56,10 +68,7 @@ class PackageModel {
           : CreatorVendorModel.fallback(id: creatorVendor?.toString() ?? ''),
       title: json['title']?.toString() ?? '',
       description: json['description']?.toString() ?? '',
-      media: (json['media'] as List<dynamic>?)
-              ?.map((e) => e.toString())
-              .toList() ??
-          [],
+      media: parsedMedia,
       subprice: (subpriceValue as num?)?.toInt() ?? 0,
       totalPrice: (totalPriceValue as num?)?.toInt() ?? 0,
       vendorEmails: (json['vendorEmails'] as List<dynamic>?)
