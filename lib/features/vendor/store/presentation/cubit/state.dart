@@ -8,6 +8,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_response_mode
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -26,6 +27,7 @@ class VendorStoreState extends Equatable {
     this.vendorStoreInfo = const DataState.initial(),
     this.otherVendorStoreInfo = const DataState.initial(),
     this.createPackageState = const DataState.initial(),
+    this.vendorPackages = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -41,6 +43,7 @@ class VendorStoreState extends Equatable {
   final DataState<VendorStoreInfoModel> vendorStoreInfo;
   final DataState<VendorStoreInfoModel> otherVendorStoreInfo;
   final DataState<CreatePackageResponseModel> createPackageState;
+  final DataState<VendorPackagesResponseModel> vendorPackages;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -56,8 +59,8 @@ class VendorStoreState extends Equatable {
     DataState<VendorStoreInfoModel>? vendorStoreInfo,
     DataState<VendorStoreInfoModel>? otherVendorStoreInfo,
     DataState<CreatePackageResponseModel>? createPackageState,
+    DataState<VendorPackagesResponseModel>? vendorPackages,
   }) {
-    // If clearStoreImage is being set to true, also clear the storeImageFile
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
         ? null
@@ -78,6 +81,7 @@ class VendorStoreState extends Equatable {
       vendorStoreInfo: vendorStoreInfo ?? this.vendorStoreInfo,
       otherVendorStoreInfo: otherVendorStoreInfo ?? this.otherVendorStoreInfo,
       createPackageState: createPackageState ?? this.createPackageState,
+      vendorPackages: vendorPackages ?? this.vendorPackages,
     );
   }
 
@@ -96,5 +100,6 @@ class VendorStoreState extends Equatable {
     vendorStoreInfo,
     otherVendorStoreInfo,
     createPackageState,
+    vendorPackages,
   ];
 }

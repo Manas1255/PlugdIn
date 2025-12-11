@@ -34,6 +34,7 @@ class Endpoints {
   static const String vendorStoreMedia = 'vendor/storemedia/vendor';
   static const String uploadCompanyLogo = 'vendor/upload-logo';
   static const String createPackage = 'packages';
+  static const String getVendorPackages = 'packages/my';
 
   /// Filter Endpoints
   static const String getFilterData = 'vendor/filter';

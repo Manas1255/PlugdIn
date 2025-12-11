@@ -11,15 +11,28 @@ class PaginationModel {
   });
 
   factory PaginationModel.fromJson(Map<String, dynamic> json) {
+    int _asInt(dynamic value) {
+      if (value == null) return 0;
+      if (value is int) return value;
+      if (value is double) return value.toInt();
+      return int.tryParse(value.toString()) ?? 0;
+    }
+
+    bool _asBool(dynamic value) {
+      if (value is bool) return value;
+      if (value is num) return value != 0;
+      return value?.toString().toLowerCase() == 'true';
+    }
+
     return PaginationModel(
-      currentPage: json['currentPage'] as int,
-      totalPages: json['totalPages'] as int,
-      totalItems: json['totalItems'] as int,
-      itemsPerPage: json['itemsPerPage'] as int,
-      hasNextPage: json['hasNextPage'] as bool,
-      hasPrevPage: json['hasPrevPage'] as bool,
-      nextPage: json['nextPage'] as int?,
-      prevPage: json['prevPage'] as int?,
+      currentPage: _asInt(json['currentPage']),
+      totalPages: _asInt(json['totalPages']),
+      totalItems: _asInt(json['totalItems']),
+      itemsPerPage: _asInt(json['itemsPerPage']),
+      hasNextPage: _asBool(json['hasNextPage']),
+      hasPrevPage: _asBool(json['hasPrevPage']),
+      nextPage: json['nextPage'] != null ? _asInt(json['nextPage']) : null,
+      prevPage: json['prevPage'] != null ? _asInt(json['prevPage']) : null,
     );
   }
   final int currentPage;

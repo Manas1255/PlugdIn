@@ -12,6 +12,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_response_mode
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -196,15 +197,42 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
   }
 
   @override
+  Future<RepositoryResponse<VendorPackagesResponseModel>> getVendorPackages({
+    int pageNumber = 1,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorPackages,
+        queryParams: {
+          'page': pageNumber,
+          'limit': AppConstants.paginationLimit,
+        },
+      );
+      final responseData = ApiResponseParser.parse<VendorPackagesResponseModel>(
+        json: response.data,
+        fromJson: VendorPackagesResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor packages', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
   Future<RepositoryResponse<CreatePackageResponseModel>> createPackage(
     CreatePackageRequestModel package,
   ) async {
     try {
-      // Check if we have file paths that need to be uploaded
       final hasFiles = package.files.isNotEmpty;
-      
+
       if (hasFiles) {
-        // Use multipart for file uploads
         final formData = <String, dynamic>{
           'title': package.title,
           'description': package.description,
@@ -213,7 +241,6 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
           'vendorEmails': package.vendorEmails,
         };
 
-        // Add files as MultipartFile
         final files = <MultipartFile>[];
         for (final filePath in package.files) {
           final file = File(filePath);
@@ -225,7 +252,7 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
             files.add(multipartFile);
           }
         }
-        
+
         if (files.isNotEmpty) {
           formData['files'] = files;
         }
@@ -234,24 +261,25 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
           Endpoints.createPackage,
           formData,
         );
-        final responseData = ApiResponseParser.parse<CreatePackageResponseModel>(
-          json: response.data,
-          fromJson: CreatePackageResponseModel.fromJson,
-        );
+        final responseData =
+            ApiResponseParser.parse<CreatePackageResponseModel>(
+              json: response.data,
+              fromJson: CreatePackageResponseModel.fromJson,
+            );
         return RepositoryResponse(
           isSuccess: responseData.isSuccess,
           data: responseData.responseData,
         );
       } else {
-        // Use regular POST for JSON data without files
         final response = await _apiService.post(
           endpoint: Endpoints.createPackage,
           data: package.toJson(),
         );
-        final responseData = ApiResponseParser.parse<CreatePackageResponseModel>(
-          json: response.data,
-          fromJson: CreatePackageResponseModel.fromJson,
-        );
+        final responseData =
+            ApiResponseParser.parse<CreatePackageResponseModel>(
+              json: response.data,
+              fromJson: CreatePackageResponseModel.fromJson,
+            );
         return RepositoryResponse(
           isSuccess: responseData.isSuccess,
           data: responseData.responseData,
