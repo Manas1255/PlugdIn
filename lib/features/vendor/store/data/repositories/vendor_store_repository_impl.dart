@@ -15,6 +15,7 @@ import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -338,6 +339,35 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error adding review', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorReviewsResponseModel>> getVendorReviews({
+    int pageNumber = 1,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorReviews,
+        queryParams: {
+          'page': pageNumber,
+          'limit': AppConstants.paginationLimit,
+        },
+      );
+      final responseData = ApiResponseParser.parse<VendorReviewsResponseModel>(
+        json: response.data,
+        fromJson: VendorReviewsResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor reviews', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

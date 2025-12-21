@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/asset_paths.dart';
 
 class StarRatingWidget extends StatelessWidget {
@@ -10,6 +11,7 @@ class StarRatingWidget extends StatelessWidget {
     super.key,
     this.starCount = 5,
     this.size = 20,
+    this.color = AppColors.secondaryColor,
   });
 
   final double rating;
@@ -17,6 +19,7 @@ class StarRatingWidget extends StatelessWidget {
   final double size;
   final String filledStarAsset;
   final String emptyStarAsset;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,10 @@ class StarRatingWidget extends StatelessWidget {
       final fillPercent = (rating - i).clamp(0, 1);
       if (fillPercent == 1) {
         stars.add(
-          _buildStar(filledStarAsset),
+          _buildStar(filledStarAsset, isFilled: true),
         );
       } else if (fillPercent == 0) {
-        stars.add(_buildStar(emptyStarAsset));
+        stars.add(_buildStar(emptyStarAsset, isFilled: false));
       } else {
         stars.add(
           SizedBox(
@@ -36,10 +39,10 @@ class StarRatingWidget extends StatelessWidget {
             height: size,
             child: Stack(
               children: [
-                _buildStar(emptyStarAsset),
+                _buildStar(emptyStarAsset, isFilled: false),
                 ClipRect(
                   clipper: _StarClipper(fillPercent.toDouble()),
-                  child: _buildStar(filledStarAsset),
+                  child: _buildStar(filledStarAsset, isFilled: true),
                 ),
               ],
             ),
@@ -53,7 +56,7 @@ class StarRatingWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildStar(String assetPath) {
+  Widget _buildStar(String assetPath, {required bool isFilled}) {
     return SizedBox(
       width: size,
       height: size,
@@ -63,6 +66,9 @@ class StarRatingWidget extends StatelessWidget {
           width: size,
           height: size,
           fit: BoxFit.contain,
+          colorFilter: isFilled
+              ? ColorFilter.mode(color, BlendMode.srcIn)
+              : null,
         ),
       ),
     );

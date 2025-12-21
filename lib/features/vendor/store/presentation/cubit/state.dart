@@ -10,6 +10,7 @@ import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -31,6 +32,7 @@ class VendorStoreState extends Equatable {
     this.vendorPackages = const DataState.initial(),
     this.deletePostState = const DataState.initial(),
     this.addReviewState = const DataState.initial(),
+    this.vendorReviews = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -49,6 +51,7 @@ class VendorStoreState extends Equatable {
   final DataState<VendorPackagesResponseModel> vendorPackages;
   final DataState<bool> deletePostState;
   final DataState<AddReviewResponseModel> addReviewState;
+  final DataState<VendorReviewsResponseModel> vendorReviews;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -67,6 +70,7 @@ class VendorStoreState extends Equatable {
     DataState<VendorPackagesResponseModel>? vendorPackages,
     DataState<bool>? deletePostState,
     DataState<AddReviewResponseModel>? addReviewState,
+    DataState<VendorReviewsResponseModel>? vendorReviews,
   }) {
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
@@ -91,6 +95,7 @@ class VendorStoreState extends Equatable {
       vendorPackages: vendorPackages ?? this.vendorPackages,
       deletePostState: deletePostState ?? this.deletePostState,
       addReviewState: addReviewState ?? this.addReviewState,
+      vendorReviews: vendorReviews ?? this.vendorReviews,
     );
   }
 
@@ -112,5 +117,6 @@ class VendorStoreState extends Equatable {
     vendorPackages,
     deletePostState,
     addReviewState,
+    vendorReviews,
   ];
 }
