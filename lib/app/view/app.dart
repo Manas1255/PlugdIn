@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plugdin/app/view/app_view.dart';
 import 'package:plugdin/core/locale/cubit/locale_cubit.dart';
+import 'package:plugdin/features/customer/filter/data/repositories/customer_filter_repository_impl.dart';
+import 'package:plugdin/features/customer/filter/presentation/browse/cubit/cubit.dart';
+import 'package:plugdin/features/customer/filter/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/home/data/repositories/customer_home_repository_impl.dart';
 import 'package:plugdin/features/customer/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/customer/profile/data/repositories/profile_repository_impl.dart';
 import 'package:plugdin/features/customer/profile/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/customer/search/data/repositories/customer_search_repository_impl.dart';
+import 'package:plugdin/features/customer/search/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/onboarding/data/repositories/onboarding_flow_repository_impl.dart';
 import 'package:plugdin/features/onboarding/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/filter/data/repositories/vendor_filter_repository_impl.dart';
@@ -88,6 +93,24 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => BrowseCubit(
             repository: VendorFilterRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerSearchCubit(
+            repository: CustomerSearchRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerFilterCubit(
+            repository: CustomerFilterRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerBrowseCubit(
+            repository: CustomerFilterRepositoryImpl(),
           ),
         ),
       ],

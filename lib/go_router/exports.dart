@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/app/view/splash_screen.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
+import 'package:plugdin/features/customer/filter/presentation/browse/views/browse_screen.dart';
 import 'package:plugdin/features/customer/home/presentation/views/home_screen.dart';
 import 'package:plugdin/features/customer/home/presentation/views/search_screen.dart';
 import 'package:plugdin/features/customer/navigation/presentation/views/customer_navigation.dart';

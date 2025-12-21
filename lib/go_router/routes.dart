@@ -34,6 +34,7 @@ class AppRoutes {
   static const String vendorNotificationsScreen =
       '/vendor-notifications-screen';
   static const String browseScreen = '/browse-screen';
+  static const String customerBrowseScreen = '/customer-browse-screen';
   static const String createPackageScreen = '/create-package-screen';
   static const String packageDetailScreen = '/package/:packageId';
 }
@@ -70,6 +71,7 @@ class AppRouteNames {
   static const String vendorOtherVendorStoreScreen =
       'vendor-other-vendor-store-screen';
   static const String browseScreen = 'browse-screen';
+  static const String customerBrowseScreen = 'customer-browse-screen';
   static const String createPackageScreen = 'create-package-screen';
   static const String packageDetailScreen = 'package-detail-screen';
 }

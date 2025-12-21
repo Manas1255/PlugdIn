@@ -190,6 +190,14 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: AppRoutes.customerBrowseScreen,
+        name: AppRouteNames.customerBrowseScreen,
+        builder: (context, state) {
+          return const CustomerBrowseScreen();
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.packageDetailScreen,
         name: AppRouteNames.packageDetailScreen,
         builder: (context, state) {
@@ -232,7 +240,7 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.customerSearchScreen,
                 name: AppRouteNames.customerSearchScreen,
-                builder: (context, state) => const CustomerSearchScreen(),
+                builder: (context, state) => CustomerSearchScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
                   if (appPreferences.isCustomer()) {
