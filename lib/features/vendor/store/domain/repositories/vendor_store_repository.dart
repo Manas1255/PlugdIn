@@ -1,3 +1,5 @@
+import 'package:plugdin/features/vendor/store/data/models/add_review_request_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
@@ -37,4 +39,8 @@ abstract class VendorStoreRepository {
   Future<RepositoryResponse<VendorPackagesResponseModel>> getVendorPackages({
     int pageNumber = 1,
   });
+
+  Future<RepositoryResponse<AddReviewResponseModel>> addReview(
+    AddReviewRequestModel review,
+  );
 }

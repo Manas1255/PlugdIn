@@ -171,11 +171,9 @@ class _PackagesViewState extends State<PackagesView> {
           PIButton(
             text: 'Review Package',
             onPressed: () {
-              // TODO: Navigate to review screen or show review dialog
-              // For now, navigate to package detail screen
               context.pushNamed(
-                AppRouteNames.packageDetailScreen,
-                pathParameters: {'packageId': package.id},
+                AppRouteNames.addReviewScreen,
+                extra: package,
               );
             },
             //outsidePadding: EdgeInsets.zero,

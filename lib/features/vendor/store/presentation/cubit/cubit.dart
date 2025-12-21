@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_request_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
@@ -433,6 +435,40 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     emit(
       state.copyWith(
         deletePostState: const DataState.initial(),
+      ),
+    );
+  }
+
+  Future<void> addReview(AddReviewRequestModel review) async {
+    emit(
+      state.copyWith(
+        addReviewState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.addReview(review);
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          addReviewState: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          addReviewState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetAddReviewState() {
+    emit(
+      state.copyWith(
+        addReviewState: const DataState.initial(),
       ),
     );
   }

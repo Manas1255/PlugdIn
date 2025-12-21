@@ -212,6 +212,20 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.addReviewScreen,
+        name: AppRouteNames.addReviewScreen,
+        builder: (context, state) {
+          final package = state.extra is PackageModel
+              ? state.extra as PackageModel
+              : null;
+          if (package == null) {
+            throw Exception('Package is required for AddReviewScreen');
+          }
+          return AddReviewScreen(package: package);
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(
