@@ -80,11 +80,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         child: PIButton(
                           text: 'Clear Filters',
                           onPressed: () {
-                            // TODO: Implement clear filters logic
-                            context.read<VendorFilterCubit>().setCapacityRange(
-                              AppConstants.minCapacityRange,
-                              AppConstants.maxCapacityRange,
-                            );
+                            context.read<VendorFilterCubit>().clearFilters();
                           },
                           backgroundColor: Colors.transparent,
                           textColor: AppColors.secondaryColor,
@@ -100,8 +96,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         child: PIButton(
                           text: 'Apply',
                           onPressed: () {
-                            context.pop();
-                            context.pushNamed(AppRouteNames.browseScreen);
+                            context
+                              ..pop()
+                              ..pushNamed(AppRouteNames.browseScreen);
                           },
                           suffixIcon: SvgPicture.asset(
                             AssetPaths.filterIcon,

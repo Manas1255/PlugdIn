@@ -385,4 +385,55 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
       ),
     );
   }
+
+  Future<void> handleDeletePost(String postId, int postIndex) async {
+    emit(
+      state.copyWith(
+        deletePostState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.deleteStoreMedia(postId);
+    if (response.isSuccess && response.data == true) {
+      // Remove the post from local state
+      final currentData = state.storeMedia.data;
+      if (currentData != null && postIndex >= 0 && postIndex < currentData.posts.length) {
+        final updatedPosts = List<StorePostModel>.from(currentData.posts);
+        updatedPosts.removeAt(postIndex);
+        
+        final updatedData = StoreMediaResponseModel(
+          posts: updatedPosts,
+          pagination: currentData.pagination,
+        );
+
+        emit(
+          state.copyWith(
+            deletePostState: DataState.loaded(data: true),
+            storeMedia: DataState.loaded(data: updatedData),
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            deletePostState: DataState.loaded(data: true),
+          ),
+        );
+      }
+    } else {
+      emit(
+        state.copyWith(
+          deletePostState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetDeletePostState() {
+    emit(
+      state.copyWith(
+        deletePostState: const DataState.initial(),
+      ),
+    );
+  }
 }

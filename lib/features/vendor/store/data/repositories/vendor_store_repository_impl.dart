@@ -147,6 +147,29 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
   }
 
   @override
+  Future<RepositoryResponse<bool>> deleteStoreMedia(String postId) async {
+    try {
+      final response = await _apiService.delete(
+        Endpoints.deletePost(postId),
+      );
+      final responseData = ApiResponseParser.parseBooleanResponse(
+        json: response.data,
+        successMessage: 'Post deleted successfully',
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error deleting store media', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
   Future<RepositoryResponse<VendorStoreInfoModel>> getVendorStoreInfo() async {
     try {
       final response = await _apiService.get(

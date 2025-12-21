@@ -22,6 +22,8 @@ abstract class VendorStoreRepository {
     int pageNumber = 1,
   });
 
+  Future<RepositoryResponse<bool>> deleteStoreMedia(String postId);
+
   Future<RepositoryResponse<VendorStoreInfoModel>> getVendorStoreInfo();
 
   Future<RepositoryResponse<VendorStoreInfoModel>> getVendorById(

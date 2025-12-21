@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/enums/filter_view_type.dart';
 import 'package:plugdin/core/enums/role_type.dart';
 
@@ -19,7 +20,7 @@ class VendorFilterState extends Equatable {
   final FilterViewType viewType;
   final int minCapacity;
   final int maxCapacity;
-  final String? city;
+  final City? city;
   final double? priceFrom;
   final double? priceTo;
   final int? capacity;
@@ -30,7 +31,7 @@ class VendorFilterState extends Equatable {
     FilterViewType? viewType,
     int? minCapacity,
     int? maxCapacity,
-    String? city,
+    City? city,
     double? priceFrom,
     double? priceTo,
     int? capacity,
