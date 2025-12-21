@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_request_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
@@ -435,5 +438,82 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
         deletePostState: const DataState.initial(),
       ),
     );
+  }
+
+  Future<void> addReview(AddReviewRequestModel review) async {
+    emit(
+      state.copyWith(
+        addReviewState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.addReview(review);
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          addReviewState: DataState.loaded(
+            data: response.data,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          addReviewState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetAddReviewState() {
+    emit(
+      state.copyWith(
+        addReviewState: const DataState.initial(),
+      ),
+    );
+  }
+
+  Future<void> getVendorReviews({int pageNumber = 1}) async {
+    emit(
+      state.copyWith(
+        vendorReviews: pageNumber == 1
+            ? const DataState.loading()
+            : DataState.pageLoading(
+                data: state.vendorReviews.data,
+              ),
+      ),
+    );
+    final response = await repository.getVendorReviews(
+      pageNumber: pageNumber,
+    );
+    if (response.isSuccess) {
+      final currentData = state.vendorReviews.data;
+      final updatedData = currentData != null && pageNumber > 1
+          ? VendorReviewsResponseModel(
+              reviews: [
+                ...currentData.reviews,
+                ...response.data?.reviews ?? [],
+              ],
+              pagination: response.data?.pagination ?? currentData.pagination,
+            )
+          : response.data;
+
+      emit(
+        state.copyWith(
+          vendorReviews: DataState.loaded(
+            data: updatedData,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorReviews: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
   }
 }

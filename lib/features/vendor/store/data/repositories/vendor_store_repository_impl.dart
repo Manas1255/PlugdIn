@@ -6,6 +6,8 @@ import 'package:plugdin/core/api_service/api_service.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_request_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
@@ -13,6 +15,7 @@ import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/features/vendor/store/domain/repositories/vendor_store_repository.dart';
 import 'package:plugdin/utils/helpers/logger_helper.dart';
@@ -310,6 +313,61 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       }
     } catch (e, s) {
       AppLogger.error('Error creating package', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<AddReviewResponseModel>> addReview(
+    AddReviewRequestModel review,
+  ) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.addVendorReview,
+        data: review.toJson(),
+      );
+      final responseData = ApiResponseParser.parse<AddReviewResponseModel>(
+        json: response.data,
+        fromJson: AddReviewResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error adding review', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorReviewsResponseModel>> getVendorReviews({
+    int pageNumber = 1,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorReviews,
+        queryParams: {
+          'page': pageNumber,
+          'limit': AppConstants.paginationLimit,
+        },
+      );
+      final responseData = ApiResponseParser.parse<VendorReviewsResponseModel>(
+        json: response.data,
+        fromJson: VendorReviewsResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor reviews', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

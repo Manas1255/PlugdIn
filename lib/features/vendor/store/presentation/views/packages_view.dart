@@ -167,6 +167,21 @@ class _PackagesViewState extends State<PackagesView> {
                   .toList(),
             ),
           ],
+          const SizedBox(height: 16),
+          PIButton(
+            text: 'Review Package',
+            onPressed: () {
+              context.pushNamed(
+                AppRouteNames.addReviewScreen,
+                extra: package,
+              );
+            },
+            //outsidePadding: EdgeInsets.zero,
+            padding: const EdgeInsetsDirectional.symmetric(
+              vertical: 12,
+              horizontal: 16,
+            ),
+          ),
         ],
       ),
     );

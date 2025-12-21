@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:plugdin/core/enums/role_type.dart';
 import 'package:plugdin/core/enums/store_view_type.dart';
+import 'package:plugdin/features/vendor/store/data/models/add_review_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_store_info_model.dart';
 import 'package:plugdin/utils/helpers/data_state.dart';
 
@@ -29,6 +31,8 @@ class VendorStoreState extends Equatable {
     this.createPackageState = const DataState.initial(),
     this.vendorPackages = const DataState.initial(),
     this.deletePostState = const DataState.initial(),
+    this.addReviewState = const DataState.initial(),
+    this.vendorReviews = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -46,6 +50,8 @@ class VendorStoreState extends Equatable {
   final DataState<CreatePackageResponseModel> createPackageState;
   final DataState<VendorPackagesResponseModel> vendorPackages;
   final DataState<bool> deletePostState;
+  final DataState<AddReviewResponseModel> addReviewState;
+  final DataState<VendorReviewsResponseModel> vendorReviews;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -63,6 +69,8 @@ class VendorStoreState extends Equatable {
     DataState<CreatePackageResponseModel>? createPackageState,
     DataState<VendorPackagesResponseModel>? vendorPackages,
     DataState<bool>? deletePostState,
+    DataState<AddReviewResponseModel>? addReviewState,
+    DataState<VendorReviewsResponseModel>? vendorReviews,
   }) {
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
@@ -86,6 +94,8 @@ class VendorStoreState extends Equatable {
       createPackageState: createPackageState ?? this.createPackageState,
       vendorPackages: vendorPackages ?? this.vendorPackages,
       deletePostState: deletePostState ?? this.deletePostState,
+      addReviewState: addReviewState ?? this.addReviewState,
+      vendorReviews: vendorReviews ?? this.vendorReviews,
     );
   }
 
@@ -106,5 +116,7 @@ class VendorStoreState extends Equatable {
     createPackageState,
     vendorPackages,
     deletePostState,
+    addReviewState,
+    vendorReviews,
   ];
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:plugdin/app/view/splash_screen.dart';
 import 'package:plugdin/core/app_preferences/app_preferences.dart';
 import 'package:plugdin/core/di/injector.dart';
+import 'package:plugdin/features/customer/filter/presentation/browse/views/browse_screen.dart';
 import 'package:plugdin/features/customer/home/presentation/views/home_screen.dart';
 import 'package:plugdin/features/customer/home/presentation/views/search_screen.dart';
 import 'package:plugdin/features/customer/navigation/presentation/views/customer_navigation.dart';
@@ -27,6 +28,7 @@ import 'package:plugdin/features/vendor/profile/presentation/views/personal_info
 import 'package:plugdin/features/vendor/profile/presentation/views/profile_screen.dart';
 import 'package:plugdin/features/vendor/search/presentation/views/search_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/add_review_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/package_detail_screen.dart';

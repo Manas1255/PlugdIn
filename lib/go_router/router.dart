@@ -190,6 +190,14 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: AppRoutes.customerBrowseScreen,
+        name: AppRouteNames.customerBrowseScreen,
+        builder: (context, state) {
+          return const CustomerBrowseScreen();
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.packageDetailScreen,
         name: AppRouteNames.packageDetailScreen,
         builder: (context, state) {
@@ -201,6 +209,20 @@ class AppRouter {
             packageId: packageId,
             initialPackage: package,
           );
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.addReviewScreen,
+        name: AppRouteNames.addReviewScreen,
+        builder: (context, state) {
+          final package = state.extra is PackageModel
+              ? state.extra as PackageModel
+              : null;
+          if (package == null) {
+            throw Exception('Package is required for AddReviewScreen');
+          }
+          return AddReviewScreen(package: package);
         },
       ),
 
@@ -232,7 +254,7 @@ class AppRouter {
               GoRoute(
                 path: AppRoutes.customerSearchScreen,
                 name: AppRouteNames.customerSearchScreen,
-                builder: (context, state) => const CustomerSearchScreen(),
+                builder: (context, state) => CustomerSearchScreen(),
                 redirect: (context, state) {
                   final appPreferences = Injector.resolve<AppPreferences>();
                   if (appPreferences.isCustomer()) {

@@ -38,6 +38,8 @@ class Endpoints {
   static const String getVendorPackages = 'packages/my';
   static const String getAllPackages = 'packages';
   static String getPackageById(String packageId) => 'packages/$packageId';
+  static const String addVendorReview = 'vendor/reviews';
+  static const String getVendorReviews = 'vendor/reviews';
 
   /// Filter Endpoints
   static const String getFilterData = 'vendor/filter';
