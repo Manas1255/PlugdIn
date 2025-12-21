@@ -8,7 +8,6 @@ import 'package:plugdin/utils/helpers/responsive_helper.dart';
 import 'package:plugdin/utils/helpers/toast_helper.dart';
 import 'package:plugdin/utils/widgets/core_widgets/dialog_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
-import 'package:plugdin/utils/widgets/core_widgets/images/svg_pic.dart';
 import 'package:plugdin/utils/widgets/paginated_builder.dart';
 
 class StoreView extends StatefulWidget {
@@ -29,7 +28,8 @@ class _StoreViewState extends State<StoreView> {
     FitThereDialogWidget.show(
       context,
       headingText: 'Delete Post',
-      subHeadingText: 'Are you sure you want to delete this post? This action cannot be undone.',
+      subHeadingText:
+          'Are you sure you want to delete this post? This action cannot be undone.',
       optionOneText: 'Cancel',
       optionTwoText: 'Delete',
       onOptionOneTextPress: () {
@@ -102,7 +102,7 @@ class _StoreViewState extends State<StoreView> {
             final vendor = state.storeMedia.data?.posts[index];
             final postId = vendor?.id ?? '';
             final isDeleting = state.deletePostState.isLoading;
-            
+
             return Padding(
               padding: const EdgeInsetsDirectional.only(
                 bottom: 8,

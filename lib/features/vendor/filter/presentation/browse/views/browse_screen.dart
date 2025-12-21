@@ -6,7 +6,6 @@ import 'package:plugdin/core/enums/filter_view_type.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/cubit/state.dart';
 import 'package:plugdin/features/vendor/filter/presentation/cubit/cubit.dart';
-import 'package:plugdin/features/vendor/filter/presentation/cubit/state.dart';
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/export.dart';
 import 'package:plugdin/utils/widgets/vendor_card_widget.dart';
@@ -27,15 +26,22 @@ class _BrowseScreenState extends State<BrowseScreen> {
 
   void _fetchFilteredVendors() {
     final filterState = context.read<VendorFilterCubit>().state;
+    final viewType = filterState.viewType;
+    
+    // Only pass capacity for venues and caterers
+    int? capacity;
+    if (viewType == FilterViewType.venuesFilterView ||
+        viewType == FilterViewType.caterersFilterView) {
+      capacity = filterState.capacity ?? filterState.minCapacity;
+    }
+    
     context.read<BrowseCubit>().fetchFilteredVendors(
-      viewType: filterState.viewType,
+      viewType: viewType,
       city: filterState.city,
       priceFrom: filterState.priceFrom,
       priceTo: filterState.priceTo,
-      capacity: filterState.capacity ?? filterState.minCapacity,
+      capacity: capacity,
       feature: filterState.feature,
-      page: 1,
-      limit: 10,
     );
   }
 
@@ -91,7 +97,8 @@ class _BrowseScreenState extends State<BrowseScreen> {
                     }
                     return ListView.separated(
                       itemBuilder: (context, index) {
-                        final vendor = state.filteredVendors.data?.vendors[index];
+                        final vendor =
+                            state.filteredVendors.data?.vendors[index];
                         return VendorCardWidget(
                           companyName: vendor?.companyName ?? '',
                           primaryCategory: vendor?.primaryCategory ?? '',
@@ -109,7 +116,8 @@ class _BrowseScreenState extends State<BrowseScreen> {
                           height: 8,
                         );
                       },
-                      itemCount: state.filteredVendors.data?.vendors.length ?? 0,
+                      itemCount:
+                          state.filteredVendors.data?.vendors.length ?? 0,
                       shrinkWrap: true,
                       physics: const AlwaysScrollableScrollPhysics(),
                     );
@@ -123,4 +131,3 @@ class _BrowseScreenState extends State<BrowseScreen> {
     );
   }
 }
-

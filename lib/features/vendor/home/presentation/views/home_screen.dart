@@ -148,9 +148,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                   ),
                   const SizedBox(height: 20),
                   if (state.allVendors.isLoading)
-                    const SizedBox(
-                      height: 300,
-                      child: Center(
+                    SizedBox(
+                      height: constraints.maxHeight - 48,
+                      child: const Center(
                         child: LoadingWidget(),
                       ),
                     )
@@ -237,9 +237,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       builder: (context) {
                         final packagesState = state.allPackages;
                         if (packagesState.isLoading) {
-                          return const SizedBox(
-                            height: 300,
-                            child: Center(child: LoadingWidget()),
+                          return SizedBox(
+                            height: constraints.maxHeight - 48,
+                            child: const Center(child: LoadingWidget()),
                           );
                         }
                         if (packagesState.isFailure) {

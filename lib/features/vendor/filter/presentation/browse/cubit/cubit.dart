@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:plugdin/core/enums/city.dart';
 import 'package:plugdin/core/enums/filter_view_type.dart';
 import 'package:plugdin/features/vendor/filter/domain/repositories/vendor_filter_repository.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/cubit/state.dart';
@@ -33,7 +34,7 @@ class BrowseCubit extends Cubit<BrowseState> {
 
   Future<void> fetchFilteredVendors({
     required FilterViewType viewType,
-    String? city,
+    City? city,
     double? priceFrom,
     double? priceTo,
     int? capacity,
@@ -48,10 +49,12 @@ class BrowseCubit extends Cubit<BrowseState> {
     );
 
     final category = _getCategoryFromViewType(viewType);
+    // Convert City enum to string for API call
+    final cityString = city?.toName();
 
     final response = await repository.getFilteredVendors(
       category: category,
-      city: city,
+      city: cityString,
       priceFrom: priceFrom,
       priceTo: priceTo,
       capacity: capacity,
