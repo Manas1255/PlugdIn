@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plugdin/constants/app_colors.dart';
 import 'package:plugdin/constants/app_text_style.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/loading_widget.dart';
@@ -58,7 +60,12 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(
+                AppRouteNames.packageAvailabilityCalendarScreen,
+                pathParameters: {'packageId': widget.packageId},
+              );
+            },
             child: const Text('Book Now'),
           ),
         ),

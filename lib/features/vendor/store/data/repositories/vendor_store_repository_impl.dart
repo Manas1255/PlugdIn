@@ -14,6 +14,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_response_mode
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/set_availability_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_bookings_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
@@ -394,6 +395,40 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error setting vendor availability', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<VendorBookingsResponseModel>> getVendorBookings({
+    int pageNumber = 1,
+    String? status,
+  }) async {
+    try {
+      final queryParams = <String, dynamic>{
+        'page': pageNumber,
+        'limit': AppConstants.paginationLimit,
+      };
+      if (status != null && status.isNotEmpty) {
+        queryParams['status'] = status;
+      }
+      final response = await _apiService.get(
+        Endpoints.getVendorBookings,
+        queryParams: queryParams,
+      );
+      final responseData = ApiResponseParser.parse<VendorBookingsResponseModel>(
+        json: response.data,
+        fromJson: VendorBookingsResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor bookings', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),

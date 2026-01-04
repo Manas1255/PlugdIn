@@ -37,8 +37,12 @@ class AppRoutes {
   static const String customerBrowseScreen = '/customer-browse-screen';
   static const String createPackageScreen = '/create-package-screen';
   static const String packageDetailScreen = '/package/:packageId';
+  static const String packageAvailabilityCalendarScreen =
+      '/package/:packageId/availability';
+  static const String createBookingScreen = '/booking-form';
   static const String addReviewScreen = '/add-review-screen';
   static const String setAvailabilityScreen = '/set-availability-screen';
+  static const String vendorBookingsScreen = '/vendor-bookings-screen';
 }
 
 class AppRouteNames {
@@ -76,6 +80,10 @@ class AppRouteNames {
   static const String customerBrowseScreen = 'customer-browse-screen';
   static const String createPackageScreen = 'create-package-screen';
   static const String packageDetailScreen = 'package-detail-screen';
+  static const String packageAvailabilityCalendarScreen =
+      'package-availability-calendar-screen';
+  static const String createBookingScreen = 'create-booking-screen';
   static const String addReviewScreen = 'add-review-screen';
   static const String setAvailabilityScreen = 'set-availability-screen';
+  static const String vendorBookingsScreen = 'vendor-bookings-screen';
 }

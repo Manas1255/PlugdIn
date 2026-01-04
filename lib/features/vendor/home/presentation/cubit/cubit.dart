@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/models/all_vendors_response_model.dart';
+import 'package:plugdin/features/vendor/home/data/models/create_booking_request_model.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
@@ -142,5 +143,73 @@ class VendorHomeCubit extends Cubit<VendorHomeState> {
         ),
       );
     }
+  }
+
+  Future<void> fetchPackageAvailability({
+    required String packageId,
+    required String from,
+    required String to,
+  }) async {
+    emit(
+      state.copyWith(
+        packageAvailability: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.getPackageAvailability(
+      packageId: packageId,
+      from: from,
+      to: to,
+    );
+
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          packageAvailability: DataState.loaded(data: response.data),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          packageAvailability: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> createBooking(CreateBookingRequestModel request) async {
+    emit(
+      state.copyWith(
+        createBooking: const DataState.loading(),
+      ),
+    );
+
+    final response = await repository.createBooking(request);
+
+    if (response.isSuccess && response.data != null) {
+      emit(
+        state.copyWith(
+          createBooking: DataState.loaded(data: response.data),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          createBooking: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void clearBookingState() {
+    emit(
+      state.copyWith(
+        createBooking: const DataState.initial(),
+      ),
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_response_mode
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/set_availability_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_bookings_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
@@ -53,4 +54,9 @@ abstract class VendorStoreRepository {
   Future<RepositoryResponse<bool>> setVendorAvailability(
     SetAvailabilityRequestModel availability,
   );
+
+  Future<RepositoryResponse<VendorBookingsResponseModel>> getVendorBookings({
+    int pageNumber = 1,
+    String? status,
+  });
 }

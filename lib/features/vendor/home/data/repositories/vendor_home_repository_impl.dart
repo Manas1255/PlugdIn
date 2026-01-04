@@ -5,6 +5,9 @@ import 'package:plugdin/core/di/injector.dart';
 import 'package:plugdin/core/endpoints/endpoints.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/core/models/all_vendors_response_model.dart';
+import 'package:plugdin/features/vendor/home/data/models/create_booking_request_model.dart';
+import 'package:plugdin/features/vendor/home/data/models/create_booking_response_model.dart';
+import 'package:plugdin/features/vendor/home/data/models/package_availability_response_model.dart';
 import 'package:plugdin/features/vendor/home/domain/repositories/vendor_home_repository.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_response_model.dart';
@@ -111,6 +114,70 @@ class VendorHomeRepositoryImpl implements VendorHomeRepository {
       );
     } catch (e, s) {
       AppLogger.error('Error fetching package by id: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<PackageAvailabilityResponseModel>>
+      getPackageAvailability({
+    required String packageId,
+    required String from,
+    required String to,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getPackageAvailability(packageId),
+        queryParams: {
+          'from': from,
+          'to': to,
+        },
+      );
+
+      final responseData = ApiResponseParser.parse<
+          PackageAvailabilityResponseModel>(
+        json: response.data,
+        fromJson: PackageAvailabilityResponseModel.fromJson,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching package availability: ', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RepositoryResponse<CreateBookingResponseModel>> createBooking(
+    CreateBookingRequestModel request,
+  ) async {
+    try {
+      final response = await _apiService.post(
+        endpoint: Endpoints.createBooking,
+        data: request.toJson(),
+      );
+
+      final responseData =
+          ApiResponseParser.parse<CreateBookingResponseModel>(
+        json: response.data,
+        fromJson: CreateBookingResponseModel.fromJson,
+      );
+
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error creating booking: ', e, s);
       return RepositoryResponse(
         isSuccess: false,
         message: e.toString(),
