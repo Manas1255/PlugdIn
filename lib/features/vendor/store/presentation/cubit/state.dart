@@ -33,6 +33,7 @@ class VendorStoreState extends Equatable {
     this.deletePostState = const DataState.initial(),
     this.addReviewState = const DataState.initial(),
     this.vendorReviews = const DataState.initial(),
+    this.setAvailabilityState = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -52,6 +53,7 @@ class VendorStoreState extends Equatable {
   final DataState<bool> deletePostState;
   final DataState<AddReviewResponseModel> addReviewState;
   final DataState<VendorReviewsResponseModel> vendorReviews;
+  final DataState<bool> setAvailabilityState;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -71,6 +73,7 @@ class VendorStoreState extends Equatable {
     DataState<bool>? deletePostState,
     DataState<AddReviewResponseModel>? addReviewState,
     DataState<VendorReviewsResponseModel>? vendorReviews,
+    DataState<bool>? setAvailabilityState,
   }) {
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
@@ -96,6 +99,7 @@ class VendorStoreState extends Equatable {
       deletePostState: deletePostState ?? this.deletePostState,
       addReviewState: addReviewState ?? this.addReviewState,
       vendorReviews: vendorReviews ?? this.vendorReviews,
+      setAvailabilityState: setAvailabilityState ?? this.setAvailabilityState,
     );
   }
 
@@ -118,5 +122,6 @@ class VendorStoreState extends Equatable {
     deletePostState,
     addReviewState,
     vendorReviews,
+    setAvailabilityState,
   ];
 }

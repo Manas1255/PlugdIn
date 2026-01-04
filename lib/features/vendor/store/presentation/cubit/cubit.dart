@@ -8,6 +8,7 @@ import 'package:plugdin/features/vendor/store/data/models/add_review_response_mo
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/set_availability_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
@@ -515,5 +516,41 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
         ),
       );
     }
+  }
+
+  Future<void> setVendorAvailability(
+    SetAvailabilityRequestModel availability,
+  ) async {
+    emit(
+      state.copyWith(
+        setAvailabilityState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.setVendorAvailability(availability);
+    if (response.isSuccess && response.data == true) {
+      emit(
+        state.copyWith(
+          setAvailabilityState: DataState.loaded(
+            data: true,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          setAvailabilityState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetSetAvailabilityState() {
+    emit(
+      state.copyWith(
+        setAvailabilityState: const DataState.initial(),
+      ),
+    );
   }
 }

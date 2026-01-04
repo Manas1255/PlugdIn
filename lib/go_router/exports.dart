@@ -31,6 +31,7 @@ import 'package:plugdin/features/vendor/store/presentation/views/add_features_sc
 import 'package:plugdin/features/vendor/store/presentation/views/add_review_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/set_availability_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/package_detail_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/views/browse_screen.dart';

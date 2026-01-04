@@ -4,6 +4,7 @@ import 'package:plugdin/features/vendor/store/data/models/create_package_request
 import 'package:plugdin/features/vendor/store/data/models/features_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/set_availability_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
@@ -48,4 +49,8 @@ abstract class VendorStoreRepository {
   Future<RepositoryResponse<VendorReviewsResponseModel>> getVendorReviews({
     int pageNumber = 1,
   });
+
+  Future<RepositoryResponse<bool>> setVendorAvailability(
+    SetAvailabilityRequestModel availability,
+  );
 }

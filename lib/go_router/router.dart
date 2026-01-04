@@ -226,6 +226,14 @@ class AppRouter {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.setAvailabilityScreen,
+        name: AppRouteNames.setAvailabilityScreen,
+        builder: (context, state) {
+          return const SetAvailabilityScreen();
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         branches: [
           StatefulShellBranch(

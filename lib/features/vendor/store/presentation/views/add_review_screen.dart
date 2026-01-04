@@ -102,7 +102,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Package Info Card
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -131,7 +130,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                // Rating Section
+
                 Text(
                   'Rating',
                   style: context.h3.copyWith(

@@ -38,6 +38,7 @@ class AppRoutes {
   static const String createPackageScreen = '/create-package-screen';
   static const String packageDetailScreen = '/package/:packageId';
   static const String addReviewScreen = '/add-review-screen';
+  static const String setAvailabilityScreen = '/set-availability-screen';
 }
 
 class AppRouteNames {
@@ -76,4 +77,5 @@ class AppRouteNames {
   static const String createPackageScreen = 'create-package-screen';
   static const String packageDetailScreen = 'package-detail-screen';
   static const String addReviewScreen = 'add-review-screen';
+  static const String setAvailabilityScreen = 'set-availability-screen';
 }
