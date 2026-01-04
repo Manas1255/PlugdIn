@@ -38,130 +38,233 @@ class DetailsView extends StatelessWidget {
         }
         final features = state.vendorStoreInfo.data?.features ?? [];
         return Scaffold(
-          body: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 20,
-              vertical: 10,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Features',
-                  style: context.b1.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Give customers a quick overview of what makes this package stand out.',
-                  style: context.b3.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceVariant.withOpacity(0.35),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: theme.colorScheme.outlineVariant.withOpacity(0.6),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Features',
+                    style: context.b1.copyWith(
+                      fontSize: 18,
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.widgets_outlined,
-                          color: theme.colorScheme.onPrimaryContainer,
-                          size: 20,
-                        ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Give customers a quick overview of what makes this package stand out.',
+                    style: context.b3.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surfaceVariant.withOpacity(0.35),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: theme.colorScheme.outlineVariant.withOpacity(0.6),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          'Feature list',
-                          style: context.b2.copyWith(
-                            fontWeight: FontWeight.w600,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            Icons.widgets_outlined,
+                            color: theme.colorScheme.onPrimaryContainer,
+                            size: 20,
                           ),
                         ),
-                      ),
-                      Text(
-                        '${features.length} item${features.length == 1 ? '' : 's'}',
-                        style: context.b3.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'Feature list',
+                            style: context.b2.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        Text(
+                          '${features.length} item${features.length == 1 ? '' : 's'}',
+                          style: context.b3.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 14),
-                Expanded(
-                  child: features.isNotEmpty
-                      ? ListView.separated(
-                          itemCount: features.length,
-                          padding: const EdgeInsets.only(top: 4, bottom: 8),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final feature = features[index];
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.surface,
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color: theme.colorScheme.outlineVariant
-                                      .withOpacity(0.45),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.03),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surfaceVariant.withOpacity(0.35),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: theme.colorScheme.outlineVariant.withOpacity(0.6),
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        context.pushNamed(
+                          AppRouteNames.setAvailabilityScreen,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 36,
+                            width: 36,
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.calendar_today_outlined,
+                              color: theme.colorScheme.onPrimaryContainer,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Set Availability',
+                              style: context.b2.copyWith(
+                                fontWeight: FontWeight.w600,
                               ),
-                              padding: const EdgeInsets.all(14),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 32,
-                                    width: 32,
-                                    decoration: BoxDecoration(
-                                      color: theme.colorScheme.primaryContainer,
-                                      borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surfaceVariant.withOpacity(0.35),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: theme.colorScheme.outlineVariant.withOpacity(0.6),
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        context.pushNamed(
+                          AppRouteNames.vendorBookingsScreen,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 36,
+                            width: 36,
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.event_note_outlined,
+                              color: theme.colorScheme.onPrimaryContainer,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'See Bookings',
+                              style: context.b2.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  features.isNotEmpty
+                      ? Column(
+                          children: [
+                            ...features.asMap().entries.expand((entry) {
+                              final index = entry.key;
+                              final feature = entry.value;
+                              return [
+                                if (index > 0) const SizedBox(height: 12),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.surface,
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: theme.colorScheme.outlineVariant
+                                          .withOpacity(0.45),
                                     ),
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      color:
-                                          theme.colorScheme.onPrimaryContainer,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      feature,
-                                      style: context.b2.copyWith(
-                                        color: theme.colorScheme.onSurface,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.03),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 4),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
-                          },
+                                  padding: const EdgeInsets.all(14),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 32,
+                                        width: 32,
+                                        decoration: BoxDecoration(
+                                          color: theme.colorScheme.primaryContainer,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Icon(
+                                          Icons.check_rounded,
+                                          color:
+                                              theme.colorScheme.onPrimaryContainer,
+                                          size: 18,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          feature,
+                                          style: context.b2.copyWith(
+                                            color: theme.colorScheme.onSurface,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ];
+                            }).toList(),
+                          ],
                         )
-                      : Center(
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -194,8 +297,9 @@ class DetailsView extends StatelessWidget {
                             ],
                           ),
                         ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
           bottomNavigationBar: SafeArea(

@@ -213,6 +213,36 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: AppRoutes.packageAvailabilityCalendarScreen,
+        name: AppRouteNames.packageAvailabilityCalendarScreen,
+        builder: (context, state) {
+          final packageId = state.pathParameters['packageId'] ?? '';
+          return PackageAvailabilityCalendarScreen(
+            packageId: packageId,
+          );
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.createBookingScreen,
+        name: AppRouteNames.createBookingScreen,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>?;
+          if (args == null) {
+            throw Exception(
+              'Package ID and selected slot are required for CreateBookingScreen',
+            );
+          }
+          final packageId = args['packageId'] as String? ?? '';
+          final selectedSlot = args['selectedSlot'] as String? ?? '';
+          return CreateBookingScreen(
+            packageId: packageId,
+            selectedSlot: selectedSlot,
+          );
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.addReviewScreen,
         name: AppRouteNames.addReviewScreen,
         builder: (context, state) {
@@ -223,6 +253,22 @@ class AppRouter {
             throw Exception('Package is required for AddReviewScreen');
           }
           return AddReviewScreen(package: package);
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.setAvailabilityScreen,
+        name: AppRouteNames.setAvailabilityScreen,
+        builder: (context, state) {
+          return const SetAvailabilityScreen();
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.vendorBookingsScreen,
+        name: AppRouteNames.vendorBookingsScreen,
+        builder: (context, state) {
+          return const BookingsView();
         },
       ),
 

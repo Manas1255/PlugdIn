@@ -8,7 +8,9 @@ import 'package:plugdin/features/vendor/store/data/models/add_review_response_mo
 import 'package:plugdin/features/vendor/store/data/models/create_package_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/set_availability_request_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_bookings_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
@@ -510,6 +512,91 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
       emit(
         state.copyWith(
           vendorReviews: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> setVendorAvailability(
+    SetAvailabilityRequestModel availability,
+  ) async {
+    emit(
+      state.copyWith(
+        setAvailabilityState: const DataState.loading(),
+      ),
+    );
+    final response = await repository.setVendorAvailability(availability);
+    if (response.isSuccess && response.data == true) {
+      emit(
+        state.copyWith(
+          setAvailabilityState: DataState.loaded(
+            data: true,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          setAvailabilityState: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
+  void resetSetAvailabilityState() {
+    emit(
+      state.copyWith(
+        setAvailabilityState: const DataState.initial(),
+      ),
+    );
+  }
+
+  Future<void> getVendorBookings({
+    int pageNumber = 1,
+    String? status,
+  }) async {
+    emit(
+      state.copyWith(
+        vendorBookings: pageNumber == 1
+            ? const DataState.loading()
+            : DataState.pageLoading(
+                data: state.vendorBookings.data,
+              ),
+      ),
+    );
+
+    final response = await repository.getVendorBookings(
+      pageNumber: pageNumber,
+      status: status,
+    );
+
+    if (response.isSuccess) {
+      final currentData = state.vendorBookings.data;
+      final updatedData = currentData != null && pageNumber > 1
+          ? VendorBookingsResponseModel(
+              bookings: [
+                ...currentData.bookings,
+                ...response.data?.bookings ?? [],
+              ],
+              pagination: response.data?.pagination ?? currentData.pagination,
+            )
+          : response.data;
+
+      emit(
+        state.copyWith(
+          vendorBookings: DataState.loaded(
+            data: updatedData,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          vendorBookings: DataState.failure(
             error: response.message,
           ),
         ),

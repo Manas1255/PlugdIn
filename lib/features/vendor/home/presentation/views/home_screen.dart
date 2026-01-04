@@ -9,10 +9,10 @@ import 'package:plugdin/constants/asset_paths.dart';
 import 'package:plugdin/core/enums/category_type.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/home/presentation/cubit/state.dart';
+import 'package:plugdin/features/vendor/home/presentation/widgets/package_card.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/profile/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
-import 'package:plugdin/features/vendor/home/presentation/widgets/package_card.dart';
 import 'package:plugdin/go_router/exports.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/images/cached_network_image_widget.dart';
@@ -245,9 +245,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                         if (packagesState.isFailure) {
                           return PIErrorWidget(
                             errorText:
-                                packagesState.errorMessage ?? 'Something went wrong',
+                                packagesState.errorMessage ??
+                                'Something went wrong',
                             onPressed: () {
-                              context.read<VendorHomeCubit>().fetchAllPackages();
+                              context
+                                  .read<VendorHomeCubit>()
+                                  .fetchAllPackages();
                             },
                           );
                         }
@@ -294,9 +297,14 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                                   .fetchAllPackages();
                             },
                             onLoadMore: () async {
-                              await context.read<VendorHomeCubit>().fetchAllPackages(
-                                    pageNumber: packagesState
-                                            .data?.pagination?.nextPage ??
+                              await context
+                                  .read<VendorHomeCubit>()
+                                  .fetchAllPackages(
+                                    pageNumber:
+                                        packagesState
+                                            .data
+                                            ?.pagination
+                                            ?.nextPage ??
                                         1,
                                   );
                             },
@@ -304,10 +312,13 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                             isLoadingMore: packagesState.isPageLoading,
                             hasMoreData:
                                 packagesState.data?.pagination?.hasNextPage ??
-                                    false,
+                                false,
                           ),
                         );
                       },
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
                     ),
                   ],
                 ],

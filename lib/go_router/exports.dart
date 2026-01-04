@@ -29,9 +29,13 @@ import 'package:plugdin/features/vendor/profile/presentation/views/profile_scree
 import 'package:plugdin/features/vendor/search/presentation/views/search_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/add_features_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/add_review_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/bookings_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/set_availability_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/package_detail_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/package_availability_calendar_screen.dart';
+import 'package:plugdin/features/vendor/home/presentation/views/create_booking_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/store_screen.dart';
 import 'package:plugdin/features/vendor/filter/presentation/browse/views/browse_screen.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';

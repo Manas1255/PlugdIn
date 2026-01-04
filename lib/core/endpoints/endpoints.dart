@@ -38,8 +38,13 @@ class Endpoints {
   static const String getVendorPackages = 'packages/my';
   static const String getAllPackages = 'packages';
   static String getPackageById(String packageId) => 'packages/$packageId';
+  static String getPackageAvailability(String packageId) =>
+      'packages/$packageId/availability';
+  static const String createBooking = 'bookings';
   static const String addVendorReview = 'vendor/reviews';
   static const String getVendorReviews = 'vendor/reviews';
+  static const String setVendorAvailability = 'vendor/availability';
+  static const String getVendorBookings = 'bookings/vendor';
 
   /// Filter Endpoints
   static const String getFilterData = 'vendor/filter';

@@ -8,6 +8,7 @@ import 'package:plugdin/features/vendor/store/data/models/features_request_model
 import 'package:plugdin/features/vendor/store/data/models/features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/package_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/store_media_response_model.dart';
+import 'package:plugdin/features/vendor/store/data/models/vendor_bookings_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_features_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_packages_response_model.dart';
 import 'package:plugdin/features/vendor/store/data/models/vendor_reviews_response_model.dart';
@@ -33,6 +34,8 @@ class VendorStoreState extends Equatable {
     this.deletePostState = const DataState.initial(),
     this.addReviewState = const DataState.initial(),
     this.vendorReviews = const DataState.initial(),
+    this.setAvailabilityState = const DataState.initial(),
+    this.vendorBookings = const DataState.initial(),
   });
 
   final RoleType? selectedRoleType;
@@ -52,6 +55,8 @@ class VendorStoreState extends Equatable {
   final DataState<bool> deletePostState;
   final DataState<AddReviewResponseModel> addReviewState;
   final DataState<VendorReviewsResponseModel> vendorReviews;
+  final DataState<bool> setAvailabilityState;
+  final DataState<VendorBookingsResponseModel> vendorBookings;
 
   VendorStoreState copyWith({
     RoleType? selectedRoleType,
@@ -71,6 +76,8 @@ class VendorStoreState extends Equatable {
     DataState<bool>? deletePostState,
     DataState<AddReviewResponseModel>? addReviewState,
     DataState<VendorReviewsResponseModel>? vendorReviews,
+    DataState<bool>? setAvailabilityState,
+    DataState<VendorBookingsResponseModel>? vendorBookings,
   }) {
     final bool willClearImage = clearStoreImage == true;
     final File? finalStoreImageFile = willClearImage
@@ -96,6 +103,8 @@ class VendorStoreState extends Equatable {
       deletePostState: deletePostState ?? this.deletePostState,
       addReviewState: addReviewState ?? this.addReviewState,
       vendorReviews: vendorReviews ?? this.vendorReviews,
+      setAvailabilityState: setAvailabilityState ?? this.setAvailabilityState,
+      vendorBookings: vendorBookings ?? this.vendorBookings,
     );
   }
 
@@ -118,5 +127,7 @@ class VendorStoreState extends Equatable {
     deletePostState,
     addReviewState,
     vendorReviews,
+    setAvailabilityState,
+    vendorBookings,
   ];
 }
