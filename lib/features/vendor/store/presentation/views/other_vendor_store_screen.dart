@@ -7,9 +7,9 @@ import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_details_view.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_reviews_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/packages_view.dart';
-import 'package:plugdin/features/vendor/store/presentation/views/reviews_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
@@ -55,7 +55,9 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
 
   @override
   void initState() {
-    context.read<VendorStoreCubit>().getVendorById(widget.vendorId);
+    final cubit = context.read<VendorStoreCubit>();
+    cubit.getVendorById(widget.vendorId);
+    cubit.getVendorReviewsById(vendorId: widget.vendorId);
     _pageController = PageController();
     super.initState();
   }
@@ -110,23 +112,23 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
               text: 'No store information available.',
             );
           }
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: 24,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: NestedScrollView(
-                    headerSliverBuilder:
-                        (BuildContext context, bool innerBoxIsScrolled) => [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                StoreHeaderWidget(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) => [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                  vertical: 20,
+                                ),
+                                child: StoreHeaderWidget(
                                   reviewCount:
                                       state
                                           .otherVendorStoreInfo
@@ -147,8 +149,12 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                                           ?.companyLogo ??
                                       AppConstants.appPlaceHolderUrlImage,
                                 ),
-                                const SizedBox(height: 16),
-                                StoreDetailsWidget(
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                  horizontal: 24,
+                                ),
+                                child: StoreDetailsWidget(
                                   companyName:
                                       state
                                           .otherVendorStoreInfo
@@ -174,9 +180,10 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                                           ?.businessDescription ??
                                       'N/A',
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ),
                           SliverPersistentHeader(
                             pinned: true,
                             delegate: _SliverTabBarDelegate(
@@ -211,18 +218,17 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                       controller: _pageController,
                       onPageChanged: _onPageChanged,
                       physics: const ClampingScrollPhysics(),
-                      children: const [
-                        OtherVendorStoreView(),
-                        OtherVendorDetailsView(),
-                      PackagesView(isOwnStore: false),
-                        ReviewsView(),
+                      children: [
+                        const OtherVendorStoreView(),
+                        const OtherVendorDetailsView(),
+                        const PackagesView(isOwnStore: false),
+                        OtherVendorReviewsView(vendorId: widget.vendorId),
                       ],
                     ),
                   ),
                 ),
               ],
-            ),
-          );
+            );
         },
       ),
     );

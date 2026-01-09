@@ -6,21 +6,25 @@ import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/reviews_widget.dart';
 import 'package:plugdin/utils/widgets/paginated_builder.dart';
 
-class ReviewsView extends StatefulWidget {
-  const ReviewsView({super.key});
+class OtherVendorReviewsView extends StatefulWidget {
+  const OtherVendorReviewsView({
+    required this.vendorId,
+    super.key,
+  });
+
+  final String vendorId;
 
   @override
-  State<ReviewsView> createState() => _ReviewsViewState();
+  State<OtherVendorReviewsView> createState() => _OtherVendorReviewsViewState();
 }
 
-class _ReviewsViewState extends State<ReviewsView> {
-
+class _OtherVendorReviewsViewState extends State<OtherVendorReviewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<VendorStoreCubit, VendorStoreState>(
         builder: (context, state) {
-          final reviewsState = state.vendorReviews;
+          final reviewsState = state.otherVendorReviews;
           final reviews = reviewsState.data?.reviews ?? [];
 
           return PaginatedBuilder<ReviewModel>(
@@ -32,17 +36,22 @@ class _ReviewsViewState extends State<ReviewsView> {
             },
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             onRefresh: () async {
-              await context.read<VendorStoreCubit>().getVendorReviews();
+              await context.read<VendorStoreCubit>().getVendorReviewsById(
+                    vendorId: widget.vendorId,
+                  );
             },
             onLoadMore: () async {
               final cubit = context.read<VendorStoreCubit>();
               final currentState = cubit.state;
-              final pagination = currentState.vendorReviews.data?.pagination;
+              final pagination = currentState.otherVendorReviews.data?.pagination;
 
               if (pagination != null && pagination.hasNextPage) {
                 final nextPage =
                     pagination.nextPage ?? (pagination.currentPage + 1);
-                await cubit.getVendorReviews(pageNumber: nextPage);
+                await cubit.getVendorReviewsById(
+                  vendorId: widget.vendorId,
+                  pageNumber: nextPage,
+                );
               }
             },
             isLoading: reviewsState.isLoading,
@@ -54,7 +63,9 @@ class _ReviewsViewState extends State<ReviewsView> {
                 ? (reviewsState.errorMessage ?? 'Failed to load reviews.')
                 : null,
             onRetry: () {
-              context.read<VendorStoreCubit>().getVendorReviews();
+              context.read<VendorStoreCubit>().getVendorReviewsById(
+                    vendorId: widget.vendorId,
+                  );
             },
           );
         },

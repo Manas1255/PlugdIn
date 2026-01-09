@@ -23,13 +23,6 @@ class PackagesView extends StatefulWidget {
 }
 
 class _PackagesViewState extends State<PackagesView> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.isOwnStore) {
-      context.read<VendorStoreCubit>().getVendorPackages();
-    }
-  }
 
   String _formatDate(String? raw) {
     final parsed = DateTime.tryParse(raw ?? '');

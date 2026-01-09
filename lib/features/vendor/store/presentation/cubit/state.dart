@@ -34,6 +34,7 @@ class VendorStoreState extends Equatable {
     this.deletePostState = const DataState.initial(),
     this.addReviewState = const DataState.initial(),
     this.vendorReviews = const DataState.initial(),
+    this.otherVendorReviews = const DataState.initial(),
     this.setAvailabilityState = const DataState.initial(),
     this.vendorBookings = const DataState.initial(),
   });
@@ -55,6 +56,7 @@ class VendorStoreState extends Equatable {
   final DataState<bool> deletePostState;
   final DataState<AddReviewResponseModel> addReviewState;
   final DataState<VendorReviewsResponseModel> vendorReviews;
+  final DataState<VendorReviewsResponseModel> otherVendorReviews;
   final DataState<bool> setAvailabilityState;
   final DataState<VendorBookingsResponseModel> vendorBookings;
 
@@ -76,6 +78,7 @@ class VendorStoreState extends Equatable {
     DataState<bool>? deletePostState,
     DataState<AddReviewResponseModel>? addReviewState,
     DataState<VendorReviewsResponseModel>? vendorReviews,
+    DataState<VendorReviewsResponseModel>? otherVendorReviews,
     DataState<bool>? setAvailabilityState,
     DataState<VendorBookingsResponseModel>? vendorBookings,
   }) {
@@ -103,6 +106,7 @@ class VendorStoreState extends Equatable {
       deletePostState: deletePostState ?? this.deletePostState,
       addReviewState: addReviewState ?? this.addReviewState,
       vendorReviews: vendorReviews ?? this.vendorReviews,
+      otherVendorReviews: otherVendorReviews ?? this.otherVendorReviews,
       setAvailabilityState: setAvailabilityState ?? this.setAvailabilityState,
       vendorBookings: vendorBookings ?? this.vendorBookings,
     );
@@ -127,6 +131,7 @@ class VendorStoreState extends Equatable {
     deletePostState,
     addReviewState,
     vendorReviews,
+    otherVendorReviews,
     setAvailabilityState,
     vendorBookings,
   ];

@@ -519,6 +519,53 @@ class VendorStoreCubit extends Cubit<VendorStoreState> {
     }
   }
 
+  Future<void> getVendorReviewsById({
+    required String vendorId,
+    int pageNumber = 1,
+  }) async {
+    emit(
+      state.copyWith(
+        otherVendorReviews: pageNumber == 1
+            ? const DataState.loading()
+            : DataState.pageLoading(
+                data: state.otherVendorReviews.data,
+              ),
+      ),
+    );
+    final response = await repository.getVendorReviewsById(
+      vendorId: vendorId,
+      pageNumber: pageNumber,
+    );
+    if (response.isSuccess) {
+      final currentData = state.otherVendorReviews.data;
+      final updatedData = currentData != null && pageNumber > 1
+          ? VendorReviewsResponseModel(
+              reviews: [
+                ...currentData.reviews,
+                ...response.data?.reviews ?? [],
+              ],
+              pagination: response.data?.pagination ?? currentData.pagination,
+            )
+          : response.data;
+
+      emit(
+        state.copyWith(
+          otherVendorReviews: DataState.loaded(
+            data: updatedData,
+          ),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          otherVendorReviews: DataState.failure(
+            error: response.message,
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> setVendorAvailability(
     SetAvailabilityRequestModel availability,
   ) async {

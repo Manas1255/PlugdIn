@@ -51,6 +51,11 @@ abstract class VendorStoreRepository {
     int pageNumber = 1,
   });
 
+  Future<RepositoryResponse<VendorReviewsResponseModel>> getVendorReviewsById({
+    required String vendorId,
+    int pageNumber = 1,
+  });
+
   Future<RepositoryResponse<bool>> setVendorAvailability(
     SetAvailabilityRequestModel availability,
   );
