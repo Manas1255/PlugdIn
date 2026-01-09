@@ -43,6 +43,7 @@ class Endpoints {
   static const String createBooking = 'bookings';
   static const String addVendorReview = 'vendor/reviews';
   static const String getVendorReviews = 'vendor/reviews';
+  static String getVendorReviewsById(String vendorId) => 'vendor/$vendorId/reviews';
   static const String setVendorAvailability = 'vendor/availability';
   static const String getVendorBookings = 'bookings/vendor';
 

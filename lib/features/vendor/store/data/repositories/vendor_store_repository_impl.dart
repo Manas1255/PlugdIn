@@ -378,6 +378,36 @@ class VendorStoreRepositoryImpl implements VendorStoreRepository {
   }
 
   @override
+  Future<RepositoryResponse<VendorReviewsResponseModel>> getVendorReviewsById({
+    required String vendorId,
+    int pageNumber = 1,
+  }) async {
+    try {
+      final response = await _apiService.get(
+        Endpoints.getVendorReviewsById(vendorId),
+        queryParams: {
+          'page': pageNumber,
+          'limit': AppConstants.paginationLimit,
+        },
+      );
+      final responseData = ApiResponseParser.parse<VendorReviewsResponseModel>(
+        json: response.data,
+        fromJson: VendorReviewsResponseModel.fromJson,
+      );
+      return RepositoryResponse(
+        isSuccess: responseData.isSuccess,
+        data: responseData.responseData,
+      );
+    } catch (e, s) {
+      AppLogger.error('Error fetching vendor reviews by ID', e, s);
+      return RepositoryResponse(
+        isSuccess: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  @override
   Future<RepositoryResponse<bool>> setVendorAvailability(
     SetAvailabilityRequestModel availability,
   ) async {

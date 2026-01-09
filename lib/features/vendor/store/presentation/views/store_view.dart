@@ -18,11 +18,6 @@ class StoreView extends StatefulWidget {
 }
 
 class _StoreViewState extends State<StoreView> {
-  @override
-  void initState() {
-    context.read<VendorStoreCubit>().getStoreMedia();
-    super.initState();
-  }
 
   void _handleDeletePost(String postId, int postIndex) {
     FitThereDialogWidget.show(
