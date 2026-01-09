@@ -26,6 +26,8 @@ import 'package:plugdin/features/vendor/search/data/repositories/vendor_search_r
 import 'package:plugdin/features/vendor/search/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/data/repositories/vendor_store_repository_impl.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
+import 'package:plugdin/features/customer/store/data/repositories/customer_store_repository_impl.dart';
+import 'package:plugdin/features/customer/store/presentation/cubit/cubit.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -111,6 +113,12 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => CustomerBrowseCubit(
             repository: CustomerFilterRepositoryImpl(),
+          ),
+        ),
+
+        BlocProvider(
+          create: (context) => CustomerStoreCubit(
+            repository: CustomerStoreRepositoryImpl(),
           ),
         ),
       ],

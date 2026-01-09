@@ -25,6 +25,8 @@ class AppRoutes {
   static const String vendorPersonalInfoScreen = '/vendor-personal-info-screen';
   static const String vendorOtherVendorStoreScreen =
       '/vendor-other-vendor-store-screen';
+  static const String customerVendorStoreScreen =
+      '/customer-vendor-store-screen';
 
   static const String customerChangePasswordScreen =
       '/customer-change-password-screen';
@@ -76,6 +78,8 @@ class AppRouteNames {
   static const String vendorNotificationsScreen = 'vendor-notifications-screen';
   static const String vendorOtherVendorStoreScreen =
       'vendor-other-vendor-store-screen';
+  static const String customerVendorStoreScreen =
+      'customer-vendor-store-screen';
   static const String browseScreen = 'browse-screen';
   static const String customerBrowseScreen = 'customer-browse-screen';
   static const String createPackageScreen = 'create-package-screen';
