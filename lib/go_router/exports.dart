@@ -33,6 +33,7 @@ import 'package:plugdin/features/vendor/store/presentation/views/bookings_view.d
 import 'package:plugdin/features/vendor/store/presentation/views/create_package_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/set_availability_screen.dart';
+import 'package:plugdin/features/customer/store/presentation/views/vendor_store_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/package_detail_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/package_availability_calendar_screen.dart';
 import 'package:plugdin/features/vendor/home/presentation/views/create_booking_screen.dart';

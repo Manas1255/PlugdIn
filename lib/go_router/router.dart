@@ -182,6 +182,15 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: '${AppRoutes.customerVendorStoreScreen}/:vendorId',
+        name: AppRouteNames.customerVendorStoreScreen,
+        builder: (context, state) {
+          final vendorId = state.pathParameters['vendorId'] ?? '';
+          return CustomerVendorStoreScreen(vendorId: vendorId);
+        },
+      ),
+
+      GoRoute(
         path: AppRoutes.browseScreen,
         name: AppRouteNames.browseScreen,
         builder: (context, state) {
