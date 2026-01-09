@@ -1,4 +1,4 @@
-package com.example.verygoodcore.plugdin
+package com.plugdinmobile.app
 
 import io.flutter.embedding.android.FlutterActivity
 
