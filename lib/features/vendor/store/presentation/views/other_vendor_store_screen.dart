@@ -7,9 +7,9 @@ import 'package:plugdin/core/enums/store_view_type.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/cubit.dart';
 import 'package:plugdin/features/vendor/store/presentation/cubit/state.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_details_view.dart';
+import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_packages_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_reviews_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/views/other_vendor_store_view.dart';
-import 'package:plugdin/features/vendor/store/presentation/views/packages_view.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_details_widget.dart';
 import 'package:plugdin/features/vendor/store/presentation/widgets/store_header_widget.dart';
 import 'package:plugdin/utils/widgets/core_widgets/error_widget.dart';
@@ -58,6 +58,7 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
     final cubit = context.read<VendorStoreCubit>();
     cubit.getVendorById(widget.vendorId);
     cubit.getVendorReviewsById(vendorId: widget.vendorId);
+    cubit.getVendorPackagesById(vendorId: widget.vendorId);
     _pageController = PageController();
     super.initState();
   }
@@ -221,7 +222,7 @@ class _OtherVendorStoreScreenState extends State<OtherVendorStoreScreen> {
                       children: [
                         const OtherVendorStoreView(),
                         const OtherVendorDetailsView(),
-                        const PackagesView(isOwnStore: false),
+                        OtherVendorPackagesView(vendorId: widget.vendorId),
                         OtherVendorReviewsView(vendorId: widget.vendorId),
                       ],
                     ),

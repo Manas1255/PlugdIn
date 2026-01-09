@@ -43,6 +43,11 @@ abstract class VendorStoreRepository {
     int pageNumber = 1,
   });
 
+  Future<RepositoryResponse<VendorPackagesResponseModel>> getVendorPackagesById({
+    required String vendorId,
+    int pageNumber = 1,
+  });
+
   Future<RepositoryResponse<AddReviewResponseModel>> addReview(
     AddReviewRequestModel review,
   );
