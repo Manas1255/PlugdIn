@@ -50,11 +50,11 @@ class _VendorStoreScreenState extends State<VendorStoreScreen> {
 
   @override
   void initState() {
-    final cubit = context.read<VendorStoreCubit>();
-    cubit.getVendorStoreInfo();
-    cubit.getStoreMedia();
-    cubit.getVendorPackages();
-    cubit.getVendorReviews();
+    final cubit = context.read<VendorStoreCubit>()
+      ..getVendorStoreInfo()
+      ..getStoreMedia()
+      ..getVendorPackages()
+      ..getVendorReviews();
     _pageController = PageController();
     super.initState();
   }
